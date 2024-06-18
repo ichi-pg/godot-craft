@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://wa2aefa4clsk"]
+
+[ext_resource type="Texture2D" uid="uid://ch87pell0xua4" path="res://main/icon.svg" id="1_bt7cb"]
+[ext_resource type="Script" path="res://item/drop.gd" id="1_cpi0i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ebbw"]
+radius = 62.1289
+
+[node name="Drop" type="RigidBody2D"]
+script = ExtResource("1_cpi0i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bt7cb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3ebbw")

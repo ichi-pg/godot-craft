@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://3ic8debmyys5"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_opgyd"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_t2eme"]
+[ext_resource type="Texture2D" uid="uid://jtnu8g4jxnn4" path="res://player/playerGrey_walk2.png" id="2_2dms1"]
+[ext_resource type="Script" path="res://world/camera.gd" id="2_hxq3q"]
+[ext_resource type="TileSet" uid="uid://ct87hclt7ojsh" path="res://world/tile_set.tres" id="3_bw5cg"]
+[ext_resource type="Texture2D" uid="uid://dmad6l1uieoh2" path="res://player/playerGrey_walk1.png" id="3_dpifm"]
+[ext_resource type="Script" path="res://world/tile_map.gd" id="4_jceth"]
+[ext_resource type="Script" path="res://world/cursor.gd" id="5_2vpgi"]
+[ext_resource type="Script" path="res://main/inventory.gd" id="9_8af11"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ahygp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2dms1")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dpifm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2dms1")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_28cup"]
+radius = 52.0
+
+[node name="Main" type="Node"]
+script = ExtResource("1_t2eme")
+
+[node name="World" type="Node" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="World"]
+floor_constant_speed = true
+script = ExtResource("1_opgyd")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Player"]
+sprite_frames = SubResource("SpriteFrames_ahygp")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+position = Vector2(0, 15)
+shape = SubResource("CircleShape2D_28cup")
+
+[node name="Camera" type="Camera2D" parent="World"]
+script = ExtResource("2_hxq3q")
+
+[node name="TileMap" type="TileMap" parent="World"]
+tile_set = ExtResource("3_bw5cg")
+format = 2
+layer_0/tile_data = PackedInt32Array(131065, 1, 9, 131066, 1, 9, 131067, 1, 9, 131068, 131073, 11, 131069, 131073, 9, 131071, 131073, 9, 65536, 131073, 9, 65537, 131073, 9, 65538, 131073, 9, 65539, 65537, 11, 65540, 1, 9, 65541, 1, 9, 65542, 1, 9, 196601, 1, 9, 196602, 1, 9, 196603, 1, 9, 196604, 1, 9, 196605, 1, 9, 196606, 1, 9, 196607, 1, 9, 131072, 1, 9, 131073, 1, 9, 131074, 1, 9, 131075, 1, 9, 131076, 1, 9, 131077, 1, 9, 131078, 1, 9, 196614, 1, 9, 196613, 1, 9, 196612, 1, 9, 196611, 1, 9, 196610, 1, 9, 196609, 1, 9, 196608, 1, 9, 262143, 1, 9, 262142, 1, 9, 262141, 1, 9, 262140, 1, 9, 262139, 1, 9, 262138, 1, 9, 262137, 1, 9, 327673, 1, 9, 327674, 1, 9, 327675, 1, 9, 327676, 1, 9, 327677, 1, 9, 327678, 1, 9, 327679, 1, 9, 262144, 1, 9, 262145, 1, 9, 262146, 1, 9, 262147, 1, 9, 262148, 1, 9, 262149, 1, 9, 262150, 1, 9, 3, 65537, 10, 65532, 131073, 10, -5, 131073, 10, 4, 65537, 11, -65531, 65537, 11, -65532, 65537, 10, -131067, 65537, 10, -65542, 131073, 10, -6, 131073, 11, 65531, 131073, 11, 131070, 131073, 9, 65530, 1, 9, 5, 1, 9, 6, 1, 9, -65530, 1, 9, 65529, 1, 9, -7, 1, 9, -65543, 131073, 9, -131066, 131073, 9)
+script = ExtResource("4_jceth")
+
+[node name="Cursor" type="ColorRect" parent="World"]
+offset_right = 128.0
+offset_bottom = 128.0
+color = Color(1, 0.501961, 0.501961, 0.501961)
+script = ExtResource("5_2vpgi")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Inventory" type="ItemList" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -40.0
+offset_right = 600.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_8af11")
+
+[node name="Hotbar" type="ItemList" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -600.0
+offset_top = -140.0
+offset_right = 600.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="moved" from="World/Player" to="World/Camera" method="_on_player_moved"]
+[connection signal="moved" from="World/Player" to="World/TileMap" method="_on_player_moved"]
+[connection signal="targeted" from="World/TileMap" to="World/Cursor" method="_on_tile_map_targeted"]

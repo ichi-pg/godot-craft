@@ -1,0 +1,138 @@
+[gd_scene load_steps=13 format=3 uid="uid://3ic8debmyys5"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_opgyd"]
+[ext_resource type="Script" path="res://main/main.gd" id="1_t2eme"]
+[ext_resource type="Texture2D" uid="uid://jtnu8g4jxnn4" path="res://player/playerGrey_walk2.png" id="2_2dms1"]
+[ext_resource type="Script" path="res://player/camera.gd" id="2_hxq3q"]
+[ext_resource type="TileSet" uid="uid://ct87hclt7ojsh" path="res://level/level.tres" id="3_bw5cg"]
+[ext_resource type="Texture2D" uid="uid://dmad6l1uieoh2" path="res://player/playerGrey_walk1.png" id="3_dpifm"]
+[ext_resource type="Script" path="res://level/level.gd" id="4_jceth"]
+[ext_resource type="Script" path="res://item/hotbar.gd" id="9_0pegt"]
+[ext_resource type="Script" path="res://item/inventory.gd" id="9_wpset"]
+[ext_resource type="Script" path="res://player/health.gd" id="11_63l4i"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ahygp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2dms1")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dpifm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2dms1")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_28cup"]
+radius = 52.0
+
+[node name="Main" type="Node"]
+script = ExtResource("1_t2eme")
+
+[node name="World" type="Node" parent="."]
+
+[node name="Level" type="TileMap" parent="World"]
+tile_set = ExtResource("3_bw5cg")
+format = 2
+layer_0/tile_data = PackedInt32Array(131065, 1, 9, 131066, 1, 9, 131067, 1, 9, 131068, 131073, 11, 131069, 131073, 9, 131071, 131073, 9, 65536, 131073, 9, 65537, 131073, 9, 65538, 131073, 9, 65539, 65537, 11, 65540, 1, 9, 65541, 1, 9, 65542, 1, 9, 196602, 1, 9, 196603, 1, 9, 196604, 1, 9, 196605, 1, 9, 196606, 1, 9, 196607, 1, 9, 131072, 1, 9, 131073, 1, 9, 131074, 1, 9, 131075, 1, 9, 131076, 1, 9, 131077, 1, 9, 131078, 1, 9, 196614, 1, 9, 196613, 1, 9, 196612, 1, 9, 196611, 1, 9, 196610, 1, 9, 196609, 1, 9, 196608, 1, 9, 262143, 1, 9, 262142, 1, 9, 262141, 1, 9, 262140, 1, 9, 262139, 1, 9, 262138, 1, 9, 262137, 1, 9, 327673, 1, 9, 327674, 1, 9, 327675, 1, 9, 327676, 1, 9, 327677, 1, 9, 327678, 1, 9, 327679, 1, 9, 262144, 1, 9, 262145, 1, 9, 262146, 1, 9, 262147, 1, 9, 262148, 1, 9, 262149, 1, 9, 262150, 1, 9, 3, 65537, 10, 65532, 131073, 10, -5, 131073, 10, 4, 65537, 11, -65531, 65537, 11, -65532, 65537, 10, -131067, 65537, 10, -65542, 131073, 10, -6, 131073, 11, 65531, 131073, 11, 131070, 131073, 9, 65530, 1, 9, 5, 1, 9, 6, 1, 9, -65530, 1, 9, 65529, 1, 9, -7, 1, 9, -65543, 131073, 9, -131066, 131073, 9, 65534, 589825, 3, -131079, 589825, 3, 65533, 720897, 3, 2, 655361, 3, 1, 720897, 2, -196602, 655361, 2, -131065, 131073, 6, -131064, 131073, 6, -131063, 131073, 6, -131062, 131073, 6, -65544, 131073, 9, -65545, 131073, 9, -65546, 131073, 9, -65547, 131073, 9, 196601, 1, 9, -8, 1, 9, 65528, 1, 9, 131064, 1, 9, 196600, 1, 9, 262136, 1, 9, 327672, 1, 9, 262135, 1, 9, 196599, 1, 9, 131063, 1, 9, 65527, 1, 9, -9, 1, 9, -10, 1, 9, 65526, 1, 9, 65525, 1, 9, 131061, 1, 9, 196597, 1, 9, 196598, 1, 9, -11, 1, 9, 131062, 1, 9, 327671, 1, 9, 262133, 1, 9, 327669, 1, 9, 262134, 1, 9, 327670, 1, 9, -65529, 1, 6, 7, 1, 6, -65528, 1, 6, 8, 1, 6, -65527, 1, 6, 9, 1, 6, 65544, 1, 6, 131080, 1, 6, 65545, 1, 6, 131081, 1, 6, -65526, 1, 6, 10, 1, 6, 65546, 1, 6, 131082, 1, 6, 196617, 1, 6, 262153, 1, 6, 196618, 1, 6, 262154, 1, 6, 196615, 1, 6, 262151, 1, 6, 196616, 1, 6, 262152, 1, 6, 65543, 1, 6, 131079, 1, 6, -196600, 589825, 5, -196599, 655361, 5, -196601, 655361, 4, -131082, 655361, 9, -131083, 589825, 9, -131081, 720897, 9)
+script = ExtResource("4_jceth")
+
+[node name="Cursor" type="ColorRect" parent="World/Level"]
+offset_right = 128.0
+offset_bottom = 128.0
+color = Color(1, 0.501961, 0.501961, 0.501961)
+
+[node name="Player" type="CharacterBody2D" parent="World"]
+floor_constant_speed = true
+script = ExtResource("1_opgyd")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Player"]
+sprite_frames = SubResource("SpriteFrames_ahygp")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+position = Vector2(0, 15)
+shape = SubResource("CircleShape2D_28cup")
+
+[node name="Camera" type="Camera2D" parent="World"]
+script = ExtResource("2_hxq3q")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Hotbar" type="ColorRect" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -666.0
+offset_top = -168.0
+offset_right = 666.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.501961)
+script = ExtResource("9_0pegt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Hotbar"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1324.0
+offset_bottom = 136.0
+
+[node name="Selector" type="ColorRect" parent="HUD/Hotbar"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+color = Color(0.501961, 1, 0.501961, 0.501961)
+
+[node name="Inventory" type="ColorRect" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -666.0
+offset_top = -600.0
+offset_right = 666.0
+offset_bottom = -184.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.501961)
+script = ExtResource("9_wpset")
+
+[node name="GridContainer" type="GridContainer" parent="HUD/Inventory"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1324.0
+offset_bottom = 268.0
+columns = 10
+
+[node name="Health" type="ProgressBar" parent="HUD"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 64.0
+step = 1.0
+value = 75.0
+script = ExtResource("11_63l4i")
+
+[connection signal="erased" from="World/Level" to="HUD/Hotbar" method="_on_level_erased"]
+[connection signal="placed" from="World/Level" to="HUD/Hotbar" method="_on_level_placed"]
+[connection signal="moved" from="World/Player" to="World/Level" method="_on_player_moved"]
+[connection signal="moved" from="World/Player" to="World/Camera" method="_on_player_moved"]
+[connection signal="overflow" from="HUD/Hotbar" to="HUD/Inventory" method="_on_hotbar_overflow"]
+[connection signal="selected" from="HUD/Hotbar" to="World/Level" method="_on_hotbar_selected"]
