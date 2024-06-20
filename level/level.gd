@@ -1,7 +1,11 @@
 extends TileMap
 
+class_name Level
+
 signal erased(tile_id)
 signal placed(tile_id)
+
+static var texture: AtlasTexture = AtlasTexture.new()
 
 var player_position = Vector2.ZERO
 var mouse_position = Vector2.ZERO
@@ -16,8 +20,7 @@ var tile_size = tile_set.tile_size * 0.5
 
 func _ready():
 	var source = tile_set.get_source(1) as TileSetAtlasSource
-	Common.level_texture = AtlasTexture.new()
-	Common.level_texture.atlas = source.texture
+	texture.atlas = source.texture
 
 
 func _on_player_moved(pos):
@@ -41,8 +44,7 @@ func _input(event):
 		update_target_tile(0)
 	elif select_tile_id:
 		# TODO is on floor
-		# TODO pass drop
-		set_cell(0, target_map_position, 1, Common.get_tile_coord(select_tile_id))
+		set_cell(0, target_map_position, 1, get_tile_coord(select_tile_id))
 		placed.emit(select_tile_id)
 		update_target_tile(select_tile_id)
 
@@ -52,7 +54,7 @@ func update_target():
 	if target_map_position == new_target_map_position:
 		return
 	target_map_position = new_target_map_position
-	update_target_tile(Common.get_tile_id(get_cell_atlas_coords(0, target_map_position)))
+	update_target_tile(get_tile_id(get_cell_atlas_coords(0, target_map_position)))
 
 
 func update_target_tile(tile_id):
@@ -64,5 +66,16 @@ func update_target_tile(tile_id):
 	cursor.global_position = map_to_local(target_map_position) - tile_size
 
 
-func _on_hotbar_selected(item_id):
-	select_tile_id = Common.get_item_category_id(item_id, Common.ItemCategory.TILE)
+func _on_hotbar_selected(category, item_id):
+	if category == Item.Category.TILE:
+		select_tile_id = item_id
+	else:
+		select_tile_id = 0
+
+
+static func get_tile_id(coord: Vector2i) -> int:
+	return coord.x + coord.y * 100 + 101
+
+
+static func get_tile_coord(tile_id: int) -> Vector2i:
+	return Vector2i(tile_id % 100 - 1, int(tile_id / 100) - 1)

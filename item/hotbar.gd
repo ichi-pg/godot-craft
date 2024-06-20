@@ -1,7 +1,7 @@
 extends Node
 
-signal selected(item_id)
-signal overflow(item_id, amount)
+signal selected(category, item_id)
+signal overflow(category, item_id, amount)
 
 var select_index = 0
 var items = {}
@@ -11,11 +11,14 @@ var items = {}
 
 
 func _ready():
-	increment_item(Common.get_item_id(101, Common.ItemCategory.TILE), 10)
+	increment_item(Item.Category.TILE, 101, 10)
 	select_item(0)
 
 
 func _input(event):
+	for i in range(10):
+		if event.is_action_pressed("hotbar_%d"%i):
+			select_item(i)
 	if event.is_action_pressed("hotbar_up"):
 		select_item(select_index - 1)
 	elif event.is_action_pressed("hotbar_down"):
@@ -26,26 +29,26 @@ func select_item(index):
 	var count = container.get_child_count()
 	select_index = max(min(index, count - 1), 0)
 	if not count:
-		selected.emit(0)
+		selected.emit(Item.Category.NULL, 0)
 		return
 	var item = container.get_child(select_index)
-	selected.emit(item.item_id)
+	selected.emit(item.category, item.item_id)
 	selector.global_position = item.global_position
 
 
-func increment_item(item_id, amount):
-	Common.increment_item(self, item_id, amount, 10)
+func increment_item(category, item_id, amount):
+	if Inventory.increment_item(self, category, item_id, amount, 10):
+		select_item(select_index)
 
 
-func decrement_item(item_id, amount):
-	var item = Common.decrement_item(self, item_id, amount)
-	if item == container.get_child(select_index):
-		selected.emit(0)
+func decrement_item(category, item_id, amount):
+	if Inventory.decrement_item(self, category, item_id, amount):
+		selected.emit(Item.Category.NULL, 0)
 
 
 func _on_level_erased(tile_id):
-	increment_item(Common.get_item_id(tile_id, Common.ItemCategory.TILE), 1)
-
+	increment_item(Item.Category.TILE, tile_id, 1)
+	# TODO pass drop
 
 func _on_level_placed(tile_id):
-	decrement_item(Common.get_item_id(tile_id, Common.ItemCategory.TILE), 1)
+	decrement_item(Item.Category.TILE, tile_id, 1)
