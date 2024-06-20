@@ -36,9 +36,9 @@ static func increment_item(inventory, category, item_id, amount, max_count) -> I
 		inventory.overflow.emit(category, item_id, amount)
 		return null
 	var item = Item.instantiate()
+	item.init(category, item_id, amount)
 	items[item_id] = item
 	inventory.container.add_child(item)
-	item.init(category, item_id, amount)
 	return item
 
 

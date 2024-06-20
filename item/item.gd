@@ -17,13 +17,18 @@ var amount = 0
 func init(_category, _item_id, _amount):
 	category = _category
 	item_id = _item_id
-	increment(_amount)
+	amount = _amount
+	$Label.text = str(amount)
 	match category:
+		Category.NULL:
+			texture = null
+			size = Vector2(128, 128)
 		Category.TILE:
 			var atlas = Level.texture.duplicate() as AtlasTexture
 			var coord = Level.get_tile_coord(item_id)
 			atlas.region = Rect2(coord * 128, Vector2i(128, 128))
 			texture = atlas
+			# TODO free or cache
 
 
 func increment(_amount):

@@ -7,7 +7,6 @@
 offset_right = 128.0
 offset_bottom = 128.0
 texture = ExtResource("1_mtdbm")
-expand_mode = 2
 script = ExtResource("2_g43ds")
 metadata/_edit_group_ = true
 

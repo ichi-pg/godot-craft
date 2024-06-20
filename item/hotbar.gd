@@ -19,6 +19,7 @@ func _input(event):
 	for i in range(10):
 		if event.is_action_pressed("hotbar_%d"%i):
 			select_item(i)
+			return
 	if event.is_action_pressed("hotbar_up"):
 		select_item(select_index - 1)
 	elif event.is_action_pressed("hotbar_down"):
@@ -27,10 +28,11 @@ func _input(event):
 
 func select_item(index):
 	var count = container.get_child_count()
-	select_index = max(min(index, count - 1), 0)
 	if not count:
+		select_index = 0
 		selected.emit(Item.Category.NULL, 0)
 		return
+	select_index = index % count
 	var item = container.get_child(select_index)
 	selected.emit(item.category, item.item_id)
 	selector.global_position = item.global_position

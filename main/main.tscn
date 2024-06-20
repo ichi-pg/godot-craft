@@ -114,7 +114,7 @@ color = Color(0, 0, 0, 0.501961)
 script = ExtResource("9_wpset")
 
 [node name="GridContainer" type="GridContainer" parent="HUD/Inventory"]
-layout_mode = 0
+layout_mode = 1
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 1324.0
