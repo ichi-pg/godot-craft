@@ -22,10 +22,12 @@ func get_level_atlas(item_id) -> AtlasTexture:
 
 
 func get_tile_id(coord: Vector2i) -> int:
+	# TODO cache
 	return coord.x + coord.y * 100 + 101
 
 
 func get_tile_coord(tile_id: int) -> Vector2i:
+	# TODO cache
 	return Vector2i(tile_id % 100 - 1, int(tile_id / 100) - 1)
 
 
