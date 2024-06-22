@@ -40,7 +40,6 @@ func select_item(index):
 	select_index = index % count
 	var item = container.get_child(select_index)
 	selected.emit(item.category, item.item_id)
-	item.add_child(selector)
 	selector.global_position = item.global_position
 
 
