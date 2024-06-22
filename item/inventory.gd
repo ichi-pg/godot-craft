@@ -33,3 +33,13 @@ func remove_item(item):
 func _on_hotbar_overflow(category, item_id, amount):
 	Common.increment_item(self, category, item_id, amount, 30)
 	# TODO drop
+
+
+func _can_drop_data(at_position, data):
+	return data is Item
+
+
+func _drop_data(at_position, item):
+	add_item(item.category, item.item_id, item.amount)
+	# TODO max count
+	# TODO free or init
