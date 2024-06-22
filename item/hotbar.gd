@@ -3,15 +3,20 @@ extends Node
 signal selected(category, item_id)
 signal overflow(category, item_id, amount)
 
+const Item = preload("res://item/item.tscn")
+
 var select_index = 0
-var items = {}
 
 @onready var container = $HBoxContainer
 @onready var selector = $Selector
 
 
 func _ready():
-	increment_item(Item.Category.TILE, 101, 10)
+	for i in range(10):
+		var item = Item.instantiate()
+		item.init(Common.ItemCategory.NULL, 0, 0)
+		container.add_child(item)
+	increment_item(Common.ItemCategory.TILE, 101, 10)
 	select_item(0)
 
 
@@ -30,7 +35,7 @@ func select_item(index):
 	var count = container.get_child_count()
 	if not count:
 		select_index = 0
-		selected.emit(Item.Category.NULL, 0)
+		selected.emit(Common.ItemCategory.NULL, 0)
 		return
 	select_index = index % count
 	var item = container.get_child(select_index)
@@ -39,18 +44,30 @@ func select_item(index):
 
 
 func increment_item(category, item_id, amount):
-	if Inventory.increment_item(self, category, item_id, amount, 10):
+	if Common.increment_item(self, category, item_id, amount, 10):
 		select_item(select_index)
 
 
 func decrement_item(category, item_id, amount):
-	if Inventory.decrement_item(self, category, item_id, amount):
-		selected.emit(Item.Category.NULL, 0)
+	if Common.decrement_item(self, category, item_id, amount):
+		select_item(select_index)
+
+
+func add_item(category, item_id, amount) -> Item:
+	for item in container.get_children():
+		if not item.item_id:
+			item.init(category, item_id, amount)
+			return item
+	return null
+
+
+func remove_item(item):
+	item.init(Common.ItemCategory.NULL, 0, 0)
 
 
 func _on_level_erased(tile_id):
-	increment_item(Item.Category.TILE, tile_id, 1)
+	increment_item(Common.ItemCategory.TILE, tile_id, 1)
 	# TODO pass drop
 
 func _on_level_placed(tile_id):
-	decrement_item(Item.Category.TILE, tile_id, 1)
+	decrement_item(Common.ItemCategory.TILE, tile_id, 1)
