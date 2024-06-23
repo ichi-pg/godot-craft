@@ -2,8 +2,6 @@ extends TextureRect
 
 class_name Item
 
-const null_texture = preload("res://main/icon.svg")
-
 var category = Common.ItemCategory.NULL
 var item_id = 0
 var amount = 0
@@ -17,11 +15,14 @@ func init(category, item_id, amount):
 	self.amount = amount
 	match category:
 		Common.ItemCategory.NULL:
-			texture = null_texture
+			$Label.visible = false
+			modulate.a = 0
+			return
 		Common.ItemCategory.TILE:
 			texture = Common.get_level_atlas(item_id)
 	$Label.text = str(amount)
-	$Label.visible = category != Common.ItemCategory.NULL
+	$Label.visible = true
+	modulate.a = 1
 
 
 func increment(amount):
@@ -32,13 +33,17 @@ func increment(amount):
 func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
-	var preview = Control.new()
 	var item = duplicate()
 	item.position -= size * 0.5
+	var preview = Control.new()
+	preview.modulate.a =  0.5
+	preview.z_index = 100
 	preview.add_child(item)
 	set_drag_preview(preview)
 	# TODO cache
-	# TODO visible
+	# TODO disable level target
+	# TODO self modulate.a
+	# TODO split number
 	return self
 
 
@@ -52,5 +57,4 @@ func _drop_data(at_position, item):
 	var amount = self.amount
 	init(item.category, item.item_id, item.amount)
 	item.init(category, item_id, amount)
-	# TODO drop on level
 	# TODO ignore selector
