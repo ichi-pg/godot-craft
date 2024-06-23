@@ -19,6 +19,7 @@ func _on_drop_item(category, item_id, amount):
 	var distance = direction * Vector2.LEFT * 384
 	add_drop(category, item_id, amount, player.global_position + distance)
 	# TODO get player size
+	# TODO while walking
 
 
 func _on_level_erased(tile_id, pos):

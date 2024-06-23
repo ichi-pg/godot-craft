@@ -6,13 +6,14 @@ enum ItemCategory {
 }
 
 const Item = preload("res://item/item.tscn")
-const INDEX_BASE = 1000000000
+const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
+const QUARTER_OF_INDEX = 10000
 
 var level_texture: AtlasTexture = AtlasTexture.new()
 var level_atlas = {}
 
 func get_level_atlas(item_id, padding) -> AtlasTexture:
-	var index = item_id + padding * INDEX_BASE
+	var index = item_id + padding * HALF_OF_INDEX
 	if level_atlas.has(index):
 		return level_atlas[index]
 	var atlas = Common.level_texture.duplicate() as AtlasTexture
@@ -27,12 +28,12 @@ func get_level_atlas(item_id, padding) -> AtlasTexture:
 
 func get_tile_id(coord: Vector2i) -> int:
 	# HACK cache
-	return coord.x + coord.y * 100 + 101
+	return coord.x + coord.y * QUARTER_OF_INDEX + QUARTER_OF_INDEX + 1
 
 
 func get_tile_coord(tile_id: int) -> Vector2i:
 	# HACK cache
-	return Vector2i(tile_id % 100 - 1, int(tile_id / 100) - 1)
+	return Vector2i(tile_id % QUARTER_OF_INDEX - 1, int(tile_id / QUARTER_OF_INDEX) - 1)
 
 
 func find_item(container: Container, category, item_id) -> Item:
