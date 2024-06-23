@@ -17,8 +17,6 @@ func _ready():
 		var item = Item.instantiate()
 		item.init(Common.ItemCategory.NULL, 0, 0)
 		container.add_child(item)
-	# TODO remove test item
-	_on_player_picked_up(Common.ItemCategory.TILE, 101, 10)
 	select_item(0)
 
 
