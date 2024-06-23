@@ -22,7 +22,7 @@ func init(category, item_id, amount):
 			$Label.visible = false
 			return
 		Common.ItemCategory.TILE:
-			texture = Common.get_level_atlas(item_id)
+			texture = Common.get_level_atlas(item_id, 0)
 	modulate.a = 1
 	$Label.text = str(amount)
 	$Label.visible = true
@@ -63,9 +63,12 @@ func _drop_data(at_position, item):
 	var category = self.category
 	var item_id = self.item_id
 	var amount = self.amount
+	if item_id == item.item_id:
+		init(item.category, item.item_id, amount + item.amount)
+		item.get_inventory().remove_item(item)
+		return
 	init(item.category, item.item_id, item.amount)
 	if item_id:
 		item.init(category, item_id, amount)
 	else:
 		item.get_inventory().remove_item(item)
-	# TODO stacking

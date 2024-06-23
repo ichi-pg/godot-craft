@@ -6,12 +6,15 @@ signal overflow(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 
+var max_items = 30
+
 @onready var container = $GridContainer
 
 
 func _ready():
 	visible = false
 	# TODO sort
+	# TODO bug and resize window
 
 
 func _input(event):
@@ -32,7 +35,7 @@ func remove_item(item):
 
 
 func _on_hotbar_overflow(category, item_id, amount):
-	Common.increment_item(self, category, item_id, amount, 30)
+	Common.increment_item(self, category, item_id, amount, max_items)
 
 
 func _can_drop_data(at_position, data):
@@ -40,7 +43,8 @@ func _can_drop_data(at_position, data):
 
 
 func _drop_data(at_position, item):
-	add_item(item.category, item.item_id, item.amount)
+	if container.get_child_count() < max_items:
+		add_item(item.category, item.item_id, item.amount)
+	else:
+		overflow.emit(item.category, item.item_id, item.amount)
 	item.get_inventory().remove_item(item)
-	# TODO max count
-	# TODO stacking

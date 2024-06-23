@@ -11,4 +11,4 @@ func init(category, item_id, amount):
 	self.amount = amount
 	match category:
 		Common.ItemCategory.TILE:
-			$Sprite2D.texture = Common.get_level_atlas(item_id)
+			$Sprite2D.texture = Common.get_level_atlas(item_id, 1)

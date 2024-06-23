@@ -14,11 +14,15 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 func _process(delta):
 	# TODO input vs process
 	if Input.is_action_just_pressed("battle_attack"):
-		pass # TODO attack
+		# TODO melee
+		# TODO projectile
+		pass
 	if Input.is_action_just_pressed("battle_guard"):
-		pass # TODO guard
+		# TODO guard
+		pass
 	if Input.is_action_just_pressed("battle_heal"):
-		pass # TODO heal
+		# TODO use potion
+		pass
 
 	if velocity.x:
 		sprite.flip_h = velocity.x < 0
@@ -38,7 +42,8 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	elif Input.is_action_just_pressed("battle_dodge"):
-		pass # TODO dodge
+		# TODO dodge
+		pass
 	elif Input.is_action_just_pressed("battle_jump"):
 		velocity.y = JUMP_VELOCITY
 

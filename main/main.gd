@@ -4,8 +4,6 @@ extends Node
 # TODO craft
 # TODO equipment
 # TODO enchant
-# TODO potion
-# TODO mob
 # TODO map
 # TODO level generate
 # TODO mount

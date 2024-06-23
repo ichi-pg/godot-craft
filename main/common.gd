@@ -6,19 +6,22 @@ enum ItemCategory {
 }
 
 const Item = preload("res://item/item.tscn")
+const INDEX_BASE = 1000000000
 
 var level_texture: AtlasTexture = AtlasTexture.new()
 var level_atlas = {}
 
-
-func get_level_atlas(item_id) -> AtlasTexture:
-	if level_atlas.has(item_id):
-		return level_atlas[item_id]
+func get_level_atlas(item_id, padding) -> AtlasTexture:
+	var index = item_id + padding * INDEX_BASE
+	if level_atlas.has(index):
+		return level_atlas[index]
 	var atlas = Common.level_texture.duplicate() as AtlasTexture
 	var coord = Common.get_tile_coord(item_id)
 	# TODO get tile size
-	atlas.region = Rect2(coord * 128 + Vector2i.ONE, Vector2i(127, 127))
-	level_atlas[item_id] = atlas
+	var pos = coord * 128 + Vector2i.ONE * padding
+	var size = Vector2i(128 - padding, 128 - padding)
+	atlas.region = Rect2(pos, size)
+	level_atlas[index] = atlas
 	return atlas
 
 

@@ -43,7 +43,7 @@ func _input(event):
 		var fix_target_tile_id = target_tile_id
 		erase_cell(0, target_map_position)
 		update_target_tile(0)
-		erased.emit(fix_target_tile_id)
+		erased.emit(fix_target_tile_id, map_to_local(target_map_position))
 		# TODO gravity
 	elif is_around_empty(target_map_position):
 		pass
