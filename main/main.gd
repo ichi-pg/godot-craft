@@ -1,11 +1,12 @@
 extends Node
 
-# TODO multi players
-# TODO save and load
+# TODO chest
+# TODO craft and enchant
+# TODO potion
 # TODO mob
 # TODO hud
-# TODO item
-# TODO craft and enchant
+# TODO multi players
+# TODO save and load
 # TODO level generate
 # TODO farm
 # TODO ride

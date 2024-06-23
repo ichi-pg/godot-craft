@@ -18,7 +18,7 @@ func init(category, item_id, amount):
 	match category:
 		Common.ItemCategory.NULL:
 			texture = null_texture
-			#modulate.a = 0
+			modulate.a = 0
 			$Label.visible = false
 			return
 		Common.ItemCategory.TILE:

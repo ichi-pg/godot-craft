@@ -11,6 +11,7 @@ const Item = preload("res://item/item.tscn")
 
 func _ready():
 	visible = false
+	# TODO sort
 
 
 func _input(event):

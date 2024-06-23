@@ -16,7 +16,7 @@ func _ready():
 		var item = Item.instantiate()
 		item.init(Common.ItemCategory.NULL, 0, 0)
 		container.add_child(item)
-	increment_item(Common.ItemCategory.TILE, 101, 10)
+	_on_player_picked_up(Common.ItemCategory.TILE, 101, 10)
 	select_item(0)
 
 
@@ -43,7 +43,7 @@ func select_item(index):
 	selector.global_position = item.global_position
 
 
-func increment_item(category, item_id, amount):
+func _on_player_picked_up(category, item_id, amount):
 	if Common.increment_item(self, category, item_id, amount, 10):
 		select_item(select_index)
 
@@ -66,8 +66,9 @@ func remove_item(item):
 
 
 func _on_level_erased(tile_id):
-	increment_item(Common.ItemCategory.TILE, tile_id, 1)
+	_on_player_picked_up(Common.ItemCategory.TILE, tile_id, 1)
 	# TODO from drop
+
 
 func _on_level_placed(tile_id):
 	decrement_item(Common.ItemCategory.TILE, tile_id, 1)

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal moved(pos)
+signal picked_up(category, item_id, amount)
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -1500.0
@@ -54,3 +55,8 @@ func _physics_process(delta):
 
 	if velocity.x or velocity.y:
 		moved.emit(global_position)
+
+
+func _on_pickup_body_entered(drop):
+	picked_up.emit(drop.category, drop.item_id, drop.amount)
+	drop.queue_free()

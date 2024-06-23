@@ -16,7 +16,8 @@ func get_level_atlas(item_id) -> AtlasTexture:
 		return level_atlas[item_id]
 	var atlas = Common.level_texture.duplicate() as AtlasTexture
 	var coord = Common.get_tile_coord(item_id)
-	atlas.region = Rect2(coord * 128, Vector2i(128, 128))
+	# TODO get tile size
+	atlas.region = Rect2(coord * 128 + Vector2i.ONE, Vector2i(127, 127))
 	level_atlas[item_id] = atlas
 	return atlas
 

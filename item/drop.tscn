@@ -4,12 +4,15 @@
 [ext_resource type="Script" path="res://item/drop.gd" id="1_cpi0i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ebbw"]
-radius = 62.1289
+radius = 31.0
 
 [node name="Drop" type="RigidBody2D"]
+collision_layer = 4
 script = ExtResource("1_cpi0i")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_bt7cb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

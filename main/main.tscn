@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://3ic8debmyys5"]
+[gd_scene load_steps=16 format=3 uid="uid://3ic8debmyys5"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_opgyd"]
 [ext_resource type="Script" path="res://main/main.gd" id="1_t2eme"]
 [ext_resource type="Texture2D" uid="uid://jtnu8g4jxnn4" path="res://player/playerGrey_walk2.png" id="2_2dms1"]
 [ext_resource type="Script" path="res://player/camera.gd" id="2_hxq3q"]
+[ext_resource type="Script" path="res://main/world.gd" id="2_vl4hx"]
 [ext_resource type="TileSet" uid="uid://ct87hclt7ojsh" path="res://level/level.tres" id="3_bw5cg"]
 [ext_resource type="Texture2D" uid="uid://dmad6l1uieoh2" path="res://player/playerGrey_walk1.png" id="3_dpifm"]
 [ext_resource type="Script" path="res://level/level.gd" id="4_jceth"]
@@ -42,6 +43,7 @@ radius = 52.0
 script = ExtResource("1_t2eme")
 
 [node name="World" type="Node" parent="."]
+script = ExtResource("2_vl4hx")
 
 [node name="Level" type="TileMap" parent="World"]
 tile_set = ExtResource("3_bw5cg")
@@ -55,6 +57,7 @@ offset_bottom = 128.0
 color = Color(1, 0.501961, 0.501961, 0.501961)
 
 [node name="Player" type="CharacterBody2D" parent="World"]
+collision_layer = 2
 floor_constant_speed = true
 script = ExtResource("1_opgyd")
 metadata/_edit_group_ = true
@@ -64,6 +67,14 @@ sprite_frames = SubResource("SpriteFrames_ahygp")
 animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+position = Vector2(0, 15)
+shape = SubResource("CircleShape2D_28cup")
+
+[node name="Pickup" type="Area2D" parent="World/Player"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player/Pickup"]
 position = Vector2(0, 15)
 shape = SubResource("CircleShape2D_28cup")
 
@@ -149,10 +160,14 @@ script = ExtResource("11_63l4i")
 [connection signal="placed" from="World/Level" to="HUD/Hotbar" method="_on_level_placed"]
 [connection signal="moved" from="World/Player" to="World/Level" method="_on_player_moved"]
 [connection signal="moved" from="World/Player" to="World/Camera" method="_on_player_moved"]
+[connection signal="picked_up" from="World/Player" to="HUD/Hotbar" method="_on_player_picked_up"]
+[connection signal="body_entered" from="World/Player/Pickup" to="World/Player" method="_on_pickup_body_entered"]
 [connection signal="focused" from="HUD" to="World/Level" method="_on_hud_focused"]
+[connection signal="drop_item" from="HUD/Empty" to="World" method="_on_drop_item"]
 [connection signal="mouse_entered" from="HUD/Hotbar" to="HUD" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="HUD/Hotbar" to="HUD" method="_on_mouse_exited"]
 [connection signal="overflow" from="HUD/Hotbar" to="HUD/Inventory" method="_on_hotbar_overflow"]
 [connection signal="selected" from="HUD/Hotbar" to="World/Level" method="_on_hotbar_selected"]
 [connection signal="mouse_entered" from="HUD/Inventory" to="HUD" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="HUD/Inventory" to="HUD" method="_on_mouse_exited"]
+[connection signal="overflow" from="HUD/Inventory" to="World" method="_on_drop_item"]
