@@ -32,7 +32,7 @@ func remove_item(item):
 
 func _on_hotbar_overflow(category, item_id, amount):
 	Common.increment_item(self, category, item_id, amount, 30)
-	# TODO drop
+	# TODO create drop
 
 
 func _can_drop_data(at_position, data):
@@ -41,5 +41,6 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, item):
 	add_item(item.category, item.item_id, item.amount)
+	item.get_inventory().remove_item(item)
 	# TODO max count
-	# TODO free or init
+	# TODO stacking

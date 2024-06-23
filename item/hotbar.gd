@@ -67,7 +67,7 @@ func remove_item(item):
 
 func _on_level_erased(tile_id):
 	increment_item(Common.ItemCategory.TILE, tile_id, 1)
-	# TODO pass drop
+	# TODO from drop
 
 func _on_level_placed(tile_id):
 	decrement_item(Common.ItemCategory.TILE, tile_id, 1)

@@ -6,6 +6,5 @@ func _can_drop_data(at_position, data):
 
 
 func _drop_data(at_position, item):
-	item.init(Common.ItemCategory.NULL, 0, 0)
-	# TODO from inventory
-	# TODO drop
+	item.get_inventory().remove_item(item)
+	# TODO create drop
