@@ -21,7 +21,7 @@ func _ready():
 
 
 func _input(event):
-	for i in range(10):
+	for i in range(MAX_ITEMS):
 		if event.is_action_pressed("hotbar_%d"%i):
 			select_item(i)
 			return

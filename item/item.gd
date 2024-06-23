@@ -45,7 +45,7 @@ func _get_drag_data(at_position):
 	item.position -= size * 0.5
 	var preview = Control.new()
 	preview.modulate.a =  0.5
-	preview.z_index = 100
+	preview.z_index = Common.MAX_Z_INDEX
 	preview.add_child(item)
 	set_drag_preview(preview)
 	# HACK cache

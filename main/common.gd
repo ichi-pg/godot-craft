@@ -8,6 +8,8 @@ enum ItemCategory {
 const Item = preload("res://item/item.tscn")
 const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
 const QUARTER_OF_INDEX = 10000
+const MAX_INT = 9223372036854775807
+const MAX_Z_INDEX = 4096
 
 var level_texture: AtlasTexture = AtlasTexture.new()
 var level_atlas = {}
