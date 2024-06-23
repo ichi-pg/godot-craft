@@ -68,3 +68,4 @@ func remove_item(item):
 
 func _on_level_placed(tile_id):
 	decrement_item(Common.ItemCategory.TILE, tile_id, 1)
+	# FIXME selected item is primary
