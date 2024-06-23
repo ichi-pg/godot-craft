@@ -7,7 +7,7 @@ const drop = preload("res://item/drop.tscn")
 
 func add_drop(category, item_id, amount, pos):
 	var drop = drop.instantiate()
-	drop.init(category, item_id, amount)
+	drop.init_drop(category, item_id, amount)
 	drop.global_position = pos
 	add_child(drop)
 	# TODO don't bury

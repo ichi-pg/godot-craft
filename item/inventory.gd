@@ -24,7 +24,7 @@ func _input(event):
 
 func add_item(category, item_id, amount) -> Item:
 	var item = Item.instantiate()
-	item.init(category, item_id, amount)
+	item.init_item(self, category, item_id, amount)
 	container.add_child(item)
 	return item
 
@@ -43,8 +43,8 @@ func _can_drop_data(at_position, data):
 
 
 func _drop_data(at_position, item):
+	# NOTE don't use increment_item.
 	if container.get_child_count() < max_items:
 		add_item(item.category, item.item_id, item.amount)
 	else:
 		overflow.emit(item.category, item.item_id, item.amount)
-	item.get_inventory().remove_item(item)

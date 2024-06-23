@@ -7,11 +7,18 @@ const null_texture = preload("res://main/icon.svg")
 var category = Common.ItemCategory.NULL
 var item_id = 0
 var amount = 0
+var inventory: Control
+var copied_item: Item
 
 @onready var label = $Label
 
+func copy_item(item):
+	init_item(item.inventory, item.category, item.item_id, item.amount)
+	copied_item = item
 
-func init(category, item_id, amount):
+
+func init_item(inventory, category, item_id, amount):
+	self.inventory = inventory
 	self.category = category
 	self.item_id = item_id
 	self.amount = amount
@@ -33,15 +40,11 @@ func increment(amount):
 	label.text = str(self.amount)
 
 
-func get_inventory():
-	# HACK cache
-	return get_parent().get_parent()
-
-
 func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
 	var item = duplicate()
+	item.copy_item(self)
 	item.position -= size * 0.5
 	var preview = Control.new()
 	preview.modulate.a =  0.5
@@ -52,23 +55,22 @@ func _get_drag_data(at_position):
 	# TODO disable level target
 	# TODO self modulate.a
 	# TODO split number
-	return self
+	inventory.remove_item(self)
+	return item
 
 
 func _can_drop_data(at_position, data):
-	return data is Item and data != self
+	return data is Item
 
 
 func _drop_data(at_position, item):
-	var category = self.category
-	var item_id = self.item_id
-	var amount = self.amount
-	if item_id == item.item_id:
-		init(item.category, item.item_id, amount + item.amount)
-		item.get_inventory().remove_item(item)
+	if category == item.category and item_id == item.item_id:
+		init_item(inventory, category, item_id, amount + item.amount)
 		return
-	init(item.category, item.item_id, item.amount)
-	if item_id:
-		item.init(category, item_id, amount)
-	else:
-		item.get_inventory().remove_item(item)
+	if item_id and is_instance_valid(item.copied_item):
+		# HACK is_instance_valid
+		item.copied_item.init_item(inventory, category, item_id, amount)
+	elif item_id:
+		item.inventory.add_item(category, item_id, amount)
+	init_item(inventory, item.category, item.item_id, item.amount)
+	# FIXME dupe by select index

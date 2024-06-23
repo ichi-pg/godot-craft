@@ -5,7 +5,7 @@ var item_id = 0
 var amount = 0
 
 
-func init(category, item_id, amount):
+func init_drop(category, item_id, amount):
 	self.category = category
 	self.item_id = item_id
 	self.amount = amount

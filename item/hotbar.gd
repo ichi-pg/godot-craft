@@ -15,7 +15,7 @@ var select_index = 0
 func _ready():
 	for i in range(MAX_ITEMS):
 		var item = Item.instantiate()
-		item.init(Common.ItemCategory.NULL, 0, 0)
+		item.init_item(self, Common.ItemCategory.NULL, 0, 0)
 		container.add_child(item)
 	select_item(0)
 
@@ -56,13 +56,15 @@ func decrement_item(category, item_id, amount):
 func add_item(category, item_id, amount) -> Item:
 	for item in container.get_children():
 		if not item.item_id:
-			item.init(category, item_id, amount)
+			item.init_item(self, category, item_id, amount)
 			return item
 	return null
 
 
 func remove_item(item):
-	item.init(Common.ItemCategory.NULL, 0, 0)
+	item.init_item(self, Common.ItemCategory.NULL, 0, 0)
+	# HACK increment_item vs add_item
+	# HACK decrement_item vs remove_item
 
 
 func _on_level_placed(tile_id):

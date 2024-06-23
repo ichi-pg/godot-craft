@@ -21,6 +21,6 @@ extends Node
 # TODO localization
 # TODO keyconfig
 
-# TODO I can't feel big world from 2d.
-# TODO So I need free move with riding dinosaurs or look far around on high tower.
-# TODO But I can easy feel satisfaction from to build base and to upgrade weapon.
+# TODO I want to open world experience with easy 2d.
+# TODO I need to ride dinosaurs and to glide from high tower.
+# TODO I feel satisfaction from to build base and to upgrade weapon.
