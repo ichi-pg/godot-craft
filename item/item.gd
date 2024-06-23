@@ -34,7 +34,7 @@ func increment(amount):
 
 
 func get_inventory():
-	# TODO cache
+	# HACK cache
 	return get_parent().get_parent()
 
 
@@ -48,7 +48,7 @@ func _get_drag_data(at_position):
 	preview.z_index = 100
 	preview.add_child(item)
 	set_drag_preview(preview)
-	# TODO cache
+	# HACK cache
 	# TODO disable level target
 	# TODO self modulate.a
 	# TODO split number

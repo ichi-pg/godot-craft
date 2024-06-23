@@ -1,17 +1,20 @@
 extends Node
 
 # TODO chest
-# TODO craft and enchant
+# TODO craft
+# TODO equipment
+# TODO enchant
 # TODO potion
 # TODO mob
-# TODO hud
-# TODO multi players
-# TODO save and load
+# TODO map
 # TODO level generate
+# TODO mount
 # TODO farm
-# TODO ride
+# TODO factory
+
 # TODO title scene
-# TODO steam save and network
+# TODO multi players on steam
+# TODO save and load on steam
 # TODO se and bgm
 # TODO localization
 # TODO keyconfig

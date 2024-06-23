@@ -23,17 +23,17 @@ func get_level_atlas(item_id) -> AtlasTexture:
 
 
 func get_tile_id(coord: Vector2i) -> int:
-	# TODO cache
+	# HACK cache
 	return coord.x + coord.y * 100 + 101
 
 
 func get_tile_coord(tile_id: int) -> Vector2i:
-	# TODO cache
+	# HACK cache
 	return Vector2i(tile_id % 100 - 1, int(tile_id / 100) - 1)
 
 
 func find_item(container: Container, category, item_id) -> Item:
-	# TODO Dictionary
+	# HACK Dictionary
 	for item in container.get_children():
 		if item.category == category and item.item_id == item_id:
 			return item
@@ -41,7 +41,7 @@ func find_item(container: Container, category, item_id) -> Item:
 
 
 func get_item_count(container: Container) -> int:
-	# TODO count up
+	# HACK count up
 	var item_count = 0
 	for item in container.get_children():
 		if item.category != ItemCategory.NULL:

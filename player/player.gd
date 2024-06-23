@@ -50,6 +50,7 @@ func _physics_process(delta):
 
 	# TODO jump sensitivity
 	# TODO move inertia
+	# TODO move on slope
 
 	move_and_slide()
 

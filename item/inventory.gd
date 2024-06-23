@@ -33,7 +33,6 @@ func remove_item(item):
 
 func _on_hotbar_overflow(category, item_id, amount):
 	Common.increment_item(self, category, item_id, amount, 30)
-	# TODO create drop
 
 
 func _can_drop_data(at_position, data):

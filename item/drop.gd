@@ -12,4 +12,3 @@ func init(category, item_id, amount):
 	match category:
 		Common.ItemCategory.TILE:
 			$Sprite2D.texture = Common.get_level_atlas(item_id)
-	# TODO fix region fighting
