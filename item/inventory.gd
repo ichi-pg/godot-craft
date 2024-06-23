@@ -22,11 +22,10 @@ func _input(event):
 		visible = not visible
 
 
-func add_item(category, item_id, amount) -> Item:
+func add_item(category, item_id, amount):
 	var item = Item.instantiate()
 	item.init_item(self, category, item_id, amount)
 	container.add_child(item)
-	return item
 
 
 func remove_item(item):

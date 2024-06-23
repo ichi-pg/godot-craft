@@ -55,24 +55,22 @@ func get_item_count(container: Container) -> int:
 	return item_count
 
 
-func increment_item(inventory, category, item_id, amount, max_count) -> Item:
+func increment_item(inventory, category, item_id, amount, max_count):
 	var item = find_item(inventory.container, category, item_id)
 	if item:
-		item.increment(amount)
+		item.increment_amount(amount)
 		# TODO item's max count
-		return null
-	if get_item_count(inventory.container) >= max_count:
+	elif get_item_count(inventory.container) < max_count:
+		inventory.add_item(category, item_id, amount)
+	else:
 		inventory.overflow.emit(category, item_id, amount)
-		return null
-	return inventory.add_item(category, item_id, amount)
 
 
-func decrement_item(inventory, category, item_id, amount) -> Item:
+func decrement_item(inventory, category, item_id, amount):
 	var item = find_item(inventory.container, category, item_id)
 	if not item:
-		return null
-	item.increment(-amount)
-	if item.amount:
-		return null
-	inventory.remove_item(item)
-	return item
+		push_error("not item")
+	elif item.amount > amount:
+		item.increment_amount(-amount)
+	else:
+		inventory.remove_item(item)

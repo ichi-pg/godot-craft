@@ -44,25 +44,24 @@ func select_item(index):
 
 
 func _on_player_picked_up(category, item_id, amount):
-	if Common.increment_item(self, category, item_id, amount, MAX_ITEMS):
-		select_item(select_index)
+	Common.increment_item(self, category, item_id, amount, MAX_ITEMS)
 
 
 func decrement_item(category, item_id, amount):
-	if Common.decrement_item(self, category, item_id, amount):
-		select_item(select_index)
+	Common.decrement_item(self, category, item_id, amount)
 
 
-func add_item(category, item_id, amount) -> Item:
+func add_item(category, item_id, amount):
 	for item in container.get_children():
 		if not item.item_id:
 			item.init_item(self, category, item_id, amount)
-			return item
-	return null
+			select_item(select_index)
+			return
 
 
 func remove_item(item):
 	item.init_item(self, Common.ItemCategory.NULL, 0, 0)
+	select_item(select_index)
 	# HACK increment_item vs add_item
 	# HACK decrement_item vs remove_item
 

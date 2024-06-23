@@ -35,9 +35,10 @@ func init_item(inventory, category, item_id, amount):
 	$Label.visible = true
 
 
-func increment(amount):
+func increment_amount(amount):
 	self.amount = max(self.amount + amount, 0)
 	label.text = str(self.amount)
+	# TODO can merge init_item
 
 
 func _get_drag_data(at_position):
@@ -65,7 +66,7 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, item):
 	if category == item.category and item_id == item.item_id:
-		init_item(inventory, category, item_id, amount + item.amount)
+		increment_amount(item.amount)
 		return
 	if item_id and is_instance_valid(item.copied_item):
 		# HACK is_instance_valid
@@ -73,4 +74,5 @@ func _drop_data(at_position, item):
 	elif item_id:
 		item.inventory.add_item(category, item_id, amount)
 	init_item(inventory, item.category, item.item_id, item.amount)
-	# FIXME dupe by select index
+	# HACK select item in hotbar
+	# HACK lost in undrop area
