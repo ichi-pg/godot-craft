@@ -154,7 +154,5 @@ script = ExtResource("11_63l4i")
 [connection signal="mouse_exited" from="HUD/Hotbar" to="HUD" method="_on_mouse_exited"]
 [connection signal="overflow" from="HUD/Hotbar" to="HUD/Inventory" method="_on_hotbar_overflow"]
 [connection signal="selected" from="HUD/Hotbar" to="World/Level" method="_on_hotbar_selected"]
-[connection signal="mouse_entered" from="HUD/Hotbar/Selector" to="HUD" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="HUD/Hotbar/Selector" to="HUD" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="HUD/Inventory" to="HUD" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="HUD/Inventory" to="HUD" method="_on_mouse_exited"]
