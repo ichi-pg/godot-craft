@@ -10,6 +10,10 @@ extends Node
 # TODO farm
 # TODO factory
 
+# TODO water
+# TODO lighting
+# TODO post effect
+
 # TODO title scene
 # TODO multi players on steam
 # TODO save and load on steam
