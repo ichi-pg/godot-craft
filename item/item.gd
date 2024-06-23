@@ -74,5 +74,5 @@ func _drop_data(at_position, item):
 	elif item_id:
 		item.inventory.add_item(category, item_id, amount)
 	init_item(inventory, item.category, item.item_id, item.amount)
-	# HACK select item in hotbar
-	# HACK lost in undrop area
+	# FIXME select item in hotbar
+	# FIXME lost in undrop area
