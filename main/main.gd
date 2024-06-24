@@ -24,3 +24,5 @@ extends Node
 # TODO I want to open world experience with easy 2d.
 # TODO I need to ride dinosaurs and to glide from high tower.
 # TODO I feel satisfaction from to build base and to upgrade weapon.
+
+# HACK how to check unlinked signals

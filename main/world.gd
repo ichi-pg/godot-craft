@@ -14,7 +14,7 @@ func add_drop(category, item_id, amount, pos):
 	# TODO rename drop
 
 
-func _on_hud_item_dropped(category, item_id, amount):
+func _on_item_dropped(category, item_id, amount):
 	var direction = int(player.sprite.flip_h) - 0.5
 	var distance = direction * Vector2.LEFT * 384
 	add_drop(category, item_id, amount, player.global_position + distance)

@@ -2,7 +2,7 @@ extends ColorRect
 
 class_name Inventory
 
-signal overflow(category, item_id, amount)
+signal overflowed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 
@@ -24,7 +24,7 @@ func _input(event):
 
 func add_item(category, item_id, amount):
 	if container.get_child_count() >= max_items:
-		overflow.emit(category, item_id, amount)
+		overflowed.emit(category, item_id, amount)
 		return
 	var item = Item.instantiate()
 	item.init_item_data(self, category, item_id, amount)
@@ -38,7 +38,7 @@ func remove_item(item):
 	return null
 
 
-func _on_hotbar_overflow(category, item_id, amount):
+func _on_hotbar_overflowed(category, item_id, amount):
 	Common.increment_item(self, category, item_id, amount)
 
 

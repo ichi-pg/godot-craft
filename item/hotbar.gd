@@ -1,7 +1,7 @@
 extends ColorRect
 
 signal selected(category, item_id)
-signal overflow(category, item_id, amount)
+signal overflowed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 const MAX_ITEMS = 10
@@ -49,7 +49,7 @@ func add_item(category, item_id, amount):
 			item.set_item_data(category, item_id, amount)
 			select_item(select_index)
 			return
-	overflow.emit(category, item_id, amount)
+	overflowed.emit(category, item_id, amount)
 
 
 func remove_item(item):
