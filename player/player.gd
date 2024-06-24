@@ -13,14 +13,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _process(delta):
 	# TODO input vs process
-	if Input.is_action_just_pressed("battle_attack"):
+	if Input.is_action_just_pressed("attack"):
 		# TODO melee
 		# TODO projectile
 		pass
-	if Input.is_action_just_pressed("battle_guard"):
+	if Input.is_action_just_pressed("use_off_hand"):
 		# TODO guard
 		pass
-	if Input.is_action_just_pressed("battle_heal"):
+	if Input.is_action_just_pressed("use_posion"):
 		# TODO use potion
 		pass
 
@@ -41,10 +41,10 @@ func _physics_process(delta):
 	# TODO on input vs each update
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	elif Input.is_action_just_pressed("battle_dodge"):
+	elif Input.is_action_just_pressed("dodge"):
 		# TODO dodge
 		pass
-	elif Input.is_action_just_pressed("battle_jump"):
+	elif Input.is_action_just_pressed("jump"):
 		velocity.y = JUMP_VELOCITY
 
 	var direction = Input.get_axis("move_left", "move_right")

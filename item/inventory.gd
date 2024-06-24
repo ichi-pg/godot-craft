@@ -18,7 +18,7 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action_pressed("inventory_toggle"):
+	if event.is_action_pressed("toggle_inventory"):
 		visible = not visible
 
 

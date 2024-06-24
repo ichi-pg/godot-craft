@@ -34,7 +34,7 @@ func _input(event):
 		update_target()
 	elif target_map_position == local_to_map(player_position):
 		pass
-	elif not event.is_action_pressed("battle_attack"):
+	elif not event.is_action_pressed("destroy_block"):
 		pass
 		# TODO range
 	elif target_tile_id:

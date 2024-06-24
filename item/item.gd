@@ -49,7 +49,7 @@ func _get_drag_data(at_position):
 		return null
 	var item = duplicate()
 	item.position -= size * 0.5
-	if Input.is_action_pressed("battle_dodge") and amount > 1:
+	if Input.is_action_pressed("pick_half") and amount > 1:
 		var half_amount = amount * 0.5
 		set_item_data(category, item_id, amount - half_amount)
 		item.init_item_data(inventory, category, item_id, half_amount)
