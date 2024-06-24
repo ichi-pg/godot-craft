@@ -72,7 +72,6 @@ func _get_drag_data(at_position):
 	preview.add_child(item)
 	set_drag_preview(preview)
 	# HACK cache
-	# TODO disable level target
 	# TODO one by one
 	# TODO bulk push
 	return item
