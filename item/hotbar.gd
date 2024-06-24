@@ -1,4 +1,4 @@
-extends Node
+extends ColorRect
 
 signal selected(category, item_id)
 signal overflow(category, item_id, amount)
@@ -8,7 +8,7 @@ const MAX_ITEMS = 10
 
 var select_index = 0
 
-@onready var container = $HBoxContainer
+@onready var container = $GridContainer
 @onready var selector = $Selector
 
 

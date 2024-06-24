@@ -51,12 +51,13 @@ grow_vertical = 0
 color = Color(0, 0, 0, 0.501961)
 script = ExtResource("9_0pegt")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Hotbar"]
+[node name="GridContainer" type="GridContainer" parent="HUD/Hotbar"]
 layout_mode = 1
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 1324.0
 offset_bottom = 136.0
+columns = 10
 
 [node name="Selector" type="ColorRect" parent="HUD/Hotbar"]
 layout_mode = 0
