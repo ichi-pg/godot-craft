@@ -11,7 +11,7 @@ var category = Common.ItemCategory.NULL
 var item_id = 0
 var amount = 0
 var inventory: Control
-var origin: Item
+var dragged: Item
 
 @onready var label = $Label
 
@@ -63,10 +63,10 @@ func _get_drag_data(at_position):
 		var half_amount = int(amount * 0.5)
 		set_item_data(category, item_id, amount - half_amount)
 		item.init_item_data(inventory, category, item_id, half_amount)
-		item.origin = self
+		item.dragged = self
 	else:
 		item.init_item_data(inventory, category, item_id, amount)
-		item.origin = inventory.remove_item(self)
+		item.dragged = inventory.remove_item(self)
 	var preview = Control.new()
 	preview.z_index = Common.MAX_Z_INDEX
 	preview.add_child(item)
@@ -83,14 +83,31 @@ func _can_drop_data(at_position, data):
 
 
 func _drop_data(at_position, item):
-	if category == item.category and item_id == item.item_id:
-		increment_amount(item.amount)
+	drop_item(item.dragged, item, self)
+
+
+static func drop_item(src, mid, dst):
+	# merge if same items
+	if dst.category == mid.category and dst.item_id == mid.item_id:
+		dst.increment_amount(mid.amount)
 		return
-	if item_id and item.origin:
-		item.origin.set_item_data(category, item_id, amount)
-		item.origin.swapped.emit()
-	elif item_id:
-		item.inventory.add_item(category, item_id, amount)
-	set_item_data(item.category, item.item_id, item.amount)
-	swapped.emit()
-	# FIXME lost when half swap
+	# dst to somewhere
+	if dst.item_id:
+		swap_items(src, mid, dst)
+	# mid to dst
+	dst.set_item_data(mid.category, mid.item_id, mid.amount)
+	dst.swapped.emit()
+
+
+static func swap_items(src, mid, dst):
+	# move from inventory
+	if not src:
+		mid.inventory.add_item(dst.category, dst.item_id, dst.amount)
+		return
+	# move from hotbar
+	if not src.item_id:
+		src.set_item_data(dst.category, dst.item_id, dst.amount)
+		src.swapped.emit()
+		return
+	# split from somewhere
+	dst.inventory.add_item(dst.category, dst.item_id, dst.amount)

@@ -78,6 +78,7 @@ func _on_item_swapped():
 func _on_item_pushed(item):
 	item_pushed.emit(item.category, item.item_id, item.amount)
 	remove_item(item)
+	# FIXME can't push if closed inventory
 
 
 func _on_inventory_item_pushed(category, item_id, amount):
