@@ -44,6 +44,7 @@ func _on_hotbar_overflowed(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
 	# TODO can replace to chest
 
+
 func _can_drop_data(at_position, data):
 	return data is Item
 
@@ -52,10 +53,19 @@ func _drop_data(at_position, item):
 	add_item(item.category, item.item_id, item.amount)
 
 
-func _on_item_pushed(item):
-	item_pushed.emit(item.category, item.item_id, item.amount)
-	remove_item(item)
+func _on_item_pushed(item: Item):
+	var amount = item.amount
+	item_pushed.emit(item.category, item.item_id, amount)
+	if amount == item.amount:
+		remove_item(item)
+	else:
+		item.increment_amount(-amount)
 	# FIXME lost when full hotbar because merge added item to removes item
+	# 1. use decrement instead remove (bat ux and better code)
+	# 2. force add when overflowed (better ux and bat code)
+	# 3. check amount and remove or decrement (better ux and bat code)
+	# 4. increment emit zero signal (better ux and best code)
+	# 4. push after remove and fix quere free (best ux and best code)
 
 
 func _on_hotbar_item_pushed(category, item_id, amount):
