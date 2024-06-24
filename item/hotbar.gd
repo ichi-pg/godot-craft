@@ -49,13 +49,14 @@ func add_item(category, item_id, amount):
 			item.set_item_data(category, item_id, amount)
 			select_item(select_index)
 			return
-	push_error("not empty")
+	overflow.emit(category, item_id, amount)
 
 
 func remove_item(item):
 	assert(item.get_parent() == container)
 	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
 	select_item(select_index)
+	return item
 
 
 func _on_player_picked_up(category, item_id, amount):

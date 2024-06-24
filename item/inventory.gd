@@ -23,7 +23,9 @@ func _input(event):
 
 
 func add_item(category, item_id, amount):
-	assert(get_child_count() < max_items)
+	if container.get_child_count() >= max_items:
+		overflow.emit(category, item_id, amount)
+		return
 	var item = Item.instantiate()
 	item.init_item_data(self, category, item_id, amount)
 	container.add_child(item)
@@ -32,7 +34,8 @@ func add_item(category, item_id, amount):
 func remove_item(item):
 	assert(item.get_parent() == container)
 	item.queue_free()
-	container.remove_child(item)
+	# HACK get_child_count is miss match?
+	return null
 
 
 func _on_hotbar_overflow(category, item_id, amount):
@@ -44,8 +47,4 @@ func _can_drop_data(at_position, data):
 
 
 func _drop_data(at_position, item):
-	# NOTE don't use increment_item.
-	if container.get_child_count() < max_items:
-		add_item(item.category, item.item_id, item.amount)
-	else:
-		overflow.emit(item.category, item.item_id, item.amount)
+	add_item(item.category, item.item_id, item.amount)

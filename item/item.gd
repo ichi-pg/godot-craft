@@ -46,7 +46,7 @@ func _get_drag_data(at_position):
 		return null
 	var item = duplicate()
 	item.init_item_data(inventory, category, item_id, amount)
-	item.origin = self
+	item.origin = inventory.remove_item(self)
 	item.position -= size * 0.5
 	var preview = Control.new()
 	preview.z_index = Common.MAX_Z_INDEX
@@ -56,7 +56,6 @@ func _get_drag_data(at_position):
 	# TODO disable level target
 	# TODO take half
 	# TODO quick transfer
-	inventory.remove_item(self)
 	return item
 
 
@@ -68,11 +67,9 @@ func _drop_data(at_position, item):
 	if category == item.category and item_id == item.item_id:
 		increment_amount(item.amount)
 		return
-	if item_id and is_instance_valid(item.origin):
-		# HACK is_instance_valid
+	if item_id and item.origin:
 		item.origin.set_item_data(category, item_id, amount)
 	elif item_id:
-		# FIXME check full
 		item.inventory.add_item(category, item_id, amount)
 	set_item_data(item.category, item.item_id, item.amount)
 	# FIXME select item in hotbar
