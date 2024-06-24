@@ -55,7 +55,7 @@ func _drop_data(at_position, item):
 func _on_item_pushed(item):
 	item_pushed.emit(item.category, item.item_id, item.amount)
 	remove_item(item)
-	# FIXME lost when full hotbar
+	# FIXME lost when full hotbar because merge added item to removes item
 
 
 func _on_hotbar_item_pushed(category, item_id, amount):
