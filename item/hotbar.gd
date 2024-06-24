@@ -81,4 +81,4 @@ func _on_item_pushed(item):
 
 
 func _on_inventory_item_pushed(category, item_id, amount):
-	add_item(category, item_id, amount)
+	Common.increment_or_add_item(self, category, item_id, amount)

@@ -46,11 +46,12 @@ func increment_amount(amount):
 
 
 func _gui_input(event):
-	if event.is_action_released("push_item"):
+	if category == Common.ItemCategory.NULL:
+		return null
+	if event.is_action_pressed("push_item"):
 		pushed.emit()
 		# HACK both run when quick drag
-		# FIXME push empty to inventory
-		# FIXME don't enable shift + click
+		# FIXME can't catch released shift + click
 
 
 func _get_drag_data(at_position):
