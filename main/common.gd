@@ -51,7 +51,7 @@ func increment_or_add_item(inventory, category, item_id, amount):
 	var item = find_item(inventory.container, category, item_id)
 	if item:
 		item.increment_amount(amount)
-		# TODO item's max count
+		# TODO item's max amount
 	else:
 		inventory.add_item(category, item_id, amount)
 

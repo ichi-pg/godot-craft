@@ -9,7 +9,6 @@ const Item = preload("res://item/item.tscn")
 @onready var drag_item = Item.instantiate()
 
 
-
 func _on_mouse_entered():
 	focused.emit(true)
 
