@@ -21,6 +21,7 @@ func _ready():
 		item.pushed.connect(_on_item_pushed.bind(item))
 		container.add_child(item)
 	select_item(0)
+	# HACK be able to responsive if use FlowContainer
 
 
 func _input(event):
