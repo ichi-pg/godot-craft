@@ -48,16 +48,22 @@ func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
 	var item = duplicate()
-	item.init_item_data(inventory, category, item_id, amount)
-	item.origin = inventory.remove_item(self)
 	item.position -= size * 0.5
+	if Input.is_action_pressed("battle_dodge") and amount > 1:
+		var half_amount = amount * 0.5
+		set_item_data(category, item_id, amount - half_amount)
+		item.init_item_data(inventory, category, item_id, half_amount)
+		item.origin = self
+	else:
+		item.init_item_data(inventory, category, item_id, amount)
+		item.origin = inventory.remove_item(self)
 	var preview = Control.new()
 	preview.z_index = Common.MAX_Z_INDEX
 	preview.add_child(item)
 	set_drag_preview(preview)
 	# HACK cache
 	# TODO disable level target
-	# TODO take half
+	# TODO take one by one
 	# TODO quick transfer
 	return item
 
