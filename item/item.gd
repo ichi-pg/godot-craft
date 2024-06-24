@@ -50,6 +50,7 @@ func _gui_input(event):
 		pushed.emit()
 		# HACK both run when quick drag
 		# FIXME push empty to inventory
+		# FIXME don't enable shift + click
 
 
 func _get_drag_data(at_position):
