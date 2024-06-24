@@ -39,7 +39,7 @@ func remove_item(item):
 
 
 func _on_hotbar_overflowed(category, item_id, amount):
-	Common.increment_item(self, category, item_id, amount)
+	Common.increment_or_add_item(self, category, item_id, amount)
 
 
 func _can_drop_data(at_position, data):

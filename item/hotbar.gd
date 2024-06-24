@@ -60,9 +60,9 @@ func remove_item(item):
 
 
 func _on_player_picked_up(category, item_id, amount):
-	Common.increment_item(self, category, item_id, amount)
+	Common.increment_or_add_item(self, category, item_id, amount)
 
 
 func _on_level_placed(tile_id):
-	Common.decrement_item(self, Common.ItemCategory.TILE, tile_id, 1)
+	Common.decrement_or_remove_item(self, Common.ItemCategory.TILE, tile_id, 1)
 	# FIXME selected item is primary

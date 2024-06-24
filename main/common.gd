@@ -14,6 +14,7 @@ const MAX_Z_INDEX = 4096
 var level_texture: AtlasTexture = AtlasTexture.new()
 var level_atlas = {}
 
+
 func get_level_atlas(item_id, padding) -> AtlasTexture:
 	var index = item_id + padding * HALF_OF_INDEX
 	if level_atlas.has(index):
@@ -46,8 +47,7 @@ func find_item(container: Container, category, item_id) -> Item:
 	return null
 
 
-func increment_item(inventory, category, item_id, amount):
-	# NOTE try increment or add. add_item simply add.
+func increment_or_add_item(inventory, category, item_id, amount):
 	var item = find_item(inventory.container, category, item_id)
 	if item:
 		item.increment_amount(amount)
@@ -56,8 +56,7 @@ func increment_item(inventory, category, item_id, amount):
 		inventory.add_item(category, item_id, amount)
 
 
-func decrement_item(inventory, category, item_id, amount):
-	# NOTE try decrement or remove. remove_item simply remove.
+func decrement_or_remove_item(inventory, category, item_id, amount):
 	var item = find_item(inventory.container, category, item_id)
 	if item.amount > amount:
 		item.increment_amount(-amount)
