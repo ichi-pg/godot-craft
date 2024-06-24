@@ -35,6 +35,8 @@ func add_item(category, item_id, amount):
 
 func remove_item(item):
 	assert(item.get_parent() == container)
+	# NOTE set zero is important when increment at the same time
+	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
 	item.queue_free()
 	# HACK get_child_count is miss match?
 	return null
@@ -54,18 +56,7 @@ func _drop_data(at_position, item):
 
 
 func _on_item_pushed(item: Item):
-	var amount = item.amount
-	item_pushed.emit(item.category, item.item_id, amount)
-	if amount == item.amount:
-		remove_item(item)
-	else:
-		item.increment_amount(-amount)
-	# FIXME lost when full hotbar because merge added item to removes item
-	# 1. use decrement instead remove (worst ux and better code)
-	# 2. force add when overflowed (best ux and worst code)
-	# 3. check amount and remove or decrement (better ux and worse code)
-	# 4. increment emit zero signal (better ux and best code)
-	# 5. push after remove and fix quere free (best ux and best code)
+	Common.push_item(self, item)
 
 
 func _on_hotbar_item_pushed(category, item_id, amount):

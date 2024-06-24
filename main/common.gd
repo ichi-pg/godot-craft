@@ -62,3 +62,11 @@ func decrement_or_remove_item(inventory, category, item_id, amount):
 		item.increment_amount(-amount)
 	else:
 		inventory.remove_item(item)
+
+
+func push_item(inventory, item):
+	var category = item.category
+	var item_id = item.item_id
+	var amount = item.amount
+	inventory.remove_item(item)
+	inventory.item_pushed.emit(category, item_id, amount)
