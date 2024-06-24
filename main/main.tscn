@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://3ic8debmyys5"]
+[gd_scene load_steps=11 format=3 uid="uid://3ic8debmyys5"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_t2eme"]
 [ext_resource type="Script" path="res://player/camera.gd" id="2_hxq3q"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://egj1j88ed826" path="res://player/player.tscn" id="5_rxcie"]
 [ext_resource type="Script" path="res://main/hud.gd" id="8_pkfmd"]
 [ext_resource type="Script" path="res://item/hotbar.gd" id="9_0pegt"]
-[ext_resource type="Script" path="res://main/empty.gd" id="9_lsyym"]
 [ext_resource type="Script" path="res://item/inventory.gd" id="9_wpset"]
 [ext_resource type="Script" path="res://player/health.gd" id="11_63l4i"]
 
@@ -36,15 +35,6 @@ script = ExtResource("2_hxq3q")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("8_pkfmd")
-
-[node name="Empty" type="ColorRect" parent="HUD"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
-script = ExtResource("9_lsyym")
 
 [node name="Hotbar" type="ColorRect" parent="HUD"]
 anchors_preset = 7
@@ -114,8 +104,8 @@ script = ExtResource("11_63l4i")
 [connection signal="moved" from="World/Player" to="World/Level" method="_on_player_moved"]
 [connection signal="moved" from="World/Player" to="World/Camera" method="_on_player_moved"]
 [connection signal="picked_up" from="World/Player" to="HUD/Hotbar" method="_on_player_picked_up"]
+[connection signal="drop_item" from="HUD" to="World" method="_on_hud_drop_item"]
 [connection signal="focused" from="HUD" to="World/Level" method="_on_hud_focused"]
-[connection signal="drop_item" from="HUD/Empty" to="World" method="_on_drop_item"]
 [connection signal="mouse_entered" from="HUD/Hotbar" to="HUD" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="HUD/Hotbar" to="HUD" method="_on_mouse_exited"]
 [connection signal="overflow" from="HUD/Hotbar" to="HUD/Inventory" method="_on_hotbar_overflow"]

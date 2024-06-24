@@ -14,7 +14,7 @@ var max_items = 30
 func _ready():
 	visible = false
 	# TODO sort
-	# TODO bug and resize window
+	# TODO bag and resize window
 
 
 func _input(event):
@@ -23,18 +23,20 @@ func _input(event):
 
 
 func add_item(category, item_id, amount):
+	assert(get_child_count() < max_items)
 	var item = Item.instantiate()
-	item.init_item(self, category, item_id, amount)
+	item.init_item_data(self, category, item_id, amount)
 	container.add_child(item)
 
 
 func remove_item(item):
+	assert(item.get_parent() == container)
 	item.queue_free()
 	container.remove_child(item)
 
 
 func _on_hotbar_overflow(category, item_id, amount):
-	Common.increment_item(self, category, item_id, amount, max_items)
+	Common.increment_item(self, category, item_id, amount)
 
 
 func _can_drop_data(at_position, data):

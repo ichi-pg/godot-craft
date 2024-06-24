@@ -8,16 +8,17 @@ var category = Common.ItemCategory.NULL
 var item_id = 0
 var amount = 0
 var inventory: Control
-var copied_item: Item
+var origin: Item
 
 @onready var label = $Label
 
-func copy_item(item):
-	init_item(item.inventory, item.category, item.item_id, item.amount)
-	copied_item = item
+
+func init_item_data(inventory, category, item_id, amount):
+	self.inventory = inventory
+	set_item_data(category, item_id, amount)
 
 
-func init_item(inventory, category, item_id, amount):
+func set_item_data(category, item_id, amount):
 	self.inventory = inventory
 	self.category = category
 	self.item_id = item_id
@@ -38,24 +39,23 @@ func init_item(inventory, category, item_id, amount):
 func increment_amount(amount):
 	self.amount = max(self.amount + amount, 0)
 	label.text = str(self.amount)
-	# TODO can merge init_item
 
 
 func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
 	var item = duplicate()
-	item.copy_item(self)
+	item.init_item_data(inventory, category, item_id, amount)
+	item.origin = self
 	item.position -= size * 0.5
 	var preview = Control.new()
-	preview.modulate.a =  0.5
 	preview.z_index = Common.MAX_Z_INDEX
 	preview.add_child(item)
 	set_drag_preview(preview)
 	# HACK cache
 	# TODO disable level target
-	# TODO self modulate.a
-	# TODO split number
+	# TODO take half
+	# TODO quick transfer
 	inventory.remove_item(self)
 	return item
 
@@ -68,11 +68,11 @@ func _drop_data(at_position, item):
 	if category == item.category and item_id == item.item_id:
 		increment_amount(item.amount)
 		return
-	if item_id and is_instance_valid(item.copied_item):
+	if item_id and is_instance_valid(item.origin):
 		# HACK is_instance_valid
-		item.copied_item.init_item(inventory, category, item_id, amount)
+		item.origin.set_item_data(category, item_id, amount)
 	elif item_id:
+		# FIXME check full
 		item.inventory.add_item(category, item_id, amount)
-	init_item(inventory, item.category, item.item_id, item.amount)
+	set_item_data(item.category, item.item_id, item.amount)
 	# FIXME select item in hotbar
-	# FIXME lost in undrop area
