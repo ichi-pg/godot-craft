@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 signal focused(is_focus)
-signal drop_item(category, item_id, amount)
+signal item_dropped(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 
@@ -26,5 +26,5 @@ func _notification(notification_type):
 				drag_item.set_item_data(data.category, data.item_id, data.amount)
 		NOTIFICATION_DRAG_END:
 			if not viewport.gui_is_drag_successful() and drag_item.item_id:
-				drop_item.emit(drag_item.category, drag_item.item_id, drag_item.amount)
+				item_dropped.emit(drag_item.category, drag_item.item_id, drag_item.amount)
 			drag_item.set_item_data(Common.ItemCategory.NULL, 0, 0)
