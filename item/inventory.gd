@@ -3,6 +3,7 @@ extends ColorRect
 class_name Inventory
 
 signal overflowed(category, item_id, amount)
+signal item_pushed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 
@@ -28,6 +29,7 @@ func add_item(category, item_id, amount):
 		return
 	var item = Item.instantiate()
 	item.init_item_data(self, category, item_id, amount)
+	item.pushed.connect(_on_item_pushed.bind(item))
 	container.add_child(item)
 
 
@@ -48,3 +50,12 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, item):
 	add_item(item.category, item.item_id, item.amount)
+
+
+func _on_item_pushed(item):
+	item_pushed.emit(item.category, item.item_id, item.amount)
+	remove_item(item)
+
+
+func _on_hotbar_item_pushed(category, item_id, amount):
+	add_item(category, item_id, amount)

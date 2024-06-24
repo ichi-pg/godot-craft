@@ -2,6 +2,7 @@ extends ColorRect
 
 signal selected(category, item_id)
 signal overflowed(category, item_id, amount)
+signal item_pushed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 const MAX_ITEMS = 10
@@ -17,6 +18,7 @@ func _ready():
 		var item = Item.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
 		item.swapped.connect(_on_item_swapped)
+		item.pushed.connect(_on_item_pushed.bind(item))
 		container.add_child(item)
 	select_item(0)
 
@@ -71,3 +73,12 @@ func _on_level_placed(tile_id):
 
 func _on_item_swapped():
 	select_item(select_index)
+
+
+func _on_item_pushed(item):
+	item_pushed.emit(item.category, item.item_id, item.amount)
+	remove_item(item)
+
+
+func _on_inventory_item_pushed(category, item_id, amount):
+	add_item(category, item_id, amount)

@@ -3,6 +3,7 @@ extends TextureRect
 class_name Item
 
 signal swapped()
+signal pushed()
 
 const NULL_TEXTURE = preload("res://main/icon.svg")
 
@@ -44,13 +45,20 @@ func increment_amount(amount):
 	label.text = str(self.amount)
 
 
+func _gui_input(event):
+	if event.is_action_released("push_item"):
+		pushed.emit()
+		# HACK both run when quick drag
+		# FIXME push empty to inventory
+
+
 func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
 	var item = duplicate()
 	item.position -= size * 0.5
 	if Input.is_action_pressed("pick_half") and amount > 1:
-		var half_amount = amount * 0.5
+		var half_amount = int(amount * 0.5)
 		set_item_data(category, item_id, amount - half_amount)
 		item.init_item_data(inventory, category, item_id, half_amount)
 		item.origin = self
@@ -63,8 +71,8 @@ func _get_drag_data(at_position):
 	set_drag_preview(preview)
 	# HACK cache
 	# TODO disable level target
-	# TODO take one by one
-	# TODO quick transfer
+	# TODO one by one
+	# TODO bulk push
 	return item
 
 
@@ -83,3 +91,4 @@ func _drop_data(at_position, item):
 		item.inventory.add_item(category, item_id, amount)
 	set_item_data(item.category, item.item_id, item.amount)
 	swapped.emit()
+	# FIXME lost when half swap
