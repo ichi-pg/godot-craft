@@ -2,6 +2,8 @@ extends TextureRect
 
 class_name Item
 
+signal swapped()
+
 const NULL_TEXTURE = preload("res://main/icon.svg")
 
 var category = Common.ItemCategory.NULL
@@ -37,7 +39,8 @@ func set_item_data(category, item_id, amount):
 
 
 func increment_amount(amount):
-	self.amount = max(self.amount + amount, 0)
+	assert(self.amount + amount > 0)
+	self.amount += amount
 	label.text = str(self.amount)
 
 
@@ -69,7 +72,8 @@ func _drop_data(at_position, item):
 		return
 	if item_id and item.origin:
 		item.origin.set_item_data(category, item_id, amount)
+		item.origin.swapped.emit()
 	elif item_id:
 		item.inventory.add_item(category, item_id, amount)
 	set_item_data(item.category, item.item_id, item.amount)
-	# FIXME select item in hotbar
+	swapped.emit()

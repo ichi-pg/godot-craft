@@ -16,6 +16,7 @@ func _ready():
 	for i in range(MAX_ITEMS):
 		var item = Item.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
+		item.swapped.connect(_on_item_swapped)
 		container.add_child(item)
 	select_item(0)
 
@@ -66,3 +67,7 @@ func _on_player_picked_up(category, item_id, amount):
 func _on_level_placed(tile_id):
 	Common.decrement_or_remove_item(self, Common.ItemCategory.TILE, tile_id, 1)
 	# FIXME selected item is primary
+
+
+func _on_item_swapped():
+	select_item(select_index)
