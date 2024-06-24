@@ -4,16 +4,16 @@ signal selected(category, item_id)
 signal overflow(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
+const MAX_ITEMS = 10
 
 var select_index = 0
-var max_items = 10
 
 @onready var container = $HBoxContainer
 @onready var selector = $Selector
 
 
 func _ready():
-	for i in range(max_items):
+	for i in range(MAX_ITEMS):
 		var item = Item.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
 		container.add_child(item)
@@ -21,7 +21,7 @@ func _ready():
 
 
 func _input(event):
-	for i in range(max_items):
+	for i in range(MAX_ITEMS):
 		if event.is_action_pressed("hotbar_%d"%i):
 			select_item(i)
 			return

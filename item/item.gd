@@ -2,7 +2,7 @@ extends TextureRect
 
 class_name Item
 
-const null_texture = preload("res://main/icon.svg")
+const NULL_TEXTURE = preload("res://main/icon.svg")
 
 var category = Common.ItemCategory.NULL
 var item_id = 0
@@ -25,7 +25,7 @@ func set_item_data(category, item_id, amount):
 	self.amount = amount
 	match category:
 		Common.ItemCategory.NULL:
-			texture = null_texture
+			texture = NULL_TEXTURE
 			modulate.a = 0
 			$Label.visible = false
 			return

@@ -1,12 +1,12 @@
 extends Node
 
-const drop = preload("res://item/drop.tscn")
+const Drop = preload("res://item/drop.tscn")
 
 @onready var player = $Player
 
 
 func add_drop(category, item_id, amount, pos):
-	var drop = drop.instantiate()
+	var drop = Drop.instantiate()
 	drop.init_drop(category, item_id, amount)
 	drop.global_position = pos
 	add_child(drop)
