@@ -61,9 +61,9 @@ func _on_item_pushed(item: Item):
 	else:
 		item.increment_amount(-amount)
 	# FIXME lost when full hotbar because merge added item to removes item
-	# 1. use decrement instead remove (bat ux and better code)
-	# 2. force add when overflowed (best ux and bat code)
-	# 3. check amount and remove or decrement (better ux and bat code)
+	# 1. use decrement instead remove (worst ux and better code)
+	# 2. force add when overflowed (best ux and worst code)
+	# 3. check amount and remove or decrement (better ux and worse code)
 	# 4. increment emit zero signal (better ux and best code)
 	# 5. push after remove and fix quere free (best ux and best code)
 
