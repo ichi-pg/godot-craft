@@ -65,7 +65,7 @@ func _on_item_pushed(item: Item):
 	# 2. force add when overflowed (better ux and bat code)
 	# 3. check amount and remove or decrement (better ux and bat code)
 	# 4. increment emit zero signal (better ux and best code)
-	# 4. push after remove and fix quere free (best ux and best code)
+	# 5. push after remove and fix quere free (best ux and best code)
 
 
 func _on_hotbar_item_pushed(category, item_id, amount):
