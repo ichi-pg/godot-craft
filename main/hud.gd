@@ -2,6 +2,9 @@ extends CanvasLayer
 
 signal focused(is_focus)
 signal item_dropped(category, item_id, amount)
+signal hotbar_selected(category, item_id)
+signal player_picked_up(category, item_id, amount)
+signal level_placed(tile_id)
 
 const Item = preload("res://item/item.tscn")
 
@@ -37,3 +40,19 @@ func _notification(notification_type):
 
 func focus():
 	focused.emit(is_mouse_entering or viewport.gui_is_dragging())
+
+
+func _on_item_dropped(category, item_id, amount):
+	item_dropped.emit(category, item_id, amount)
+
+
+func _on_hotbar_selected(category, item_id):
+	hotbar_selected.emit(category, item_id)
+
+
+func _on_player_picked_up(category, item_id, amount):
+	player_picked_up.emit(category, item_id, amount)
+
+
+func _on_level_placed(tile_id):
+	level_placed.emit(tile_id)
