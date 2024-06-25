@@ -26,3 +26,5 @@ extends Node
 # TODO I feel satisfaction from to build base and to upgrade weapon.
 
 # HACK how to check unlinked signals
+# HACK resolve warnings
+# HACK refactor type safe
