@@ -70,3 +70,21 @@ func push_item(inventory, item):
 	var amount = item.amount
 	inventory.remove_item(item)
 	inventory.item_pushed.emit(category, item_id, amount)
+
+
+func add_item_instance(inventory, category, item_id, amount):
+	if inventory.container.get_child_count() >= inventory.capacity:
+		inventory.overflowed.emit(category, item_id, amount)
+		return
+	var item = Item.instantiate()
+	item.init_item_data(inventory, category, item_id, amount)
+	item.pushed.connect(inventory._on_item_pushed.bind(item))
+	inventory.container.add_child(item)
+
+
+func remove_item_instance(inventory, item):
+	assert(item.get_parent() == inventory.container)
+	# NOTE To set zero is important if increment at the same time.
+	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
+	item.queue_free()
+	# HACK get_child_count is miss match?

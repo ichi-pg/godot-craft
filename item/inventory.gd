@@ -5,8 +5,6 @@ class_name Inventory
 signal overflowed(category, item_id, amount)
 signal item_pushed(category, item_id, amount)
 
-const Item = preload("res://item/item.tscn")
-
 var capacity = 30
 
 @onready var container = $GridContainer
@@ -24,27 +22,17 @@ func _input(event):
 
 
 func add_item(category, item_id, amount):
-	if container.get_child_count() >= capacity:
-		overflowed.emit(category, item_id, amount)
-		return
-	var item = Item.instantiate()
-	item.init_item_data(self, category, item_id, amount)
-	item.pushed.connect(_on_item_pushed.bind(item))
-	container.add_child(item)
+	Common.add_item_instance(self, category, item_id, amount)
 
 
 func remove_item(item):
-	assert(item.get_parent() == container)
-	# NOTE To set zero is important if increment at the same time.
-	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
-	item.queue_free()
-	# HACK get_child_count is miss match?
+	Common.remove_item_instance(self, item)
 	return null
 
 
 func _on_hotbar_overflowed(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
-	# TODO can replace to chest
+	# TODO wich chest
 
 
 func _can_drop_data(at_position, data):
@@ -61,4 +49,4 @@ func _on_item_pushed(item: Item):
 
 func _on_hotbar_item_pushed(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
-	# TODO can replace to chest
+	# TODO wich chest
