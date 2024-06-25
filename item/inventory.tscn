@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://lvfix7a3oquy"]
+
+[ext_resource type="Script" path="res://item/inventory.gd" id="1_53yc2"]
+
+[node name="Inventory" type="ColorRect"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -666.0
+offset_top = -600.0
+offset_right = 666.0
+offset_bottom = -184.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.501961)
+script = ExtResource("1_53yc2")
+metadata/_edit_group_ = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1324.0
+offset_bottom = 268.0
+columns = 10
