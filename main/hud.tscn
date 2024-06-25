@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4d3qqthxg38a"]
+
+[ext_resource type="Script" path="res://main/hud.gd" id="1_0rmbr"]
+[ext_resource type="PackedScene" uid="uid://dplv5ybu5kawn" path="res://item/hotbar.tscn" id="2_87777"]
+[ext_resource type="PackedScene" uid="uid://lvfix7a3oquy" path="res://item/inventory.tscn" id="3_kjdmw"]
+[ext_resource type="Script" path="res://player/health.gd" id="4_dtne0"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_0rmbr")
+
+[node name="Hotbar" parent="." instance=ExtResource("2_87777")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory" parent="." instance=ExtResource("3_kjdmw")]
+metadata/_edit_use_anchors_ = true
+
+[node name="Health" type="ProgressBar" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 64.0
+step = 1.0
+value = 75.0
+script = ExtResource("4_dtne0")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[connection signal="level_placed" from="." to="Hotbar" method="_on_level_placed"]
+[connection signal="player_picked_up" from="." to="Hotbar" method="_on_player_picked_up"]
+[connection signal="item_pushed" from="Hotbar" to="Inventory" method="_on_hotbar_item_pushed"]
+[connection signal="mouse_entered" from="Hotbar" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hotbar" to="." method="_on_mouse_exited"]
+[connection signal="overflowed" from="Hotbar" to="Inventory" method="_on_hotbar_overflowed"]
+[connection signal="selected" from="Hotbar" to="." method="_on_hotbar_selected"]
+[connection signal="item_pushed" from="Inventory" to="Hotbar" method="_on_inventory_item_pushed"]
+[connection signal="mouse_entered" from="Inventory" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Inventory" to="." method="_on_mouse_exited"]
+[connection signal="overflowed" from="Inventory" to="." method="_on_item_dropped"]

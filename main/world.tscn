@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1nq76i2of6bc"]
+
+[ext_resource type="Script" path="res://main/world.gd" id="1_36thn"]
+[ext_resource type="PackedScene" uid="uid://bg3xqibb0m2uo" path="res://level/level.tscn" id="2_lceek"]
+[ext_resource type="PackedScene" uid="uid://egj1j88ed826" path="res://player/player.tscn" id="3_dggd5"]
+[ext_resource type="Script" path="res://player/camera.gd" id="4_gbybe"]
+
+[node name="World" type="Node"]
+script = ExtResource("1_36thn")
+
+[node name="Level" parent="." instance=ExtResource("2_lceek")]
+
+[node name="Player" parent="." instance=ExtResource("3_dggd5")]
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("4_gbybe")
+metadata/_edit_group_ = true
+
+[connection signal="hotbar_selected" from="." to="Level" method="_on_hotbar_selected"]
+[connection signal="hud_focused" from="." to="Level" method="_on_hud_focused"]
+[connection signal="erased" from="Level" to="." method="_on_level_erased"]
+[connection signal="placed" from="Level" to="." method="_on_level_placed"]
+[connection signal="moved" from="Player" to="Level" method="_on_player_moved"]
+[connection signal="moved" from="Player" to="Camera" method="_on_player_moved"]
+[connection signal="picked_up" from="Player" to="." method="_on_player_picked_up"]
