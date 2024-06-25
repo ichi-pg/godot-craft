@@ -5,6 +5,7 @@ signal item_dropped(category, item_id, amount)
 signal hotbar_selected(category, item_id)
 signal player_picked_up(category, item_id, amount)
 signal level_placed(tile_id)
+signal chest_opened(chest_id, capacity)
 
 const Item = preload("res://item/item.tscn")
 
@@ -56,3 +57,7 @@ func _on_player_picked_up(category, item_id, amount):
 
 func _on_level_placed(tile_id):
 	level_placed.emit(tile_id)
+
+
+func _on_chest_opened(chest_id, capacity):
+	chest_opened.emit(chest_id, capacity)

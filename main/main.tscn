@@ -11,6 +11,7 @@ script = ExtResource("1_t2eme")
 
 [node name="HUD" parent="." instance=ExtResource("6_ekvqr")]
 
+[connection signal="chest_opened" from="World" to="HUD" method="_on_chest_opened"]
 [connection signal="level_placed" from="World" to="HUD" method="_on_level_placed"]
 [connection signal="player_picked_up" from="World" to="HUD" method="_on_player_picked_up"]
 [connection signal="focused" from="HUD" to="World" method="_on_hud_focused"]

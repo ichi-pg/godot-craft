@@ -59,7 +59,7 @@ func _get_drag_data(at_position):
 		return null
 	var item = duplicate()
 	item.position -= size * 0.5
-	if Input.is_action_pressed("pick_half") and amount > 1:
+	if Input.is_action_pressed("drag_half") and amount > 1:
 		var half_amount = int(amount * 0.5)
 		set_item_data(category, item_id, amount - half_amount)
 		item.init_item_data(inventory, category, item_id, half_amount)
@@ -86,27 +86,27 @@ func _drop_data(at_position, item):
 
 
 static func drop_item(src, mid, dst):
-	# merge if same items
+	# NOTE Merge items if same.
 	if dst.category == mid.category and dst.item_id == mid.item_id:
 		dst.increment_amount(mid.amount)
 		return
-	# dst to somewhere
+	# NOTE Destination item move to other slot.
 	if dst.item_id:
 		swap_items(src, mid, dst)
-	# mid to dst
+	# NOTE Moved item overwrite destination slot.
 	dst.set_item_data(mid.category, mid.item_id, mid.amount)
 	dst.swapped.emit()
 
 
 static func swap_items(src, mid, dst):
-	# move from inventory
+	# NOTE All item's amount moved from inventory.
 	if not src:
 		mid.inventory.add_item(dst.category, dst.item_id, dst.amount)
 		return
-	# move from hotbar
+	# NOTE All item's amount moved from hotbar.
 	if not src.item_id:
 		src.set_item_data(dst.category, dst.item_id, dst.amount)
 		src.swapped.emit()
 		return
-	# split from somewhere
+	# NOTE Item divided from inventory or hotbar.
 	dst.inventory.add_item(dst.category, dst.item_id, dst.amount)

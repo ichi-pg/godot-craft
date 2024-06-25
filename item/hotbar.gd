@@ -5,7 +5,7 @@ signal overflowed(category, item_id, amount)
 signal item_pushed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
-const MAX_ITEMS = 10
+const CAPACITY = 10
 
 var select_index = 0
 
@@ -14,7 +14,7 @@ var select_index = 0
 
 
 func _ready():
-	for i in range(MAX_ITEMS):
+	for i in range(CAPACITY):
 		var item = Item.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
 		item.swapped.connect(_on_item_swapped)
@@ -25,7 +25,8 @@ func _ready():
 
 
 func _input(event):
-	for i in range(MAX_ITEMS):
+	# NOTE Do only one which these actions.
+	for i in range(CAPACITY):
 		if event.is_action_pressed("hotbar_%d"%i):
 			select_item(i)
 			return

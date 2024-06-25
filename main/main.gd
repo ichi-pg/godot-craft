@@ -28,3 +28,5 @@ extends Node
 # HACK how to check unlinked signals
 # HACK resolve warnings
 # HACK refactor type safe
+# HACK max_items and max_amount vs capacity
+# HACK pass and elif

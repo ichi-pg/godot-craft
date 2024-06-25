@@ -4,6 +4,7 @@ class_name Level
 
 signal erased(tile_id)
 signal placed(tile_id)
+signal chest_opened(chest_id, capacity)
 
 var player_position = Vector2.ZERO
 var mouse_position = Vector2.ZERO
@@ -27,31 +28,69 @@ func _on_player_moved(pos):
 
 
 func _input(event):
+	# NOTE Cursor control all block actions.
 	if not cursor.visible:
-		pass
-	elif event is InputEventMouseMotion:
+		return
+	# NOTE Can change target while other actions.
+	if event is InputEventMouseMotion:
 		mouse_position = viewport.get_mouse_position() - viewport.get_visible_rect().size * 0.5
 		update_target()
-	elif target_map_position == local_to_map(player_position):
-		pass
-	elif not event.is_action_pressed("destroy_block"):
-		pass
-		# TODO range
-	elif target_tile_id:
-		# TODO pickaxe
-		# TODO tile health
-		var fix_target_tile_id = target_tile_id
-		erase_cell(0, target_map_position)
-		update_target_tile(0)
-		erased.emit(fix_target_tile_id, map_to_local(target_map_position))
-		# TODO gravity
-	elif is_around_empty(target_map_position):
-		pass
-	elif select_tile_id:
-		var fix_select_tile_id = select_tile_id
-		set_cell(0, target_map_position, 1, Common.get_tile_coord(fix_select_tile_id))
-		update_target_tile(fix_select_tile_id)
-		placed.emit(fix_select_tile_id)
+	# NOTE Do only one which these actions.
+	if erase_block(event):
+		return
+	if place_block(event):
+		return
+	if interact_block(event):
+		return
+
+
+func erase_block(event):
+	if not event.is_action_pressed("erase_block"):
+		return false
+	if not target_tile_id:
+		return false
+	# TODO range
+	# TODO pickaxe
+	# TODO tile health
+	# TODO gravity
+	# TODO drop chest items
+	erased.emit(target_tile_id, map_to_local(target_map_position))
+	erase_cell(0, target_map_position)
+	update_target_tile(0)
+	return true
+
+
+func place_block(event):
+	if not event.is_action_pressed("place_block"):
+		return false
+	if target_tile_id:
+		return false
+	if not select_tile_id:
+		return false
+	if target_map_position == local_to_map(player_position):
+		return false
+	if is_around_empty(target_map_position):
+		return false
+	# TODO range
+	set_cell(0, target_map_position, 1, Common.get_tile_coord(select_tile_id))
+	update_target_tile(select_tile_id)
+	placed.emit(select_tile_id)
+	return true
+
+
+func interact_block(event):
+	if not event.is_action_pressed("interact_block"):
+		return false
+	var tile_data = get_cell_tile_data(0, target_map_position)
+	if not tile_data:
+		return false
+	var chest_capacity = tile_data.get_custom_data("chest_capacity")
+	if chest_capacity > 0:
+		# TODO Create chest ID.
+		chest_opened.emit(0, chest_capacity)
+		return true
+	# TODO Other tile types.
+	return false
 
 
 func is_around_empty(pos):
@@ -63,7 +102,7 @@ func is_around_empty(pos):
 		return false
 	if get_cell_tile_data(0, pos + Vector2i.DOWN):
 		return false
-	# TODO tile type
+	# TODO Check tile types.
 	return true
 
 

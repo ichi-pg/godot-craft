@@ -18,6 +18,7 @@ metadata/_edit_group_ = true
 
 [connection signal="hotbar_selected" from="." to="Level" method="_on_hotbar_selected"]
 [connection signal="hud_focused" from="." to="Level" method="_on_hud_focused"]
+[connection signal="chest_opened" from="Level" to="." method="_on_chest_opened"]
 [connection signal="erased" from="Level" to="." method="_on_level_erased"]
 [connection signal="placed" from="Level" to="." method="_on_level_placed"]
 [connection signal="moved" from="Player" to="Level" method="_on_player_moved"]

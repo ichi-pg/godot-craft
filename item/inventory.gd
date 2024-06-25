@@ -7,7 +7,7 @@ signal item_pushed(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 
-var max_items = 30
+var capacity = 30
 
 @onready var container = $GridContainer
 
@@ -19,12 +19,12 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action_pressed("toggle_inventory"):
+	if event.is_action_pressed("open_inventory"):
 		visible = not visible
 
 
 func add_item(category, item_id, amount):
-	if container.get_child_count() >= max_items:
+	if container.get_child_count() >= capacity:
 		overflowed.emit(category, item_id, amount)
 		return
 	var item = Item.instantiate()
@@ -35,7 +35,7 @@ func add_item(category, item_id, amount):
 
 func remove_item(item):
 	assert(item.get_parent() == container)
-	# NOTE set zero is important when increment at the same time
+	# NOTE To set zero is important if increment at the same time.
 	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
 	item.queue_free()
 	# HACK get_child_count is miss match?
