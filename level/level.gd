@@ -55,7 +55,6 @@ func erase_block(event):
 	# TODO pickaxe
 	# TODO tile health
 	# TODO gravity
-	# TODO drop chest items
 	var target_tile_id = target_tile_id
 	erase_cell(0, target_map_position)
 	update_target_tile(0)

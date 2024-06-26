@@ -25,7 +25,9 @@ func _on_chest_opened(chest_id, capacity):
 	self.chest_id = chest_id
 	self.capacity = capacity
 	visible = true
-	# TODO Subscribe erase chest.
+	# TODO must drop items when erase tile
+	# TODO save multi chests items
+	# TODO can't open while opened by a other player
 
 
 func add_item(category, item_id, amount):
