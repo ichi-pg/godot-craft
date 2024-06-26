@@ -14,7 +14,6 @@ var is_mouse_entering = false
 @onready var viewport = get_viewport()
 @onready var drag_item = Item.instantiate()
 @onready var hotbar = $Hotbar
-@onready var inventory = $Inventory
 @onready var chest = $Chest
 
 
@@ -65,3 +64,14 @@ func _on_level_placed(tile_id):
 
 func _on_chest_opened(chest_id, capacity):
 	chest_opened.emit(chest_id, capacity)
+
+
+func _on_inventory_item_pushed_out(category, item_id, amount):
+	# HACK Want each nodes to subscribe, but it's complicated.
+	if chest.visible:
+		chest._on_item_pushed_in(category, item_id, amount)
+	else:
+		hotbar._on_item_pushed_in(category, item_id, amount)
+	# NOTE hotbar <---> inventory : if chest disabled
+	# NOTE hotbar ---> chest, inventory <---> chest : if chest visibled
+	# NOTE overflow ---> inventory ---> drop : always
