@@ -2,6 +2,7 @@ extends ColorRect
 
 signal overflowed(category, item_id, amount)
 signal item_pushed_out(category, item_id, amount)
+signal opened()
 
 var chests = {}
 var chest_id = 0
@@ -19,11 +20,16 @@ func _input(event):
 		visible = false
 
 
-func _on_chest_opened(chest_id, capacity):
-	if not chests.has(chest_id):
-		chests[chest_id] = {}
-	self.chest_id = chest_id
-	self.capacity = capacity
+func _on_level_interacted(tile_data: TileData, pos: Vector2i):
+	if visible:
+		return
+	capacity = tile_data.get_custom_data("chest_capacity")
+	if not capacity:
+		return
+	# TODO chest id rule
+	chest_id = 0
+	# HACK can replace opened to visibled
+	opened.emit()
 	visible = true
 	# TODO must drop items when erase tile
 	# TODO save multi chests items

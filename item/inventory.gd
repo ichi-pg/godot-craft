@@ -22,7 +22,7 @@ func _input(event):
 		visible = not visible
 
 
-func _on_chest_opened(chest_id, capacity):
+func _on_chest_opened():
 	visible = true
 
 

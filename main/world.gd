@@ -4,7 +4,7 @@ signal player_picked_up(category, item_id, amount)
 signal hud_focused(is_focus)
 signal hotbar_selected(category, item_id)
 signal level_placed(tile_id)
-signal chest_opened(chest_id, capacity)
+signal level_interacted(tile_data, pos)
 
 const Drop = preload("res://item/drop.tscn")
 
@@ -48,5 +48,5 @@ func _on_level_placed(tile_id):
 	level_placed.emit(tile_id)
 
 
-func _on_chest_opened(chest_id, capacity):
-	chest_opened.emit(chest_id, capacity)
+func _on_level_interacted(tile_data, pos):
+	level_interacted.emit(tile_data, pos)

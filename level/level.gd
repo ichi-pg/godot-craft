@@ -4,7 +4,7 @@ class_name Level
 
 signal erased(tile_id, pos)
 signal placed(tile_id)
-signal chest_opened(chest_id, capacity)
+signal interacted(tile_data, pos)
 
 var player_position = Vector2.ZERO
 var mouse_position = Vector2.ZERO
@@ -84,14 +84,9 @@ func place_block(event):
 func interact_block(event):
 	if not event.is_action_pressed("interact_block"):
 		return false
-	var tile_data = get_cell_tile_data(0, target_map_position)
-	if not tile_data:
+	if not target_tile_id:
 		return false
-	var chest_capacity = tile_data.get_custom_data("chest_capacity")
-	if chest_capacity > 0:
-		# TODO Create chest ID.
-		chest_opened.emit(0, chest_capacity)
-		return true
+	interacted.emit(get_cell_tile_data(0, target_map_position), target_map_position)
 	# TODO trap
 	# TODO switch
 	# TODO door
