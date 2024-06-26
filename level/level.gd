@@ -2,7 +2,7 @@ extends TileMap
 
 class_name Level
 
-signal erased(tile_id)
+signal erased(tile_id, pos)
 signal placed(tile_id)
 signal chest_opened(chest_id, capacity)
 
