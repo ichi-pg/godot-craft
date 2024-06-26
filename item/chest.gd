@@ -14,12 +14,17 @@ func _ready():
 	visible = false
 
 
+func _input(event):
+	if event.is_action_pressed("open_inventory"):
+		visible = false
+
+
 func _on_chest_opened(chest_id, capacity):
-	visible = not visible
 	if not chests.has(chest_id):
 		chests[chest_id] = {}
 	self.chest_id = chest_id
 	self.capacity = capacity
+	visible = true
 	# TODO Subscribe erase chest.
 
 

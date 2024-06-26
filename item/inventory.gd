@@ -21,6 +21,10 @@ func _input(event):
 		visible = not visible
 
 
+func _on_chest_opened(chest_id, capacity):
+	visible = true
+
+
 func add_item(category, item_id, amount):
 	Common.add_item_instance(self, category, item_id, amount)
 
