@@ -49,4 +49,3 @@ func _on_item_pushed_out(item: Item):
 
 func _on_item_pushed_in(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
-	# TODO wich chest

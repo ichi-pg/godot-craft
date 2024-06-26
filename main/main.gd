@@ -13,6 +13,7 @@ extends Node
 # TODO water
 # TODO lighting
 # TODO post effect
+# TODO background layers
 
 # TODO title scene
 # TODO multi players on steam
@@ -30,3 +31,4 @@ extends Node
 # HACK refactor type safe
 # HACK max_items and max_amount vs capacity
 # HACK pass and elif
+# HACK always connect and flag vs connect and disconnect

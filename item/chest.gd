@@ -50,4 +50,8 @@ func _on_item_pushed_out(item: Item):
 
 
 func _on_item_pushed_in(category, item_id, amount):
+	if not visible:
+		# TODO push in to hotbar if push out from inventory
+		overflowed.emit(category, item_id, amount)
+		return
 	Common.increment_or_add_item(self, category, item_id, amount)
