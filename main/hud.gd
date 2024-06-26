@@ -13,6 +13,9 @@ var is_mouse_entering = false
 
 @onready var viewport = get_viewport()
 @onready var drag_item = Item.instantiate()
+@onready var hotbar = $Hotbar
+@onready var inventory = $Inventory
+@onready var chest = $Chest
 
 
 func _on_mouse_entered():

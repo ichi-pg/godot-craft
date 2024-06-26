@@ -56,9 +56,10 @@ func erase_block(event):
 	# TODO tile health
 	# TODO gravity
 	# TODO drop chest items
-	erased.emit(target_tile_id, map_to_local(target_map_position))
+	var target_tile_id = target_tile_id
 	erase_cell(0, target_map_position)
 	update_target_tile(0)
+	erased.emit(target_tile_id, map_to_local(target_map_position))
 	return true
 
 
@@ -74,6 +75,7 @@ func place_block(event):
 	if is_around_empty(target_map_position):
 		return false
 	# TODO range
+	var select_tile_id = select_tile_id
 	set_cell(0, target_map_position, 1, Common.get_tile_coord(select_tile_id))
 	update_target_tile(select_tile_id)
 	placed.emit(select_tile_id)

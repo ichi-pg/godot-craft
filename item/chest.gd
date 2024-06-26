@@ -1,7 +1,7 @@
 extends ColorRect
 
 signal overflowed(category, item_id, amount)
-signal item_pushed(category, item_id, amount)
+signal item_pushed_out(category, item_id, amount)
 
 var chests = {}
 var chest_id = 0
@@ -45,5 +45,9 @@ func _drop_data(at_position, item):
 	add_item(item.category, item.item_id, item.amount)
 
 
-func _on_item_pushed(item: Item):
-	Common.push_item(self, item)
+func _on_item_pushed_out(item: Item):
+	Common.push_out_item(self, item)
+
+
+func _on_item_pushed_in(category, item_id, amount):
+	Common.increment_or_add_item(self, category, item_id, amount)

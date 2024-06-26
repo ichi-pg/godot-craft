@@ -2,7 +2,7 @@ extends ColorRect
 
 signal selected(category, item_id)
 signal overflowed(category, item_id, amount)
-signal item_pushed(category, item_id, amount)
+signal item_pushed_out(category, item_id, amount)
 
 const Item = preload("res://item/item.tscn")
 const CAPACITY = 10
@@ -18,7 +18,7 @@ func _ready():
 		var item = Item.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
 		item.swapped.connect(_on_item_swapped)
-		item.pushed.connect(_on_item_pushed.bind(item))
+		item.pushed.connect(_on_item_pushed_out.bind(item))
 		container.add_child(item)
 	select_item(0)
 	# HACK be able to responsive if use FlowContainer
@@ -77,10 +77,10 @@ func _on_item_swapped():
 	select_item(select_index)
 
 
-func _on_item_pushed(item):
-	Common.push_item(self, item)
+func _on_item_pushed_out(item):
+	Common.push_out_item(self, item)
 	# FIXME can't push if closed inventory
 
 
-func _on_inventory_item_pushed(category, item_id, amount):
+func _on_item_pushed_in(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)

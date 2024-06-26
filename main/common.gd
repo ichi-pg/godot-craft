@@ -64,12 +64,12 @@ func decrement_or_remove_item(inventory, category, item_id, amount):
 		inventory.remove_item(item)
 
 
-func push_item(inventory, item):
+func push_out_item(inventory, item):
 	var category = item.category
 	var item_id = item.item_id
 	var amount = item.amount
 	inventory.remove_item(item)
-	inventory.item_pushed.emit(category, item_id, amount)
+	inventory.item_pushed_out.emit(category, item_id, amount)
 
 
 func add_item_instance(inventory, category, item_id, amount):
@@ -78,7 +78,7 @@ func add_item_instance(inventory, category, item_id, amount):
 		return
 	var item = Item.instantiate()
 	item.init_item_data(inventory, category, item_id, amount)
-	item.pushed.connect(inventory._on_item_pushed.bind(item))
+	item.pushed.connect(inventory._on_item_pushed_out.bind(item))
 	inventory.container.add_child(item)
 
 
