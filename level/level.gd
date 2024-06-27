@@ -2,9 +2,9 @@ extends TileMap
 
 class_name Level
 
-signal erased(tile_id, pos)
+signal erased(tile_id, map_pos, world_pos)
 signal placed(tile_id)
-signal interacted(tile_data, pos)
+signal interacted(tile_data, map_pos, world_pos)
 
 var player_position = Vector2.ZERO
 var mouse_position = Vector2.ZERO
@@ -58,7 +58,7 @@ func erase_block(event):
 	var target_tile_id = target_tile_id
 	erase_cell(0, target_map_position)
 	update_target_tile(0)
-	erased.emit(target_tile_id, map_to_local(target_map_position))
+	erased.emit(target_tile_id, target_map_position, map_to_local(target_map_position))
 	return true
 
 
@@ -86,7 +86,8 @@ func interact_block(event):
 		return false
 	if not target_tile_id:
 		return false
-	interacted.emit(get_cell_tile_data(0, target_map_position), target_map_position)
+	var tile_data = get_cell_tile_data(0, target_map_position)
+	interacted.emit(tile_data, target_map_position, map_to_local(target_map_position))
 	# TODO trap
 	# TODO switch
 	# TODO door

@@ -3,8 +3,9 @@ extends Node
 signal player_picked_up(category, item_id, amount)
 signal hud_focused(is_focus)
 signal hotbar_selected(category, item_id)
+signal level_erased(tile_id, map_pos, world_pos)
 signal level_placed(tile_id)
-signal level_interacted(tile_data, pos)
+signal level_interacted(tile_data, map_pos, world_pos)
 
 const Drop = preload("res://item/drop.tscn")
 
@@ -20,16 +21,19 @@ func add_drop(category, item_id, amount, pos):
 	# TODO rename drop
 
 
-func _on_item_dropped(category, item_id, amount):
-	var direction = int(player.sprite.flip_h) - 0.5
-	var distance = direction * Vector2.LEFT * 384
-	add_drop(category, item_id, amount, player.global_position + distance)
+func _on_item_dropped(category, item_id, amount, pos):
+	if not pos:
+		var direction = int(player.sprite.flip_h) - 0.5
+		var distance = direction * Vector2.LEFT * 384
+		pos = player.global_position + distance
+	add_drop(category, item_id, amount, pos)
 	# TODO get player size
 	# TODO while walking
 
 
-func _on_level_erased(tile_id, pos):
-	add_drop(Common.ItemCategory.TILE, tile_id, 1, pos)
+func _on_level_erased(tile_id, map_pos, world_pos):
+	add_drop(Common.ItemCategory.TILE, tile_id, 1, world_pos)
+	level_erased.emit(tile_id, map_pos, world_pos)
 
 
 func _on_player_picked_up(category, item_id, amount):
@@ -48,5 +52,5 @@ func _on_level_placed(tile_id):
 	level_placed.emit(tile_id)
 
 
-func _on_level_interacted(tile_data, pos):
-	level_interacted.emit(tile_data, pos)
+func _on_level_interacted(tile_data, map_pos, world_pos):
+	level_interacted.emit(tile_data, map_pos, world_pos)

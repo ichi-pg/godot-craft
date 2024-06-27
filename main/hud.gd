@@ -1,11 +1,12 @@
 extends CanvasLayer
 
 signal focused(is_focus)
-signal item_dropped(category, item_id, amount)
+signal item_dropped(category, item_id, amount, pos)
 signal hotbar_selected(category, item_id)
 signal player_picked_up(category, item_id, amount)
+signal level_erased(tile_id, map_pos, world_pos)
 signal level_placed(tile_id)
-signal level_interacted(tile_data, pos)
+signal level_interacted(tile_data, map_pos, world_pos)
 
 const Item = preload("res://item/item.tscn")
 
@@ -36,7 +37,7 @@ func _notification(notification_type):
 			focus()
 		NOTIFICATION_DRAG_END:
 			if not viewport.gui_is_drag_successful() and drag_item.item_id:
-				item_dropped.emit(drag_item.category, drag_item.item_id, drag_item.amount)
+				item_dropped.emit(drag_item.category, drag_item.item_id, drag_item.amount, Vector2.ZERO)
 			drag_item.set_item_data(Common.ItemCategory.NULL, 0, 0)
 			focus()
 
@@ -45,8 +46,8 @@ func focus():
 	focused.emit(is_mouse_entering or viewport.gui_is_dragging())
 
 
-func _on_item_dropped(category, item_id, amount):
-	item_dropped.emit(category, item_id, amount)
+func _on_item_dropped(category, item_id, amount, pos):
+	item_dropped.emit(category, item_id, amount, pos)
 
 
 func _on_hotbar_selected(category, item_id):
@@ -73,5 +74,9 @@ func _on_inventory_item_pushed_out(category, item_id, amount):
 	# NOTE overflow ---> inventory ---> drop : always
 
 
-func _on_level_interacted(tile_data, pos):
-	level_interacted.emit(tile_data, pos)
+func _on_level_interacted(tile_data, map_pos, world_pos):
+	level_interacted.emit(tile_data, map_pos, world_pos)
+
+
+func _on_level_erased(tile_id, map_pos, world_pos):
+	level_erased.emit(tile_id, map_pos, world_pos)
