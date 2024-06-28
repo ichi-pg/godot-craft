@@ -14,6 +14,7 @@ script = ExtResource("1_t2eme")
 [connection signal="level_erased" from="World" to="HUD" method="_on_level_erased"]
 [connection signal="level_interacted" from="World" to="HUD" method="_on_level_interacted"]
 [connection signal="level_placed" from="World" to="HUD" method="_on_level_placed"]
+[connection signal="player_moved" from="World" to="HUD" method="_on_player_moved"]
 [connection signal="player_picked_up" from="World" to="HUD" method="_on_player_picked_up"]
 [connection signal="focused" from="HUD" to="World" method="_on_hud_focused"]
 [connection signal="hotbar_selected" from="HUD" to="World" method="_on_hotbar_selected"]

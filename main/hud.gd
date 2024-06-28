@@ -7,6 +7,7 @@ signal player_picked_up(category, item_id, amount)
 signal level_erased(tile_id, map_pos, world_pos)
 signal level_placed(tile_id)
 signal level_interacted(tile_data, map_pos)
+signal player_moved(pos)
 
 const Item = preload("res://item/item.tscn")
 
@@ -80,3 +81,7 @@ func _on_level_interacted(tile_data, map_pos):
 
 func _on_level_erased(tile_id, map_pos, world_pos):
 	level_erased.emit(tile_id, map_pos, world_pos)
+
+
+func _on_player_moved(pos):
+	player_moved.emit(pos)

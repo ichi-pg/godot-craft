@@ -6,6 +6,7 @@ signal hotbar_selected(category, item_id)
 signal level_erased(tile_id, map_pos, world_pos)
 signal level_placed(tile_id)
 signal level_interacted(tile_data, map_pos)
+signal player_moved(pos)
 
 const Drop = preload("res://item/drop.tscn")
 
@@ -54,3 +55,7 @@ func _on_level_placed(tile_id):
 
 func _on_level_interacted(tile_data, map_pos):
 	level_interacted.emit(tile_data, map_pos)
+
+
+func _on_player_moved(pos):
+	player_moved.emit(pos)

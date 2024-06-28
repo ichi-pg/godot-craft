@@ -25,11 +25,13 @@ func _ready():
 
 
 func _on_player_moved(pos):
+	# HACK vs camera position. get_global_mouse_position is.
 	player_position = pos
 	update_target()
 
 
 func _input(event):
+	# TODO can't actions when player died
 	# NOTE Cursor control all block actions.
 	if not cursor.visible:
 		return

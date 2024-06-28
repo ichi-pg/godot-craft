@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8cbwinp7fspc"]
+
+[ext_resource type="Script" path="res://main/mini_map.gd" id="1_2wws8"]
+
+[node name="MiniMap" type="SubViewportContainer"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_right = 512.0
+offset_bottom = 512.0
+script = ExtResource("1_2wws8")
+metadata/_edit_group_ = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="PlayerMarker" type="ColorRect" parent="SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="SubViewport"]
+zoom = Vector2(0.1, 0.1)

@@ -21,6 +21,7 @@ metadata/_edit_group_ = true
 [connection signal="erased" from="Level" to="." method="_on_level_erased"]
 [connection signal="interacted" from="Level" to="." method="_on_level_interacted"]
 [connection signal="placed" from="Level" to="." method="_on_level_placed"]
+[connection signal="moved" from="Player" to="." method="_on_player_moved"]
 [connection signal="moved" from="Player" to="Level" method="_on_player_moved"]
 [connection signal="moved" from="Player" to="Camera" method="_on_player_moved"]
 [connection signal="picked_up" from="Player" to="." method="_on_player_picked_up"]

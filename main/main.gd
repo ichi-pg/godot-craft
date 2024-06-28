@@ -1,6 +1,5 @@
 extends Node
 
-# TODO chest
 # TODO craft
 # TODO equipment
 # TODO enchant

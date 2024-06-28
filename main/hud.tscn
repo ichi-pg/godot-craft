@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4d3qqthxg38a"]
+[gd_scene load_steps=7 format=3 uid="uid://d4d3qqthxg38a"]
 
 [ext_resource type="Script" path="res://main/hud.gd" id="1_0rmbr"]
 [ext_resource type="PackedScene" uid="uid://dplv5ybu5kawn" path="res://item/hotbar.tscn" id="2_87777"]
 [ext_resource type="PackedScene" uid="uid://lvfix7a3oquy" path="res://item/inventory.tscn" id="3_kjdmw"]
 [ext_resource type="Script" path="res://player/health.gd" id="4_dtne0"]
 [ext_resource type="PackedScene" uid="uid://b55yrhlj7w41m" path="res://item/chest.tscn" id="5_7jqsh"]
+[ext_resource type="PackedScene" uid="uid://b8cbwinp7fspc" path="res://main/mini_map.tscn" id="6_lplle"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0rmbr")
@@ -28,9 +29,23 @@ script = ExtResource("4_dtne0")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
+[node name="MiniMap" parent="." instance=ExtResource("6_lplle")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="level_erased" from="." to="Chest" method="_on_level_erased"]
 [connection signal="level_interacted" from="." to="Chest" method="_on_level_interacted"]
 [connection signal="level_placed" from="." to="Hotbar" method="_on_level_placed"]
+[connection signal="player_moved" from="." to="MiniMap" method="_on_player_moved"]
 [connection signal="player_picked_up" from="." to="Hotbar" method="_on_player_picked_up"]
 [connection signal="item_pushed_out" from="Hotbar" to="Chest" method="_on_item_pushed_in"]
 [connection signal="mouse_entered" from="Hotbar" to="." method="_on_mouse_entered"]
