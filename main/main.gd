@@ -32,3 +32,4 @@ extends Node
 # HACK max_items and max_amount vs capacity
 # HACK pass and elif
 # HACK always connect and flag vs connect and disconnect
+# HACK all type nodes connect vs select connection

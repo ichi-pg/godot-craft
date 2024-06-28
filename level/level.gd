@@ -4,7 +4,7 @@ class_name Level
 
 signal erased(tile_id, map_pos, world_pos)
 signal placed(tile_id)
-signal interacted(tile_data, map_pos, world_pos)
+signal interacted(tile_data, map_pos)
 
 var player_position = Vector2.ZERO
 var mouse_position = Vector2.ZERO
@@ -87,7 +87,7 @@ func interact_block(event):
 	if not target_tile_id:
 		return false
 	var tile_data = get_cell_tile_data(0, target_map_position)
-	interacted.emit(tile_data, target_map_position, map_to_local(target_map_position))
+	interacted.emit(tile_data, target_map_position)
 	# TODO trap
 	# TODO switch
 	# TODO door

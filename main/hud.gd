@@ -6,7 +6,7 @@ signal hotbar_selected(category, item_id)
 signal player_picked_up(category, item_id, amount)
 signal level_erased(tile_id, map_pos, world_pos)
 signal level_placed(tile_id)
-signal level_interacted(tile_data, map_pos, world_pos)
+signal level_interacted(tile_data, map_pos)
 
 const Item = preload("res://item/item.tscn")
 
@@ -74,8 +74,8 @@ func _on_inventory_item_pushed_out(category, item_id, amount):
 	# NOTE overflow ---> inventory ---> drop : always
 
 
-func _on_level_interacted(tile_data, map_pos, world_pos):
-	level_interacted.emit(tile_data, map_pos, world_pos)
+func _on_level_interacted(tile_data, map_pos):
+	level_interacted.emit(tile_data, map_pos)
 
 
 func _on_level_erased(tile_id, map_pos, world_pos):

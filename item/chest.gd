@@ -5,11 +5,12 @@ signal item_pushed_out(category, item_id, amount)
 signal item_dropped(category, item_id, amount, pos)
 signal opened()
 
-var capacity = 0
-var map_position = Vector2i.ZERO
-var world_position = Vector2.ZERO
+const ChestContainer = preload("res://item/chest_container.tscn")
 
-@onready var container = $GridContainer
+var container: ChestContainer
+var capacity = 0
+
+@onready var margin = $MarginContainer
 
 
 func _ready():
@@ -19,21 +20,42 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("open_inventory"):
 		visible = false
+		container.visible = false
+		# HACK it's easy if common always disable
+		# HACK it's simple if not use margin
+		margin.remove_child(container)
+		Common.add_child(container)
 
 
-func _on_level_interacted(tile_data, map_pos, world_pos):
+func _on_level_interacted(tile_data, map_pos):
 	if visible:
 		return
 	capacity = tile_data.get_custom_data("chest_capacity")
 	if not capacity:
 		return
-	map_position = map_pos
-	world_position = world_pos
-	opened.emit()
+	container = find_container(map_pos)
+	if container:
+		Common.remove_child(container)
+	else:
+		container = ChestContainer.instantiate()
+		container.map_position = map_pos
+	margin.add_child(container)
+	container.visible = true
 	visible = true
-	# TODO must drop items when erase tile
-	# TODO save multi chests items
+	opened.emit()
+	# TODO player can use items to craft in hidden chests
+	# TODO treasure chests already were when world created
+	# TODO save and load
 	# TODO can't open while opened by a other player
+	# TODO share hidden chests with each other players
+
+
+func find_container(map_pos):
+	# HACK dictionary
+	for container in Common.get_children():
+		if container.map_position == map_pos:
+			return container
+	return null
 
 
 func add_item(category, item_id, amount):
@@ -65,8 +87,11 @@ func _on_item_pushed_in(category, item_id, amount):
 
 
 func _on_level_erased(tile_id, map_pos, world_pos):
-	if map_position != map_pos:
+	var container = find_container(map_pos)
+	if not container:
 		return
 	for item in container.get_children():
-		item.queue_free()
 		item_dropped.emit(item.category, item.item_id, item.amount, world_pos)
+	container.queue_free()
+	container = null
+	# FIXME if visible

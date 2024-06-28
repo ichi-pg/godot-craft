@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://3f6vum7p7tgm"]
+
+[ext_resource type="Script" path="res://item/chest_container.gd" id="1_q03xh"]
+
+[node name="ChestContainer" type="GridContainer" groups=["chest"]]
+columns = 10
+script = ExtResource("1_q03xh")

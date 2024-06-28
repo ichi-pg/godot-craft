@@ -40,7 +40,7 @@ func get_tile_coord(tile_id: int) -> Vector2i:
 
 
 func find_item(container: Container, category, item_id) -> Item:
-	# HACK Dictionary
+	# HACK dictionary
 	for item in container.get_children():
 		if item.category == category and item.item_id == item_id:
 			return item
