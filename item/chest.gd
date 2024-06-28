@@ -18,16 +18,25 @@ func _ready():
 
 
 func _input(event):
+	if not visible:
+		return
 	if event.is_action_pressed("open_inventory"):
-		visible = false
-		container.visible = false
-		# HACK it's easy if common always disable
-		# HACK it's simple if not use margin
-		margin.remove_child(container)
-		Common.add_child(container)
+		close_chest()
+
+
+func close_chest():
+	visible = false
+	container.visible = false
+	# HACK it's easy if common always disable
+	# HACK it's simple if not use margin
+	margin.remove_child(container)
+	Common.add_child(container)
+	container = null
+	capacity = 0
 
 
 func _on_level_interacted(tile_data, map_pos):
+	# HACK open other chest quickly
 	if visible:
 		return
 	capacity = tile_data.get_custom_data("chest_capacity")
@@ -87,11 +96,11 @@ func _on_item_pushed_in(category, item_id, amount):
 
 
 func _on_level_erased(tile_id, map_pos, world_pos):
+	if container and container.map_position == map_pos:
+		close_chest()
 	var container = find_container(map_pos)
 	if not container:
 		return
 	for item in container.get_children():
 		item_dropped.emit(item.category, item.item_id, item.amount, world_pos)
 	container.queue_free()
-	container = null
-	# FIXME if visible
