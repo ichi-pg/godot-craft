@@ -4,6 +4,7 @@ signal overflowed(category, item_id, amount)
 signal item_pushed_out(category, item_id, amount)
 signal item_dropped(category, item_id, amount, pos)
 signal opened()
+signal erased()
 
 const ChestContainer = preload("res://item/chest_container.tscn")
 
@@ -98,6 +99,7 @@ func _on_item_pushed_in(category, item_id, amount):
 func _on_level_erased(tile_id, map_pos, world_pos):
 	if container and container.map_position == map_pos:
 		close_chest()
+		erased.emit()
 	var container = find_container(map_pos)
 	if not container:
 		return

@@ -11,7 +11,7 @@ signal player_moved(pos)
 
 const Item = preload("res://item/item.tscn")
 
-var is_mouse_entering = false
+var is_mouse_entered = false
 
 @onready var viewport = get_viewport()
 @onready var drag_item = Item.instantiate()
@@ -20,12 +20,12 @@ var is_mouse_entering = false
 
 
 func _on_mouse_entered():
-	is_mouse_entering = true
+	is_mouse_entered = true
 	focus()
 
 
 func _on_mouse_exited():
-	is_mouse_entering = false
+	is_mouse_entered = false
 	focus()
  
 
@@ -44,7 +44,7 @@ func _notification(notification_type):
 
 
 func focus():
-	focused.emit(is_mouse_entering or viewport.gui_is_dragging())
+	focused.emit(is_mouse_entered or viewport.gui_is_dragging())
 
 
 func _on_item_dropped(category, item_id, amount, pos):

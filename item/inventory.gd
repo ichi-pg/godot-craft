@@ -26,6 +26,10 @@ func _on_chest_opened():
 	visible = true
 
 
+func _on_chest_erased():
+	visible = false
+
+
 func add_item(category, item_id, amount):
 	Common.add_item_instance(self, category, item_id, amount)
 

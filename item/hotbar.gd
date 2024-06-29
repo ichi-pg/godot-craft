@@ -8,6 +8,7 @@ const Item = preload("res://item/item.tscn")
 const CAPACITY = 10
 
 var select_index = 0
+var is_mini_map_mouse_entered = false
 
 @onready var container = $GridContainer
 @onready var selector = $Selector
@@ -30,6 +31,8 @@ func _input(event):
 		if event.is_action_pressed("hotbar_%d"%i):
 			select_item(i)
 			return
+	if is_mini_map_mouse_entered:
+		return
 	if event.is_action_pressed("hotbar_up"):
 		select_item(select_index - 1)
 	elif event.is_action_pressed("hotbar_down"):
@@ -84,3 +87,11 @@ func _on_item_pushed_out(item):
 
 func _on_item_pushed_in(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
+
+
+func _on_mini_map_mouse_entered():
+	is_mini_map_mouse_entered = true
+
+
+func _on_mini_map_mouse_exited():
+	is_mini_map_mouse_entered = false
