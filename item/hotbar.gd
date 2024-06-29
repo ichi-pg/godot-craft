@@ -71,7 +71,7 @@ func _on_player_picked_up(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
 
 
-func _on_level_placed(tile_id):
+func _on_level_placed(tile_id, map_pos):
 	Common.decrement_or_remove_item(self, Common.ItemCategory.TILE, tile_id, 1)
 	# FIXME selected item is primary
 

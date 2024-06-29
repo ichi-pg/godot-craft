@@ -43,8 +43,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [connection signal="level_erased" from="." to="Chest" method="_on_level_erased"]
+[connection signal="level_erased" from="." to="MiniMap" method="_on_level_erased"]
 [connection signal="level_interacted" from="." to="Chest" method="_on_level_interacted"]
 [connection signal="level_placed" from="." to="Hotbar" method="_on_level_placed"]
+[connection signal="level_placed" from="." to="MiniMap" method="_on_level_placed"]
+[connection signal="level_readied" from="." to="MiniMap" method="_on_level_readied"]
 [connection signal="player_moved" from="." to="MiniMap" method="_on_player_moved"]
 [connection signal="player_picked_up" from="." to="Hotbar" method="_on_player_picked_up"]
 [connection signal="item_pushed_out" from="Hotbar" to="Chest" method="_on_item_pushed_in"]

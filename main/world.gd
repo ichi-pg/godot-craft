@@ -4,9 +4,10 @@ signal player_picked_up(category, item_id, amount)
 signal hud_focused(is_focus)
 signal hotbar_selected(category, item_id)
 signal level_erased(tile_id, map_pos, world_pos)
-signal level_placed(tile_id)
+signal level_placed(tile_id, map_pos)
 signal level_interacted(tile_data, map_pos)
 signal player_moved(pos)
+signal level_readied(tile_map)
 
 const Drop = preload("res://item/drop.tscn")
 
@@ -49,8 +50,8 @@ func _on_hotbar_selected(category, item_id):
 	hotbar_selected.emit(category, item_id)
 
 
-func _on_level_placed(tile_id):
-	level_placed.emit(tile_id)
+func _on_level_placed(tile_id, map_pos):
+	level_placed.emit(tile_id, map_pos)
 
 
 func _on_level_interacted(tile_data, map_pos):
@@ -59,3 +60,7 @@ func _on_level_interacted(tile_data, map_pos):
 
 func _on_player_moved(pos):
 	player_moved.emit(pos)
+
+
+func _on_level_readied(tile_map):
+	level_readied.emit(tile_map)

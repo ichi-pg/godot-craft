@@ -5,9 +5,10 @@ signal item_dropped(category, item_id, amount, pos)
 signal hotbar_selected(category, item_id)
 signal player_picked_up(category, item_id, amount)
 signal level_erased(tile_id, map_pos, world_pos)
-signal level_placed(tile_id)
+signal level_placed(tile_id, map_pos)
 signal level_interacted(tile_data, map_pos)
 signal player_moved(pos)
+signal level_readied(tile_map)
 
 const Item = preload("res://item/item.tscn")
 
@@ -60,8 +61,8 @@ func _on_player_picked_up(category, item_id, amount):
 	# NOTE push in to hotbar because want to use soon (vs inventory)
 
 
-func _on_level_placed(tile_id):
-	level_placed.emit(tile_id)
+func _on_level_placed(tile_id, map_pos):
+	level_placed.emit(tile_id, map_pos)
 
 
 func _on_inventory_item_pushed_out(category, item_id, amount):
@@ -85,3 +86,7 @@ func _on_level_erased(tile_id, map_pos, world_pos):
 
 func _on_player_moved(pos):
 	player_moved.emit(pos)
+
+
+func _on_level_readied(tile_map):
+	level_readied.emit(tile_map)
