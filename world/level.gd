@@ -19,7 +19,7 @@ var tile_size = tile_set.tile_size * 0.5
 
 
 func _ready():
-	var source = tile_set.get_source(1) as TileSetAtlasSource
+	var source = tile_set.get_source(0) as TileSetAtlasSource
 	Common.level_texture.atlas = source.texture
 	readied.emit(self)
 	# TODO layers
@@ -79,7 +79,7 @@ func place_block(event):
 		return false
 	# TODO range
 	var select_tile_id = select_tile_id
-	set_cell(0, target_map_position, 1, Common.get_tile_coord(select_tile_id))
+	set_cell(0, target_map_position, 0, Common.get_tile_coord(select_tile_id))
 	update_target_tile(select_tile_id)
 	placed.emit(select_tile_id, target_map_position)
 	return true

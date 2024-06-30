@@ -18,14 +18,12 @@ offset_left = -666.0
 offset_top = -168.0
 offset_right = 666.0
 offset_bottom = -24.0
-metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" parent="." instance=ExtResource("3_kjdmw")]
 offset_left = -666.0
 offset_top = -600.0
 offset_right = 666.0
 offset_bottom = -184.0
-metadata/_edit_use_anchors_ = true
 
 [node name="Chest" parent="." instance=ExtResource("5_7jqsh")]
 offset_left = -666.0

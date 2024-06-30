@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://world/world.gd" id="1_36thn"]
 [ext_resource type="PackedScene" uid="uid://bg3xqibb0m2uo" path="res://world/level.tscn" id="2_lceek"]
 [ext_resource type="PackedScene" uid="uid://egj1j88ed826" path="res://world/player.tscn" id="3_dggd5"]
-[ext_resource type="Script" path="res://world/camera.gd" id="4_gbybe"]
+[ext_resource type="PackedScene" uid="uid://1hk6fvtwekam" path="res://world/camera.tscn" id="4_eue4v"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_36thn")
@@ -12,9 +12,7 @@ script = ExtResource("1_36thn")
 
 [node name="Player" parent="." instance=ExtResource("3_dggd5")]
 
-[node name="Camera" type="Camera2D" parent="."]
-script = ExtResource("4_gbybe")
-metadata/_edit_group_ = true
+[node name="Camera" parent="." instance=ExtResource("4_eue4v")]
 
 [connection signal="hotbar_selected" from="." to="Level" method="_on_hotbar_selected"]
 [connection signal="hud_focused" from="." to="Level" method="_on_hud_focused"]

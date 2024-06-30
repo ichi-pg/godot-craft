@@ -53,7 +53,7 @@ func _on_level_readied(tile_map: TileMap):
 
 
 func _on_level_placed(tile_id, map_pos):
-	tile_map.set_cell(0, map_pos, 1, Common.get_tile_coord(tile_id))
+	tile_map.set_cell(0, map_pos, 0, Common.get_tile_coord(tile_id))
 
 
 func _on_level_erased(tile_id, map_pos, world_pos):
