@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4j21gmjd2i8b"
-path="res://.godot/imported/tilesheet_complete_2X.png-64ec401f06957db1b4174de1c0af0a5b.ctex"
+uid="uid://xgyx6uxkok1g"
+path="res://.godot/imported/enemyWalking_2.png-ad5b045cf3f8ed681f6c58609768ab21.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://level/tilesheet_complete_2X.png"
-dest_files=["res://.godot/imported/tilesheet_complete_2X.png-64ec401f06957db1b4174de1c0af0a5b.ctex"]
+source_file="res://assets/enemyWalking_2.png"
+dest_files=["res://.godot/imported/enemyWalking_2.png-ad5b045cf3f8ed681f6c58609768ab21.ctex"]
 
 [params]
 

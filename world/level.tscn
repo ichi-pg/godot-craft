@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg3xqibb0m2uo"]
 
-[ext_resource type="TileSet" uid="uid://ct87hclt7ojsh" path="res://level/level.tres" id="1_nldj6"]
-[ext_resource type="Script" path="res://level/level.gd" id="2_lw7nl"]
+[ext_resource type="TileSet" uid="uid://ct87hclt7ojsh" path="res://world/level.tres" id="1_nldj6"]
+[ext_resource type="Script" path="res://world/level.gd" id="2_lw7nl"]
 
 [node name="Level" type="TileMap"]
 tile_set = ExtResource("1_nldj6")

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1nq76i2of6bc"]
 
-[ext_resource type="Script" path="res://main/world.gd" id="1_36thn"]
-[ext_resource type="PackedScene" uid="uid://bg3xqibb0m2uo" path="res://level/level.tscn" id="2_lceek"]
-[ext_resource type="PackedScene" uid="uid://egj1j88ed826" path="res://player/player.tscn" id="3_dggd5"]
-[ext_resource type="Script" path="res://player/camera.gd" id="4_gbybe"]
+[ext_resource type="Script" path="res://world/world.gd" id="1_36thn"]
+[ext_resource type="PackedScene" uid="uid://bg3xqibb0m2uo" path="res://world/level.tscn" id="2_lceek"]
+[ext_resource type="PackedScene" uid="uid://egj1j88ed826" path="res://world/player.tscn" id="3_dggd5"]
+[ext_resource type="Script" path="res://world/camera.gd" id="4_gbybe"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_36thn")

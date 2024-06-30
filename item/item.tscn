@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dlamuoht54p1u"]
 
-[ext_resource type="Texture2D" uid="uid://ch87pell0xua4" path="res://main/icon.svg" id="1_mtdbm"]
+[ext_resource type="Texture2D" uid="uid://ch87pell0xua4" path="res://assets/icon.svg" id="1_mtdbm"]
 [ext_resource type="Script" path="res://item/item.gd" id="2_g43ds"]
 
 [node name="Item" type="TextureRect"]

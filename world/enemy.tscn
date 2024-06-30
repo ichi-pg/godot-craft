@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cyd434ouo2gil"]
 
-[ext_resource type="Script" path="res://mob/enemy.gd" id="1_ppd45"]
-[ext_resource type="Texture2D" uid="uid://ba3sg1l11byxq" path="res://mob/enemyWalking_1.png" id="1_wf8ag"]
-[ext_resource type="Texture2D" uid="uid://xgyx6uxkok1g" path="res://mob/enemyWalking_2.png" id="2_lbi8x"]
+[ext_resource type="Script" path="res://world/enemy.gd" id="1_ppd45"]
+[ext_resource type="Texture2D" uid="uid://ba3sg1l11byxq" path="res://assets/enemyWalking_1.png" id="1_wf8ag"]
+[ext_resource type="Texture2D" uid="uid://xgyx6uxkok1g" path="res://assets/enemyWalking_2.png" id="2_lbi8x"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2espk"]
 animations = [{

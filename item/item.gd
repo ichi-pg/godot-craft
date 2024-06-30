@@ -5,7 +5,7 @@ class_name Item
 signal swapped()
 signal pushed()
 
-const NULL_TEXTURE = preload("res://main/icon.svg")
+const NULL_TEXTURE = preload("res://assets/icon.svg")
 
 var category = Common.ItemCategory.NULL
 var item_id = 0

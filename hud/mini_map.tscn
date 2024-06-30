@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8cbwinp7fspc"]
 
-[ext_resource type="Script" path="res://main/mini_map.gd" id="1_2wws8"]
+[ext_resource type="Script" path="res://hud/mini_map.gd" id="1_2wws8"]
 
 [node name="MiniMap" type="SubViewportContainer"]
 modulate = Color(1, 1, 1, 0.501961)

@@ -9,18 +9,17 @@ signal level_interacted(tile_data, map_pos)
 signal player_moved(pos)
 signal level_readied(tile_map)
 
-const Drop = preload("res://item/drop.tscn")
+const DropItem = preload("res://world/drop_item.tscn")
 
 @onready var player = $Player
 
 
-func add_drop(category, item_id, amount, pos):
-	var drop = Drop.instantiate()
-	drop.init_drop(category, item_id, amount)
-	drop.global_position = pos
-	add_child(drop)
+func add_drop_item(category, item_id, amount, pos):
+	var drop_item = DropItem.instantiate()
+	drop_item.init_drop_item_data(category, item_id, amount)
+	drop_item.global_position = pos
+	add_child(drop_item)
 	# TODO don't bury
-	# TODO rename drop
 
 
 func _on_item_dropped(category, item_id, amount, pos):
@@ -28,13 +27,13 @@ func _on_item_dropped(category, item_id, amount, pos):
 		var direction = int(player.sprite.flip_h) - 0.5
 		var distance = direction * Vector2.LEFT * 384
 		pos = player.global_position + distance
-	add_drop(category, item_id, amount, pos)
+	add_drop_item(category, item_id, amount, pos)
 	# TODO get player size
 	# TODO while walking
 
 
 func _on_level_erased(tile_id, map_pos, world_pos):
-	add_drop(Common.ItemCategory.TILE, tile_id, 1, world_pos)
+	add_drop_item(Common.ItemCategory.TILE, tile_id, 1, world_pos)
 	level_erased.emit(tile_id, map_pos, world_pos)
 
 
