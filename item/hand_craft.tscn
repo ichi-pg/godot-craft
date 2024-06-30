@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b55yrhlj7w41m"]
+[gd_scene load_steps=2 format=3 uid="uid://ckwk3ygwyjnx4"]
 
-[ext_resource type="Script" path="res://item/chest.gd" id="1_lspit"]
+[ext_resource type="Script" path="res://item/hand_craft.gd" id="1_ron35"]
 
-[node name="Chest" type="ColorRect"]
+[node name="HandCraft" type="ColorRect"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -10,18 +10,17 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -960.0
 offset_top = -1080.0
-offset_right = 372.0
+offset_right = -302.0
 offset_bottom = -664.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_vertical = 0
 color = Color(0, 0, 0, 0.501961)
-script = ExtResource("1_lspit")
+script = ExtResource("1_ron35")
 metadata/_edit_group_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 1324.0
+offset_right = 650.0
 offset_bottom = 408.0

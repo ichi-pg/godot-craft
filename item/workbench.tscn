@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b55yrhlj7w41m"]
+[gd_scene load_steps=2 format=3 uid="uid://bul8qq1o0fx3h"]
 
-[ext_resource type="Script" path="res://item/chest.gd" id="1_lspit"]
+[ext_resource type="Script" path="res://item/workbench.gd" id="1_o6543"]
 
-[node name="Chest" type="ColorRect"]
+[node name="Workbench" type="ColorRect"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -14,12 +14,11 @@ offset_right = 372.0
 offset_bottom = -664.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_vertical = 0
 color = Color(0, 0, 0, 0.501961)
-script = ExtResource("1_lspit")
+script = ExtResource("1_o6543")
 metadata/_edit_group_ = true
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0

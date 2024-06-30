@@ -1,9 +1,7 @@
 extends Node
 
-# TODO craft
-# TODO equipment
 # TODO enchant
-# TODO map
+
 # TODO level generate
 # TODO mount
 # TODO farm

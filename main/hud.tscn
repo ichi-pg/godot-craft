@@ -1,33 +1,55 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4d3qqthxg38a"]
+[gd_scene load_steps=10 format=3 uid="uid://d4d3qqthxg38a"]
 
 [ext_resource type="Script" path="res://main/hud.gd" id="1_0rmbr"]
 [ext_resource type="PackedScene" uid="uid://dplv5ybu5kawn" path="res://item/hotbar.tscn" id="2_87777"]
 [ext_resource type="PackedScene" uid="uid://lvfix7a3oquy" path="res://item/inventory.tscn" id="3_kjdmw"]
-[ext_resource type="Script" path="res://player/health.gd" id="4_dtne0"]
 [ext_resource type="PackedScene" uid="uid://b55yrhlj7w41m" path="res://item/chest.tscn" id="5_7jqsh"]
+[ext_resource type="PackedScene" uid="uid://ckwk3ygwyjnx4" path="res://item/hand_craft.tscn" id="5_y4py5"]
 [ext_resource type="PackedScene" uid="uid://b8cbwinp7fspc" path="res://main/mini_map.tscn" id="6_lplle"]
+[ext_resource type="PackedScene" uid="uid://bbx3l2g161d3w" path="res://item/equipment.tscn" id="7_rwpu7"]
+[ext_resource type="PackedScene" uid="uid://ccp4gw8chuovg" path="res://player/health.tscn" id="8_a00yr"]
+[ext_resource type="PackedScene" uid="uid://bul8qq1o0fx3h" path="res://item/workbench.tscn" id="9_rhcbq"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0rmbr")
 
 [node name="Hotbar" parent="." instance=ExtResource("2_87777")]
+offset_left = -666.0
+offset_top = -168.0
+offset_right = 666.0
+offset_bottom = -24.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" parent="." instance=ExtResource("3_kjdmw")]
+offset_left = -666.0
+offset_top = -600.0
+offset_right = 666.0
+offset_bottom = -184.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Chest" parent="." instance=ExtResource("5_7jqsh")]
+offset_left = -666.0
+offset_top = -1032.0
+offset_right = 666.0
+offset_bottom = -616.0
 
-[node name="Health" type="ProgressBar" parent="."]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 64.0
-step = 1.0
-value = 75.0
-script = ExtResource("4_dtne0")
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
+[node name="Equipment" parent="." instance=ExtResource("7_rwpu7")]
+offset_left = 8.0
+offset_top = -1032.0
+offset_right = 666.0
+offset_bottom = -616.0
+
+[node name="HandCraft" parent="." instance=ExtResource("5_y4py5")]
+offset_left = -666.0
+offset_top = -1032.0
+offset_right = -8.0
+offset_bottom = -616.0
+
+[node name="Workbench" parent="." instance=ExtResource("9_rhcbq")]
+offset_left = -666.0
+offset_top = -1032.0
+offset_right = 666.0
+offset_bottom = -616.0
 
 [node name="MiniMap" parent="." instance=ExtResource("6_lplle")]
 anchors_preset = 8
@@ -35,12 +57,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
+offset_left = -720.0
+offset_top = -405.0
+offset_right = 720.0
+offset_bottom = 405.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Health" parent="." instance=ExtResource("8_a00yr")]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 64.0
 
 [connection signal="level_erased" from="." to="Chest" method="_on_level_erased"]
 [connection signal="level_erased" from="." to="MiniMap" method="_on_level_erased"]
