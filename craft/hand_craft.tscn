@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckwk3ygwyjnx4"]
 
-[ext_resource type="Script" path="res://item/hand_craft.gd" id="1_ron35"]
+[ext_resource type="Script" path="res://craft/hand_craft.gd" id="1_ron35"]
 
 [node name="HandCraft" type="ColorRect"]
 anchors_preset = 7

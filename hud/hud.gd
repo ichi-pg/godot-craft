@@ -4,9 +4,9 @@ signal focused(is_focus)
 signal item_dropped(category, item_id, amount, pos)
 signal hotbar_selected(category, item_id)
 signal player_picked_up(category, item_id, amount)
-signal level_erased(tile_id, map_pos, world_pos)
-signal level_placed(tile_id, map_pos)
-signal level_interacted(tile_data, map_pos)
+signal tile_erased(tile_id, map_pos, world_pos)
+signal tile_placed(tile_id, map_pos)
+signal tile_interacted(tile_data, map_pos)
 signal player_moved(pos)
 signal level_readied(tile_map)
 
@@ -61,8 +61,8 @@ func _on_player_picked_up(category, item_id, amount):
 	# NOTE push in to hotbar because want to use soon (vs inventory)
 
 
-func _on_level_placed(tile_id, map_pos):
-	level_placed.emit(tile_id, map_pos)
+func _on_tile_placed(tile_id, map_pos):
+	tile_placed.emit(tile_id, map_pos)
 
 
 func _on_inventory_item_pushed_out(category, item_id, amount):
@@ -76,12 +76,12 @@ func _on_inventory_item_pushed_out(category, item_id, amount):
 	# NOTE overflow ---> inventory ---> drop : always
 
 
-func _on_level_interacted(tile_data, map_pos):
-	level_interacted.emit(tile_data, map_pos)
+func _on_tile_interacted(tile_data, map_pos):
+	tile_interacted.emit(tile_data, map_pos)
 
 
-func _on_level_erased(tile_id, map_pos, world_pos):
-	level_erased.emit(tile_id, map_pos, world_pos)
+func _on_tile_erased(tile_id, map_pos, world_pos):
+	tile_erased.emit(tile_id, map_pos, world_pos)
 
 
 func _on_player_moved(pos):

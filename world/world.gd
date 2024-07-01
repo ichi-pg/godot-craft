@@ -3,9 +3,9 @@ extends Node
 signal player_picked_up(category, item_id, amount)
 signal hud_focused(is_focus)
 signal hotbar_selected(category, item_id)
-signal level_erased(tile_id, map_pos, world_pos)
-signal level_placed(tile_id, map_pos)
-signal level_interacted(tile_data, map_pos)
+signal tile_erased(tile_id, map_pos, world_pos)
+signal tile_placed(tile_id, map_pos)
+signal tile_interacted(tile_data, map_pos)
 signal player_moved(pos)
 signal level_readied(tile_map)
 
@@ -32,9 +32,9 @@ func _on_item_dropped(category, item_id, amount, pos):
 	# TODO while walking
 
 
-func _on_level_erased(tile_id, map_pos, world_pos):
+func _on_tile_erased(tile_id, map_pos, world_pos):
 	add_drop_item(Common.ItemCategory.TILE, tile_id, 1, world_pos)
-	level_erased.emit(tile_id, map_pos, world_pos)
+	tile_erased.emit(tile_id, map_pos, world_pos)
 
 
 func _on_player_picked_up(category, item_id, amount):
@@ -49,12 +49,12 @@ func _on_hotbar_selected(category, item_id):
 	hotbar_selected.emit(category, item_id)
 
 
-func _on_level_placed(tile_id, map_pos):
-	level_placed.emit(tile_id, map_pos)
+func _on_tile_placed(tile_id, map_pos):
+	tile_placed.emit(tile_id, map_pos)
 
 
-func _on_level_interacted(tile_data, map_pos):
-	level_interacted.emit(tile_data, map_pos)
+func _on_tile_interacted(tile_data, map_pos):
+	tile_interacted.emit(tile_data, map_pos)
 
 
 func _on_player_moved(pos):

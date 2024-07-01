@@ -1,5 +1,7 @@
 extends ColorRect
 
+@export var recipes: Array[CraftRecipe]
+
 
 func _ready():
 	visible = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bul8qq1o0fx3h"]
 
-[ext_resource type="Script" path="res://item/workbench.gd" id="1_o6543"]
+[ext_resource type="Script" path="res://craft/workbench.gd" id="1_o6543"]
 
 [node name="Workbench" type="ColorRect"]
 anchors_preset = 7

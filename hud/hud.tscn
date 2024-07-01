@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://dplv5ybu5kawn" path="res://item/hotbar.tscn" id="2_87777"]
 [ext_resource type="PackedScene" uid="uid://lvfix7a3oquy" path="res://item/inventory.tscn" id="3_kjdmw"]
 [ext_resource type="PackedScene" uid="uid://b55yrhlj7w41m" path="res://item/chest.tscn" id="5_7jqsh"]
-[ext_resource type="PackedScene" uid="uid://ckwk3ygwyjnx4" path="res://item/hand_craft.tscn" id="5_y4py5"]
+[ext_resource type="PackedScene" uid="uid://ckwk3ygwyjnx4" path="res://craft/hand_craft.tscn" id="5_y4py5"]
 [ext_resource type="PackedScene" uid="uid://b8cbwinp7fspc" path="res://hud/mini_map.tscn" id="6_lplle"]
 [ext_resource type="PackedScene" uid="uid://bbx3l2g161d3w" path="res://item/equipment.tscn" id="7_rwpu7"]
 [ext_resource type="PackedScene" uid="uid://ccp4gw8chuovg" path="res://hud/health.tscn" id="8_a00yr"]
-[ext_resource type="PackedScene" uid="uid://bul8qq1o0fx3h" path="res://item/workbench.tscn" id="9_rhcbq"]
+[ext_resource type="PackedScene" uid="uid://bul8qq1o0fx3h" path="res://craft/workbench.tscn" id="9_rhcbq"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0rmbr")
@@ -68,14 +68,14 @@ offset_top = 16.0
 offset_right = 496.0
 offset_bottom = 64.0
 
-[connection signal="level_erased" from="." to="Chest" method="_on_level_erased"]
-[connection signal="level_erased" from="." to="MiniMap" method="_on_level_erased"]
-[connection signal="level_interacted" from="." to="Chest" method="_on_level_interacted"]
-[connection signal="level_placed" from="." to="Hotbar" method="_on_level_placed"]
-[connection signal="level_placed" from="." to="MiniMap" method="_on_level_placed"]
 [connection signal="level_readied" from="." to="MiniMap" method="_on_level_readied"]
 [connection signal="player_moved" from="." to="MiniMap" method="_on_player_moved"]
 [connection signal="player_picked_up" from="." to="Hotbar" method="_on_player_picked_up"]
+[connection signal="tile_erased" from="." to="Chest" method="_on_tile_erased"]
+[connection signal="tile_erased" from="." to="MiniMap" method="_on_tile_erased"]
+[connection signal="tile_interacted" from="." to="Chest" method="_on_tile_interacted"]
+[connection signal="tile_placed" from="." to="Hotbar" method="_on_tile_placed"]
+[connection signal="tile_placed" from="." to="MiniMap" method="_on_tile_placed"]
 [connection signal="item_pushed_out" from="Hotbar" to="Chest" method="_on_item_pushed_in"]
 [connection signal="mouse_entered" from="Hotbar" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Hotbar" to="." method="_on_mouse_exited"]

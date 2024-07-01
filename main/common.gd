@@ -5,6 +5,11 @@ enum ItemCategory {
 	TILE,
 }
 
+enum CraftCategory {
+	HAND,
+	WORKBENCH,
+}
+
 const Item = preload("res://item/item.tscn")
 const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
 const QUARTER_OF_INDEX = 10000

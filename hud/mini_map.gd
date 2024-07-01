@@ -52,9 +52,9 @@ func _on_level_readied(tile_map: TileMap):
 	$SubViewport.move_child(self.tile_map, 0)
 
 
-func _on_level_placed(tile_id, map_pos):
+func _on_tile_placed(tile_id, map_pos):
 	tile_map.set_cell(0, map_pos, 0, Common.get_tile_coord(tile_id))
 
 
-func _on_level_erased(tile_id, map_pos, world_pos):
+func _on_tile_erased(tile_id, map_pos, world_pos):
 	tile_map.erase_cell(0, map_pos)

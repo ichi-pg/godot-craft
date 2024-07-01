@@ -36,7 +36,7 @@ func close_chest():
 	capacity = 0
 
 
-func _on_level_interacted(tile_data, map_pos):
+func _on_tile_interacted(tile_data, map_pos):
 	# HACK open other chest quickly
 	if visible:
 		return
@@ -96,7 +96,7 @@ func _on_item_pushed_in(category, item_id, amount):
 	Common.increment_or_add_item(self, category, item_id, amount)
 
 
-func _on_level_erased(tile_id, map_pos, world_pos):
+func _on_tile_erased(tile_id, map_pos, world_pos):
 	if container and container.map_position == map_pos:
 		close_chest()
 		erased.emit()
