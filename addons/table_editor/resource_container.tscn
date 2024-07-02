@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxtkd65cm7mfc"]
+
+[ext_resource type="Script" path="res://addons/table_editor/resource_container.gd" id="1_8bqp2"]
+
+[node name="ResourceContainer" type="HBoxContainer"]
+size_flags_vertical = 4
+script = ExtResource("1_8bqp2")

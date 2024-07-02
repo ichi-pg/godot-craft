@@ -7,7 +7,7 @@ var table_editor
 
 func _enter_tree():
 	table_editor = TableEditor.instantiate()
-	add_control_to_bottom_panel(table_editor, "Table Editor")
+	add_control_to_bottom_panel(table_editor, "TableEditor")
 
 func _exit_tree():
 	remove_control_from_bottom_panel(table_editor)
