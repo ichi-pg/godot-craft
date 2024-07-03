@@ -33,6 +33,7 @@ func build(resource: Resource):
 			line_edit.expand_to_text_length = true
 			add_child(spin_box)
 			# TODO enum
+			# TODO id to name
 		if value is Array:
 			add_child(new_label(prop_name))
 			var container = VBoxContainer.new()
@@ -44,6 +45,7 @@ func build(resource: Resource):
 				continue
 			if value is TileSetAtlasSource:
 				continue
+			# HACK check all godot resources or check tree depth
 			add_child(new_label(prop_name))
 			var container = duplicate()
 			container.clear()
