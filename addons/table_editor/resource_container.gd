@@ -36,7 +36,7 @@ func build(resource: Resource):
 			# TODO enum
 			# TODO id to name
 		elif value is Array:
-			#add_child(new_label(prop_name))
+			add_child(new_label(prop_name))
 			var container = ArrayContainer.new()
 			container.build(value, prop_name)
 			add_child(container)
@@ -46,7 +46,7 @@ func build(resource: Resource):
 			if value is TileSetAtlasSource:
 				continue
 			# HACK check all godot resources or check tree depth
-			#add_child(new_label(prop_name))
+			add_child(new_label(prop_name))
 			var container = ResourceContainer.new()
 			container.build(value)
 			add_child(container)
