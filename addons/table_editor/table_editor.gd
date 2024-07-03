@@ -7,7 +7,7 @@ class_name TableEditor
 @onready var container = $ScrollContainer/HBoxContainer
 
 
-func _on_visibility_changed():
+func _on_focus_entered():
 	item_list.clear()
 	container.clear()
 	add_files_recursively("res:/", "res://")

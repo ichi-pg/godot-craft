@@ -24,7 +24,9 @@ size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
+size_flags_vertical = 4
 script = ExtResource("2_br46k")
 
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="ItemList" to="." method="_on_file_selected"]

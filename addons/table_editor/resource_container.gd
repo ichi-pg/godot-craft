@@ -20,6 +20,7 @@ func build(resource: Resource):
 	self.resource = resource
 	for prop in resource.get_property_list():
 		var prop_name = prop["name"]
+		var prop_class_name = prop["class_name"]
 		var value = resource.get(prop_name)
 		#if value is String:
 			#add_child(new_label(prop_name))
@@ -34,24 +35,25 @@ func build(resource: Resource):
 			add_child(spin_box)
 			# TODO enum
 			# TODO id to name
-		if value is Array:
-			add_child(new_label(prop_name))
-			var container = VBoxContainer.new()
-			container.set_script(ArrayContainer)
-			container.build(value)
+		elif value is Array:
+			#add_child(new_label(prop_name))
+			var container = ArrayContainer.new()
+			container.build(value, prop_name)
 			add_child(container)
-		if value is Resource:
+		elif value is Resource:
 			if value is Script:
 				continue
 			if value is TileSetAtlasSource:
 				continue
 			# HACK check all godot resources or check tree depth
-			add_child(new_label(prop_name))
-			var container = duplicate()
-			container.clear()
+			#add_child(new_label(prop_name))
+			var container = ResourceContainer.new()
 			container.build(value)
 			add_child(container)
-		# TODO null
+		elif prop_class_name:
+			print(prop)
+			# TODO bew button if null
+
 
 func new_label(text: String):
 	var label = LineEdit.new()
@@ -63,5 +65,5 @@ func new_label(text: String):
 
 func _on_int_value_changed(value: float, prop_name: String):
 	self.resource.set(prop_name, int(value))
-	# TODO save resource
+	# TODO save resource without open resource
 	pass
