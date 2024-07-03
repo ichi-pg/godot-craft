@@ -1,19 +1,25 @@
 @tool
-extends Container
+extends VBoxContainer
 
-const ResourceContainer = preload("res://addons/table_editor/resource_container.tscn")
+class_name ArrayContainer
 
-var variants: Array[Variant]
+var rows: Array[Variant]
 
 
-func build(variants: Array[Variant]):
-	self.variants = variants
-	for variant in variants:
-		if variant is Resource:
-			var container = ResourceContainer.instantiate()
-			container.build(variant)
+func build(rows: Array[Variant]):
+	self.rows = rows
+	for row in rows:
+		if row is Resource:
+			var container = HBoxContainer.new()
+			container.set_script(ResourceContainer)
+			container.build(row)
 			add_child(container)
 	var button = Button.new()
-	button.text = "➕️Add"
+	button.text = "➕️Add Row"
+	button.pressed.connect(_on_add_row_pressed)
 	add_child(button)
 	# TODO remove
+
+func _on_add_row_pressed():
+	# TODO default value of type
+	pass

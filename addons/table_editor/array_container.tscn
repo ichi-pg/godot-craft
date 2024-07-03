@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://yhh3fy6ogocj"]
-
-[ext_resource type="Script" path="res://addons/table_editor/array_container.gd" id="1_cy4a8"]
-
-[node name="ArrayContainer" type="VBoxContainer"]
-script = ExtResource("1_cy4a8")

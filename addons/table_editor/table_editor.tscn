@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmfwlq7pniklp"]
 
 [ext_resource type="Script" path="res://addons/table_editor/table_editor.gd" id="1_fy4nb"]
-[ext_resource type="PackedScene" uid="uid://bxtkd65cm7mfc" path="res://addons/table_editor/resource_container.tscn" id="2_mvegm"]
+[ext_resource type="Script" path="res://addons/table_editor/resource_container.gd" id="2_br46k"]
 
 [node name="TableEditor" type="HSplitContainer"]
 anchors_preset = 15
@@ -22,7 +22,9 @@ item_1/text = "res://world/level.tres"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ResourceContainer" parent="ScrollContainer" instance=ExtResource("2_mvegm")]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
+script = ExtResource("2_br46k")
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="ItemList" to="." method="_on_file_selected"]
