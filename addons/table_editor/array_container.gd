@@ -13,8 +13,9 @@ func build(rows: Array[Variant]):
 			var container = HBoxContainer.new()
 			container.set_script(ResourceContainer)
 			container.build(row)
-			container.add_child(new_button("➖️Remove Row", _on_remove_row_pressed.bind(row)))
+			container.add_child(new_button("➖️Remove Row", _on_remove_row_pressed.bind(row, container)))
 			add_child(container)
+		# TODO null
 	add_child(new_button("➕️Add Row", _on_add_row_pressed))
 	# TODO remove
 
@@ -31,7 +32,6 @@ func _on_add_row_pressed():
 	pass
 
 
-func _on_remove_row_pressed(row: Variant):
-	#rows.erase(row)
-	# TODO erase on rows and container
-	pass
+func _on_remove_row_pressed(row: Variant, container: Container):
+	rows.erase(row)
+	container.queue_free()

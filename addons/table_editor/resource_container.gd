@@ -51,7 +51,7 @@ func build(resource: Resource):
 			container.clear()
 			container.build(value)
 			add_child(container)
-
+		# TODO null
 
 func new_label(text: String):
 	var label = LineEdit.new()

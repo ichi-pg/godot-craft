@@ -31,3 +31,4 @@ func add_files_recursively(dir_path, dir_name):
 func _on_file_selected(index):
 	container.clear()
 	container.build(load(item_list.get_item_text(index)))
+	# HACK connect both changed
