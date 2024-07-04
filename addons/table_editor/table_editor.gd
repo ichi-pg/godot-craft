@@ -3,15 +3,21 @@ extends Container
 
 class_name TableEditor
 
+var scripts = {}
+
 @onready var item_list = $ItemList
 @onready var container = $ScrollContainer/HBoxContainer
 
 
-func _on_focus_entered():
+func _on_visibility_changed():
+	if not item_list:
+		return
+	if not container:
+		return
 	item_list.clear()
 	container.clear()
 	add_files_recursively("res:/", "res://")
-	# TODO best trigger
+	# HACK on create or delete resource
 
 
 func add_files_recursively(dir_path, dir_name):
@@ -26,6 +32,9 @@ func add_files_recursively(dir_path, dir_name):
 			add_files_recursively(file_path, file_name)
 		elif file_name.get_extension() == "tres":
 			item_list.add_item(file_path)
+		#elif file_name.get_extension() == "gd":
+			#var script = load(file_path).new()
+			#print(script.get_script().name)
 		file_name = dir.get_next()
 
 

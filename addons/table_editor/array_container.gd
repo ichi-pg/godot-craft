@@ -24,6 +24,7 @@ func build(rows: Array[Variant], array_name: String):
 	var button = new_button("➕️Add " + resource_name)
 	button.pressed.connect(_on_add_row_pressed)
 	add_child(button)
+	# TODO exchange indices
 
 
 func new_button(text: String):

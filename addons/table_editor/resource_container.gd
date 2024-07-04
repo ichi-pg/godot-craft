@@ -22,35 +22,41 @@ func build(resource: Resource):
 	self.resource = resource
 	for prop in resource.get_property_list():
 		var prop_name = prop["name"]
+		var prop_class_name = prop["class_name"]
 		var hint_string = prop["hint_string"]
 		var type = prop["type"]
 		var value = resource.get(prop_name)
 		if value is int:
-			add_child(new_label(prop_name))
-			add_child(new_spin_box(value, _on_int_value_changed.bind(prop_name)))
-			# TODO enum
-			# TODO id to name
+			if prop_class_name:
+				var option_button = new_option_button(value, hint_string)
+				option_button.item_selected.connect(_on_int_value_changed.bind(prop_name))
+				add_child(new_label(prop_name))
+				add_child(option_button)
+			else:
+				var spin_box = new_spin_box(value)
+				spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
+				add_child(new_label(prop_name))
+				add_child(spin_box)
+				# TODO id to name
 		#elif value is String:
 			#add_child(new_label(prop_name))
 			# TODO string
 		if value is Array:
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
-		if type != Variant.Type.TYPE_OBJECT:
-			continue
-		if ClassDB.get_class_list().has(hint_string):
-			continue
-			# HACK check all godot resources or check tree depth
-		if value != null:
-			# HACK can't store scripts if all empty
-			scripts[hint_string] = value.get_script()
+		if type == Variant.Type.TYPE_OBJECT:
+			if ClassDB.get_class_list().has(hint_string):
+				continue
+				# HACK check all godot resources or check tree depth
 			add_child(new_label(prop_name))
-			add_child(new_resource_container(value))
-		else:
-			add_child(new_label(prop_name))
-			var button = new_button("🆕new " + prop_name)
-			button.pressed.connect(_on_new_resource_pressed.bind(prop_name, hint_string, button))
-			add_child(button)
+			if value != null:
+				# HACK can't store scripts if all empty
+				scripts[hint_string] = value.get_script()
+				add_child(new_resource_container(value))
+			else:
+				var button = new_button("🆕new " + prop_name)
+				button.pressed.connect(_on_new_resource_pressed.bind(prop_name, hint_string, button))
+				add_child(button)
 
 
 func _on_new_resource_pressed(prop_name, hint_string, button):
@@ -76,13 +82,21 @@ func new_label(text: String):
 	return label
 
 
-func new_spin_box(value, _on_value_changed):
+func new_spin_box(value: int):
 	var spin_box = SpinBox.new()
 	spin_box.value = value
-	spin_box.value_changed.connect(_on_value_changed)
 	var line_edit = spin_box.get_line_edit()
 	line_edit.expand_to_text_length = true
 	return spin_box
+
+
+func new_option_button(value: int, hint_string: String):
+	var option_button = OptionButton.new()
+	for option in hint_string.split(","):
+		var item = option.split(":")
+		option_button.add_item(item[0], int(item[1]))
+	option_button.selected = value
+	return option_button
 
 
 func new_resource_container(value):
