@@ -4,7 +4,7 @@ signal selected(category, item_id)
 signal overflowed(category, item_id, amount)
 signal item_pushed_out(category, item_id, amount)
 
-const Item = preload("res://item/item.tscn")
+const ItemIcon = preload("res://item/item_icon.tscn")
 const CAPACITY = 10
 
 var select_index = 0
@@ -16,7 +16,7 @@ var is_mini_map_mouse_entered = false
 
 func _ready():
 	for i in range(CAPACITY):
-		var item = Item.instantiate()
+		var item = ItemIcon.instantiate()
 		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
 		item.swapped.connect(_on_item_swapped)
 		item.pushed.connect(_on_item_pushed_out.bind(item))

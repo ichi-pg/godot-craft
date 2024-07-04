@@ -1,6 +1,6 @@
 extends TextureRect
 
-class_name Item
+class_name ItemIcon
 
 signal swapped()
 signal pushed()
@@ -11,7 +11,7 @@ var category = Common.ItemCategory.NULL
 var item_id = 0
 var amount = 0
 var inventory: Control
-var dragged: Item
+var dragged: ItemIcon
 
 @onready var label = $Label
 
@@ -57,32 +57,32 @@ func _gui_input(event):
 func _get_drag_data(at_position):
 	if category == Common.ItemCategory.NULL:
 		return null
-	var item = duplicate()
-	item.position -= size * 0.5
+	var item_icon = duplicate()
+	item_icon.position -= size * 0.5
 	if Input.is_action_pressed("drag_half") and amount > 1:
 		var half_amount = int(amount * 0.5)
 		set_item_data(category, item_id, amount - half_amount)
-		item.init_item_data(inventory, category, item_id, half_amount)
-		item.dragged = self
+		item_icon.init_item_data(inventory, category, item_id, half_amount)
+		item_icon.dragged = self
 	else:
-		item.init_item_data(inventory, category, item_id, amount)
-		item.dragged = inventory.remove_item(self)
+		item_icon.init_item_data(inventory, category, item_id, amount)
+		item_icon.dragged = inventory.remove_item(self)
 	var preview = Control.new()
 	preview.z_index = Common.MAX_Z_INDEX
-	preview.add_child(item)
+	preview.add_child(item_icon)
 	set_drag_preview(preview)
 	# HACK cache
 	# TODO one by one
 	# TODO bulk push
-	return item
+	return item_icon
 
 
 func _can_drop_data(at_position, data):
-	return data is Item
+	return data is ItemIcon
 
 
-func _drop_data(at_position, item):
-	drop_item(item.dragged, item, self)
+func _drop_data(at_position, item_icon):
+	drop_item(item_icon.dragged, item_icon, self)
 
 
 static func drop_item(src, mid, dst):
@@ -108,5 +108,5 @@ static func swap_items(src, mid, dst):
 		src.set_item_data(dst.category, dst.item_id, dst.amount)
 		src.swapped.emit()
 		return
-	# NOTE Item divided from inventory or hotbar.
+	# NOTE item divided from inventory or hotbar.
 	dst.inventory.add_item(dst.category, dst.item_id, dst.amount)

@@ -10,12 +10,12 @@ signal tile_interacted(tile_data, map_pos)
 signal player_moved(pos)
 signal level_readied(tile_map)
 
-const Item = preload("res://item/item.tscn")
+const ItemIcon = preload("res://item/item_icon.tscn")
 
 var is_mouse_entered = false
 
 @onready var viewport = get_viewport()
-@onready var drag_item = Item.instantiate()
+@onready var drag_item = ItemIcon.instantiate()
 @onready var hotbar = $Hotbar
 @onready var chest = $Chest
 
@@ -34,7 +34,7 @@ func _notification(notification_type):
 	match notification_type:
 		NOTIFICATION_DRAG_BEGIN:
 			var data = viewport.gui_get_drag_data()
-			if data is Item:
+			if data is ItemIcon:
 				drag_item.set_item_data(data.category, data.item_id, data.amount)
 			focus()
 		NOTIFICATION_DRAG_END:

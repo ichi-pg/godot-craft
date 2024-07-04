@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://dlamuoht54p1u"]
 
-[ext_resource type="Texture2D" uid="uid://ch87pell0xua4" path="res://assets/icon.svg" id="1_mtdbm"]
-[ext_resource type="Script" path="res://item/item.gd" id="2_g43ds"]
+[ext_resource type="Texture2D" uid="uid://ch87pell0xua4" path="res://assets/icon.svg" id="1_fhia1"]
+[ext_resource type="Script" path="res://item/item_icon.gd" id="2_3k0cg"]
 
 [node name="Item" type="TextureRect"]
 offset_right = 128.0
 offset_bottom = 128.0
-texture = ExtResource("1_mtdbm")
-script = ExtResource("2_g43ds")
+texture = ExtResource("1_fhia1")
+script = ExtResource("2_3k0cg")
 metadata/_edit_group_ = true
 
 [node name="Label" type="Label" parent="."]

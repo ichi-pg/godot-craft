@@ -10,7 +10,7 @@ enum CraftCategory {
 	WORKBENCH,
 }
 
-const Item = preload("res://item/item.tscn")
+const ItemIcon = preload("res://item/item_icon.tscn")
 const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
 const QUARTER_OF_INDEX = 10000
 const MAX_INT = 9223372036854775807
@@ -44,7 +44,7 @@ func get_tile_coord(tile_id: int) -> Vector2i:
 	return Vector2i(tile_id % QUARTER_OF_INDEX - 1, int(tile_id / QUARTER_OF_INDEX) - 1)
 
 
-func find_item(container: Container, category, item_id) -> Item:
+func find_item(container: Container, category, item_id) -> ItemIcon:
 	# HACK dictionary
 	for item in container.get_children():
 		if item.category == category and item.item_id == item_id:
@@ -81,7 +81,7 @@ func add_item_instance(inventory, category, item_id, amount):
 	if inventory.container.get_child_count() >= inventory.capacity:
 		inventory.overflowed.emit(category, item_id, amount)
 		return
-	var item = Item.instantiate()
+	var item = ItemIcon.instantiate()
 	item.init_item_data(inventory, category, item_id, amount)
 	item.pushed.connect(inventory._on_item_pushed_out.bind(item))
 	inventory.container.add_child(item)

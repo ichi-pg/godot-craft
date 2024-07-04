@@ -78,14 +78,14 @@ func remove_item(item):
 
 
 func _can_drop_data(at_position, data):
-	return data is Item
+	return data is ItemIcon
 
 
 func _drop_data(at_position, item):
 	add_item(item.category, item.item_id, item.amount)
 
 
-func _on_item_pushed_out(item: Item):
+func _on_item_pushed_out(item):
 	Common.push_out_item(self, item)
 
 
