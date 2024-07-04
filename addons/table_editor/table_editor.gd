@@ -11,6 +11,7 @@ func _on_focus_entered():
 	item_list.clear()
 	container.clear()
 	add_files_recursively("res:/", "res://")
+	# TODO best trigger
 
 
 func add_files_recursively(dir_path, dir_name):
