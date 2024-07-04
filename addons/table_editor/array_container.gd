@@ -13,8 +13,10 @@ func build(rows: Array[Variant], array_name: String):
 	if array_name.ends_with("ies"):
 		resource_name = array_name.trim_suffix("ies") + "y"
 		# HACK movies, boxes, and so on
-	else:
+	elif array_name.ends_with("s"):
 		resource_name = array_name.trim_suffix("s")
+	else:
+		resource_name = array_name
 	container = VBoxContainer.new()
 	for row in rows:
 		if row is Resource:
