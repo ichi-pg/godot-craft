@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="VariantTable" load_steps=5 format=3 uid="uid://bmclpmv5r8tlt"]
+
+[ext_resource type="Script" path="res://item/item.gd" id="1_f3ppi"]
+[ext_resource type="Script" path="res://addons/table_editor/variant_table.gd" id="1_kxjtw"]
+
+[sub_resource type="Resource" id="Resource_rnu4i"]
+script = ExtResource("1_f3ppi")
+category = 0
+item_id = 0
+item_name = ""
+coord = Vector2i(0, 0)
+
+[sub_resource type="Resource" id="Resource_7ydcs"]
+script = ExtResource("1_f3ppi")
+category = 0
+item_id = 0
+item_name = ""
+coord = Vector2i(0, 0)
+
+[resource]
+script = ExtResource("1_kxjtw")
+rows = [SubResource("Resource_rnu4i"), SubResource("Resource_7ydcs")]
+typed_script = ExtResource("1_f3ppi")

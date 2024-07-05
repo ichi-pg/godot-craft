@@ -33,7 +33,7 @@ func _on_item_dropped(category, item_id, amount, pos):
 
 
 func _on_tile_erased(tile_id, map_pos, world_pos):
-	add_drop_item(Common.ItemCategory.TILE, tile_id, 1, world_pos)
+	add_drop_item(Item.Category.TILE, tile_id, 1, world_pos)
 	tile_erased.emit(tile_id, map_pos, world_pos)
 
 

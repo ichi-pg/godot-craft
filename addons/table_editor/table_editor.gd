@@ -3,8 +3,6 @@ extends Container
 
 class_name TableEditor
 
-var scripts = {}
-
 @onready var item_list = $ItemList
 @onready var container = $ScrollContainer/HBoxContainer
 
@@ -31,14 +29,11 @@ func add_files_recursively(dir_path, dir_name):
 		if dir.current_is_dir():
 			add_files_recursively(file_path, file_name)
 		elif file_name.get_extension() == "tres":
-			item_list.add_item(file_path)
-		#elif file_name.get_extension() == "gd":
-			#var script = load(file_path).new()
-			#print(script.get_script().name)
+			if load(file_path).get_class() == "Resource":
+				item_list.add_item(file_path)
 		file_name = dir.get_next()
 
 
 func _on_file_selected(index):
 	container.clear()
 	container.build(load(item_list.get_item_text(index)))
-	# HACK connect both changed

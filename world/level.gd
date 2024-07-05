@@ -129,7 +129,7 @@ func update_target_tile(tile_id):
 
 
 func _on_hotbar_selected(category, item_id):
-	if category == Common.ItemCategory.TILE:
+	if category == Item.Category.TILE:
 		select_tile_id = item_id
 	else:
 		select_tile_id = 0

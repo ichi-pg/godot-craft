@@ -40,7 +40,7 @@ func _notification(notification_type):
 		NOTIFICATION_DRAG_END:
 			if not viewport.gui_is_drag_successful() and drag_item.item_id:
 				item_dropped.emit(drag_item.category, drag_item.item_id, drag_item.amount, Vector2.ZERO)
-			drag_item.set_item_data(Common.ItemCategory.NULL, 0, 0)
+			drag_item.set_item_data(Item.Category.NULL, 0, 0)
 			focus()
 
 

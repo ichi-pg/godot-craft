@@ -17,7 +17,7 @@ var is_mini_map_mouse_entered = false
 func _ready():
 	for i in range(CAPACITY):
 		var item = ItemIcon.instantiate()
-		item.init_item_data(self, Common.ItemCategory.NULL, 0, 0)
+		item.init_item_data(self, Item.Category.NULL, 0, 0)
 		item.swapped.connect(_on_item_swapped)
 		item.pushed.connect(_on_item_pushed_out.bind(item))
 		container.add_child(item)
@@ -43,7 +43,7 @@ func select_item(index):
 	var count = container.get_child_count()
 	if not count:
 		select_index = 0
-		selected.emit(Common.ItemCategory.NULL, 0)
+		selected.emit(Item.Category.NULL, 0)
 		return
 	select_index = index % count
 	var item = container.get_child(select_index)
@@ -62,7 +62,7 @@ func add_item(category, item_id, amount):
 
 func remove_item(item):
 	assert(item.get_parent() == container)
-	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
+	item.set_item_data(Item.Category.NULL, 0, 0)
 	select_item(select_index)
 	return item
 
@@ -72,7 +72,7 @@ func _on_player_picked_up(category, item_id, amount):
 
 
 func _on_tile_placed(tile_id, map_pos):
-	Common.decrement_or_remove_item(self, Common.ItemCategory.TILE, tile_id, 1)
+	Common.decrement_or_remove_item(self, Item.Category.TILE, tile_id, 1)
 	# FIXME selected item is primary
 
 

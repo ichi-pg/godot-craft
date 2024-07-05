@@ -1,43 +1,9 @@
-[gd_resource type="Resource" script_class="CraftBook" load_steps=10 format=3 uid="uid://dqh5iuhxtx44e"]
+[gd_resource type="Resource" script_class="VariantTable" load_steps=3 format=3 uid="uid://hn1y7qdj5v6h"]
 
-[ext_resource type="Script" path="res://craft/craft_item.gd" id="1_1hnko"]
-[ext_resource type="Script" path="res://craft/craft_book.gd" id="1_cwfuw"]
+[ext_resource type="Script" path="res://addons/table_editor/variant_table.gd" id="1_xsxqa"]
 [ext_resource type="Script" path="res://craft/craft_recipe.gd" id="2_nvhjl"]
 
-[sub_resource type="Resource" id="Resource_25k3c"]
-script = ExtResource("1_1hnko")
-category = 1
-item_id = 1
-amount = 1
-
-[sub_resource type="Resource" id="Resource_xumui"]
-script = ExtResource("1_1hnko")
-category = 0
-item_id = 0
-amount = 0
-
-[sub_resource type="Resource" id="Resource_p4m85"]
-script = ExtResource("2_nvhjl")
-item = SubResource("Resource_25k3c")
-materials = Array[ExtResource("1_1hnko")]([SubResource("Resource_xumui")])
-
-[sub_resource type="Resource" id="Resource_q0r2n"]
-script = ExtResource("1_1hnko")
-category = 0
-item_id = 0
-amount = 0
-
-[sub_resource type="Resource" id="Resource_jstjw"]
-script = ExtResource("1_1hnko")
-category = 0
-item_id = 0
-amount = 0
-
-[sub_resource type="Resource" id="Resource_4uhso"]
-script = ExtResource("2_nvhjl")
-item = SubResource("Resource_q0r2n")
-materials = Array[ExtResource("1_1hnko")]([SubResource("Resource_jstjw")])
-
 [resource]
-script = ExtResource("1_cwfuw")
-recipes = Array[ExtResource("2_nvhjl")]([SubResource("Resource_p4m85"), SubResource("Resource_4uhso")])
+script = ExtResource("1_xsxqa")
+rows = []
+typed_script = ExtResource("2_nvhjl")

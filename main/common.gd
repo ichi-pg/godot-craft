@@ -1,15 +1,5 @@
 extends Node
 
-enum ItemCategory {
-	NULL,
-	TILE,
-}
-
-enum CraftCategory {
-	HAND,
-	WORKBENCH,
-}
-
 const ItemIcon = preload("res://item/item_icon.tscn")
 const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
 const QUARTER_OF_INDEX = 10000
@@ -90,6 +80,6 @@ func add_item_instance(inventory, category, item_id, amount):
 func remove_item_instance(inventory, item):
 	assert(item.get_parent() == inventory.container)
 	# NOTE To set zero is important if increment at the same time.
-	item.set_item_data(Common.ItemCategory.NULL, 0, 0)
+	item.set_item_data(Item.Category.NULL, 0, 0)
 	item.queue_free()
 	# HACK get_child_count is miss match?

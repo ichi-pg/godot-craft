@@ -3,28 +3,30 @@ extends VBoxContainer
 
 class_name ArrayContainer
 
-var resource_name: String
 var rows: Array[Variant]
 var container: Container
+var row_name: String
+var typed_script: Script
 
 
-func build(rows: Array[Variant], array_name: String):
+func build(rows: Array[Variant], array_name: String, typed_script: Script):
 	self.rows = rows
+	self.typed_script = typed_script
 	if array_name.ends_with("ies"):
-		resource_name = array_name.trim_suffix("ies") + "y"
+		row_name = array_name.trim_suffix("ies") + "y"
 		# HACK movies, boxes, and so on
 	elif array_name.ends_with("s"):
-		resource_name = array_name.trim_suffix("s")
+		row_name = array_name.trim_suffix("s")
 	else:
-		resource_name = array_name
+		row_name = array_name
 	container = VBoxContainer.new()
 	for row in rows:
 		if row is Resource:
 			add_row(row)
 		# TODO int, float, string, enum, null
-	add_child(container)
-	var button = new_button("➕️Add " + resource_name)
+	var button = new_button("➕️Add " + row_name)
 	button.pressed.connect(_on_add_row_pressed)
+	add_child(container)
 	add_child(button)
 	# TODO exchange indices
 
@@ -36,8 +38,7 @@ func new_button(text: String):
 
 
 func _on_add_row_pressed():
-	var script = rows.get_typed_script()
-	var row = script.new()
+	var row = typed_script.new()
 	rows.append(row)
 	add_row(row)
 
@@ -45,7 +46,7 @@ func _on_add_row_pressed():
 func add_row(row: Resource):
 	var container = ResourceContainer.new()
 	container.build(row)
-	var button = new_button("➖️Remove " + resource_name)
+	var button = new_button("➖️Remove " + row_name)
 	button.pressed.connect(_on_remove_row_pressed.bind(row, container))
 	container.add_child(button)
 	self.container.add_child(container)

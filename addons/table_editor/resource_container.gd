@@ -3,6 +3,8 @@ extends HBoxContainer
 
 class_name ResourceContainer
 
+const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
+
 var resource: Resource
 
 static var scripts = {}
@@ -37,20 +39,36 @@ func build(resource: Resource):
 				spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
 				add_child(new_label(prop_name))
 				add_child(spin_box)
-				# TODO id to name
-		#elif value is String:
-			#add_child(new_label(prop_name))
-			# TODO string
+				# TODO id
+		if value is float:
+			var spin_box = new_spin_box(value)
+			spin_box.value_changed.connect(_on_value_changed.bind(prop_name))
+			add_child(new_label(prop_name))
+			add_child(spin_box)
+		if value is String:
+			if IGNORE_PROPERTIES.has(prop_name):
+				continue
+			var line_edit = new_line_edit(value)
+			line_edit.text_changed.connect(_on_value_changed.bind(prop_name))
+			add_child(new_label(prop_name))
+			add_child(line_edit)
+		if value is Vector2i:
+			var x_spin_box = new_spin_box(value.x)
+			var y_spin_box = new_spin_box(value.y)
+			x_spin_box.value_changed.connect(_on_v2i_x_value_changed.bind(prop_name))
+			y_spin_box.value_changed.connect(_on_v2i_y_value_changed.bind(prop_name))
+			add_child(new_label(prop_name))
+			add_child(x_spin_box)
+			add_child(y_spin_box)
 		if value is Array:
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
 		if type == Variant.Type.TYPE_OBJECT:
 			if ClassDB.get_class_list().has(hint_string):
 				continue
-				# HACK check all godot resources or check tree depth
 			add_child(new_label(prop_name))
 			if value != null:
-				# HACK can't store scripts if all empty
+				# FIXME can't store scripts if all empty
 				scripts[hint_string] = value.get_script()
 				add_child(new_resource_container(value))
 			else:
@@ -82,6 +100,13 @@ func new_label(text: String):
 	return label
 
 
+func new_line_edit(value: String):
+	var label = LineEdit.new()
+	label.text = value
+	label.expand_to_text_length = true
+	return label
+
+
 func new_spin_box(value: int):
 	var spin_box = SpinBox.new()
 	spin_box.value = value
@@ -107,10 +132,30 @@ func new_resource_container(value):
 
 func new_array_container(value, prop_name):
 	var container = ArrayContainer.new()
-	container.build(value, prop_name)
+	if resource is VariantTable:
+		container.build(value, prop_name, resource.typed_script)
+	else:
+		container.build(value, prop_name, value.get_typed_script())
 	return container
 
 
+func _on_value_changed(value: Variant, prop_name: String):
+	resource.set(prop_name, value)
+	# TODO save
+	# TODO undo and modify
+
+
+func _on_v2i_x_value_changed(value: float, prop_name: String):
+	var v2i = resource.get(prop_name)
+	v2i.x = value
+	resource.set(prop_name, v2i)
+
+
+func _on_v2i_y_value_changed(value: float, prop_name: String):
+	var v2i = resource.get(prop_name)
+	v2i.y = value
+	resource.set(prop_name, v2i)
+
+
 func _on_int_value_changed(value: float, prop_name: String):
-	self.resource.set(prop_name, int(value))
-	# TODO save resource without open resource
+	resource.set(prop_name, int(value))

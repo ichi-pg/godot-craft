@@ -2,7 +2,7 @@ extends Resource
 
 class_name CraftItem
 
-@export var category: Common.ItemCategory
+@export var category: Item.Category
 @export var item_id: int
 @export var amount: int
 

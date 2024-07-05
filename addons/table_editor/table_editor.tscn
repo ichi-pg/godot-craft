@@ -16,7 +16,7 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 item_count = 2
 item_0/text = "res://craft/hand_craft.tres"
-item_1/text = "res://world/level.tres"
+item_1/text = "res://item/item.tres"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

@@ -7,7 +7,7 @@ signal pushed()
 
 const NULL_TEXTURE = preload("res://assets/icon.svg")
 
-var category = Common.ItemCategory.NULL
+var category = Item.Category.NULL
 var item_id = 0
 var amount = 0
 var inventory: Control
@@ -27,12 +27,12 @@ func set_item_data(category, item_id, amount):
 	self.item_id = item_id
 	self.amount = amount
 	match category:
-		Common.ItemCategory.NULL:
+		Item.Category.NULL:
 			texture = NULL_TEXTURE
 			modulate.a = 0
 			$Label.visible = false
 			return
-		Common.ItemCategory.TILE:
+		Item.Category.TILE:
 			texture = Common.get_level_atlas(item_id, 0)
 	modulate.a = 1
 	$Label.text = str(amount)
@@ -46,7 +46,7 @@ func increment_amount(amount):
 
 
 func _gui_input(event):
-	if category == Common.ItemCategory.NULL:
+	if category == Item.Category.NULL:
 		return null
 	if event.is_action_pressed("push_item"):
 		pushed.emit()
@@ -55,7 +55,7 @@ func _gui_input(event):
 
 
 func _get_drag_data(at_position):
-	if category == Common.ItemCategory.NULL:
+	if category == Item.Category.NULL:
 		return null
 	var item_icon = duplicate()
 	item_icon.position -= size * 0.5
