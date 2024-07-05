@@ -9,7 +9,7 @@ var resource: Resource
 
 
 func _ready():
-	size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	size_flags_vertical = Control.SIZE_EXPAND_FILL
 
 
 func clear():
@@ -96,7 +96,7 @@ func new_label(text: String):
 	label.text = text
 	label.editable = false
 	label.expand_to_text_length = true
-	label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	label.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	return label
 
 
