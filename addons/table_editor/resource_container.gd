@@ -7,12 +7,9 @@ const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 
 var resource: Resource
 
-static var scripts = {}
-
 
 func _ready():
-	size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	# TODO SIZE_SHRINK_BEGIN
+	size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 
 
 func clear():
@@ -68,22 +65,24 @@ func build(resource: Resource):
 				continue
 			add_child(new_label(prop_name))
 			if value != null:
-				# FIXME can't store scripts if all empty
-				scripts[hint_string] = value.get_script()
 				add_child(new_resource_container(value))
 			else:
-				var button = new_button("🆕new " + prop_name)
+				print(prop)
+				var button = new_button("🔵new " + prop_name)
 				button.pressed.connect(_on_new_resource_pressed.bind(prop_name, hint_string, button))
 				add_child(button)
 
 
 func _on_new_resource_pressed(prop_name, hint_string, button):
-	var resource = scripts[hint_string].new()
-	var container = new_resource_container(resource)
-	add_child(container)
-	move_child(container, button.get_index())
-	button.queue_free()
-	self.resource.set(prop_name, resource)
+	for script in TableEditor.scripts:
+		if script.source_code.contains("class_name " + hint_string):
+			var resource = script.new()
+			var container = new_resource_container(resource)
+			add_child(container)
+			move_child(container, button.get_index())
+			button.queue_free()
+			self.resource.set(prop_name, resource)
+			return
 
 
 func new_button(text: String):
@@ -97,6 +96,7 @@ func new_label(text: String):
 	label.text = text
 	label.editable = false
 	label.expand_to_text_length = true
+	label.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	return label
 
 

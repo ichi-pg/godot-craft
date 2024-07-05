@@ -1,5 +1,5 @@
 @tool
-extends VBoxContainer
+extends HBoxContainer
 
 class_name ArrayContainer
 
@@ -24,8 +24,9 @@ func build(rows: Array[Variant], array_name: String, typed_script: Script):
 		if row is Resource:
 			add_row(row)
 		# TODO int, float, string, enum, null
-	var button = new_button("➕️Add " + row_name)
+	var button = new_button("🟢Add " + row_name)
 	button.pressed.connect(_on_add_row_pressed)
+	button.size_flags_vertical = Control.SIZE_SHRINK_END
 	add_child(container)
 	add_child(button)
 	# TODO exchange indices
@@ -46,7 +47,8 @@ func _on_add_row_pressed():
 func add_row(row: Resource):
 	var container = ResourceContainer.new()
 	container.build(row)
-	var button = new_button("➖️Remove " + row_name)
+	var button = new_button("🔴Remove " + row_name)
+	button.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	button.pressed.connect(_on_remove_row_pressed.bind(row, container))
 	container.add_child(button)
 	self.container.add_child(container)
