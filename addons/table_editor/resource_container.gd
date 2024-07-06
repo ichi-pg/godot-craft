@@ -129,6 +129,7 @@ func new_option_button(id: int, items: Array):
 	for item in items:
 		option_button.add_item(item[0], int(item[1]))
 	option_button.selected = option_button.get_item_index(id)
+	option_button.custom_minimum_size.x = 64
 	return option_button
 
 
