@@ -1,9 +1,81 @@
-[gd_resource type="Resource" script_class="VariantTable" load_steps=3 format=3 uid="uid://hn1y7qdj5v6h"]
+[gd_resource type="Resource" script_class="VariantTable" load_steps=17 format=3 uid="uid://hn1y7qdj5v6h"]
 
+[ext_resource type="Script" path="res://craft/craft_item.gd" id="1_5gb7w"]
+[ext_resource type="Resource" uid="uid://bmclpmv5r8tlt" path="res://item/item.tres" id="1_uv0kl"]
 [ext_resource type="Script" path="res://addons/table_editor/variant_table.gd" id="1_xsxqa"]
 [ext_resource type="Script" path="res://craft/craft_recipe.gd" id="2_nvhjl"]
 
+[sub_resource type="Resource" id="Resource_mr7hw"]
+script = ExtResource("1_5gb7w")
+category = 1
+item_id = 1
+amount = 0
+
+[sub_resource type="Resource" id="Resource_72v4x"]
+script = ExtResource("1_5gb7w")
+category = 2
+item_id = 2
+amount = 1
+
+[sub_resource type="Resource" id="Resource_k6ela"]
+script = ExtResource("2_nvhjl")
+product = SubResource("Resource_72v4x")
+materials = Array[ExtResource("1_5gb7w")]([SubResource("Resource_mr7hw")])
+
+[sub_resource type="Resource" id="Resource_7j88e"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_yrmmd"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_44dfg"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 2
+amount = 1
+
+[sub_resource type="Resource" id="Resource_31nfy"]
+script = ExtResource("2_nvhjl")
+product = SubResource("Resource_44dfg")
+materials = Array[ExtResource("1_5gb7w")]([SubResource("Resource_7j88e"), SubResource("Resource_yrmmd")])
+
+[sub_resource type="Resource" id="Resource_45sno"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_4ohwm"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_wlrko"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_uaruq"]
+script = ExtResource("1_5gb7w")
+category = 0
+item_id = 3
+amount = 1
+
+[sub_resource type="Resource" id="Resource_nfcl8"]
+script = ExtResource("2_nvhjl")
+product = SubResource("Resource_uaruq")
+materials = Array[ExtResource("1_5gb7w")]([SubResource("Resource_45sno"), SubResource("Resource_4ohwm"), SubResource("Resource_wlrko")])
+
 [resource]
 script = ExtResource("1_xsxqa")
-rows = []
+rows = [SubResource("Resource_k6ela"), SubResource("Resource_31nfy"), SubResource("Resource_nfcl8")]
 typed_script = ExtResource("2_nvhjl")
+depends_tables = Array[ExtResource("1_xsxqa")]([ExtResource("1_uv0kl")])

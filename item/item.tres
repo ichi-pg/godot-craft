@@ -3,21 +3,22 @@
 [ext_resource type="Script" path="res://item/item.gd" id="1_f3ppi"]
 [ext_resource type="Script" path="res://addons/table_editor/variant_table.gd" id="1_kxjtw"]
 
-[sub_resource type="Resource" id="Resource_rnu4i"]
+[sub_resource type="Resource" id="Resource_d63gr"]
 script = ExtResource("1_f3ppi")
-category = 0
-item_id = 0
-item_name = ""
+category = 1
+item_id = 1
+item_name = "a"
 coord = Vector2i(0, 0)
 
-[sub_resource type="Resource" id="Resource_7ydcs"]
+[sub_resource type="Resource" id="Resource_3a63q"]
 script = ExtResource("1_f3ppi")
-category = 0
-item_id = 0
-item_name = ""
+category = 2
+item_id = 2
+item_name = "b"
 coord = Vector2i(0, 0)
 
 [resource]
 script = ExtResource("1_kxjtw")
-rows = [SubResource("Resource_rnu4i"), SubResource("Resource_7ydcs")]
+rows = [SubResource("Resource_d63gr"), SubResource("Resource_3a63q")]
 typed_script = ExtResource("1_f3ppi")
+depends_tables = Array[ExtResource("1_kxjtw")]([])

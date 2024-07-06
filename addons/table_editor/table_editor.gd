@@ -4,6 +4,7 @@ extends Container
 class_name TableEditor
 
 static var scripts: Array[Script]
+static var depends_tables: Array[VariantTable]
 
 @onready var item_list = $ItemList
 @onready var container = $ScrollContainer/HBoxContainer
@@ -40,5 +41,8 @@ func add_files_recursively(dir_path, dir_name):
 
 
 func _on_file_selected(index):
+	var resource = load(item_list.get_item_text(index))
+	if resource is VariantTable:
+		depends_tables = resource.depends_tables
 	container.clear()
-	container.build(load(item_list.get_item_text(index)))
+	container.build(resource)

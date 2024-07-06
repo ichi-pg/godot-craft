@@ -30,3 +30,4 @@ extends Node
 # HACK pass and elif
 # HACK always connect and flag vs connect and disconnect
 # HACK all type nodes connect vs select connection
+# HACK StringName

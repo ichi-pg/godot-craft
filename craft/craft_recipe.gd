@@ -2,5 +2,5 @@ extends Resource
 
 class_name CraftRecipe
 
-@export var item: CraftItem
+@export var product: CraftItem
 @export var materials: Array[CraftItem]

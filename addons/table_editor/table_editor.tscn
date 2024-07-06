@@ -20,11 +20,9 @@ item_1/text = "res://item/item.tres"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
-size_flags_vertical = 4
 script = ExtResource("2_br46k")
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
