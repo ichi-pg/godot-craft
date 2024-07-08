@@ -8,6 +8,7 @@ const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 var resource: Resource
 var table_editor: TableEditor
 var option_items: Dictionary
+var scripts: Dictionary
 
 
 func clear():
@@ -95,16 +96,18 @@ func build(resource: Resource, table_editor: TableEditor):
 
 
 func _on_new_resource_pressed(prop_name, hint_string, button):
-	# HACK cache
-	for script in table_editor.scripts:
-		if script.source_code.contains("class_name " + hint_string):
-			var resource = script.new()
-			var container = new_resource_container(resource)
-			add_child(container)
-			move_child(container, button.get_index())
-			button.queue_free()
-			_on_value_changed(resource, prop_name)
-			return
+	if not scripts.has(prop_name):
+		for script in table_editor.all_scripts:
+			if script.source_code.contains("class_name " + hint_string):
+				scripts[prop_name] = script
+	if not scripts.has(prop_name):
+		return
+	var resource = scripts[prop_name].new()
+	var container = new_resource_container(resource)
+	add_child(container)
+	move_child(container, button.get_index())
+	button.queue_free()
+	_on_value_changed(resource, prop_name)
 
 
 func new_button(text: String):
@@ -129,8 +132,9 @@ func new_line_edit(value: String):
 
 
 func new_spin_box(value: int):
-	# FIXME 0-100
 	var spin_box = SpinBox.new()
+	spin_box.min_value = Common.MIN_RANGE
+	spin_box.max_value = Common.MAX_RANGE
 	spin_box.value = value
 	var line_edit = spin_box.get_line_edit()
 	line_edit.expand_to_text_length = true

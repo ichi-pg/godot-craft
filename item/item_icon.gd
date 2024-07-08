@@ -70,7 +70,7 @@ func _get_drag_data(at_position):
 		item_icon.init_item_data(inventory, category, item_id, amount)
 		item_icon.dragged = inventory.remove_item(self)
 	var preview = Control.new()
-	preview.z_index = Common.MAX_Z_INDEX
+	preview.z_index = RenderingServer.CANVAS_ITEM_Z_MAX
 	preview.add_child(item_icon)
 	set_drag_preview(preview)
 	# HACK cache
