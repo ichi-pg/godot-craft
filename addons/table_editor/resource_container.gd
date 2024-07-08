@@ -7,11 +7,34 @@ const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 
 var resource: Resource
 var table_editor: TableEditor
+var option_items: Dictionary
 
 
 func clear():
 	for child in get_children():
 		child.queue_free()
+
+
+func find_option_items(prop_name, hint_string):
+	if option_items.has(prop_name):
+		return option_items[prop_name]
+	var items = []
+	if hint_string != "int":
+		for option in hint_string.split(","):
+			items.append(option.split(":"))
+	elif prop_name.ends_with("_id"):
+		var label_name = prop_name.replace("_id", "_name")
+		for relational_resource in table_editor.relational_resources:
+			for relational_property in relational_resource.get_property_list():
+				var rows = relational_resource.get(relational_property["name"])
+				if rows is Array:
+					for row in rows:
+						var label = row.get(label_name)
+						var id = row.get(prop_name)
+						if label and id:
+							items.append([label, id])
+	option_items[prop_name] = items
+	return items
 
 
 func build(resource: Resource, table_editor: TableEditor):
@@ -24,29 +47,14 @@ func build(resource: Resource, table_editor: TableEditor):
 		var value = resource.get(prop_name)
 		# TODO texture preview
 		if value is int:
-			# HACK cache
-			var option_button_items = []
-			if hint_string != "int":
-				for option in hint_string.split(","):
-					option_button_items.append(option.split(":"))
-			elif prop_name.ends_with("_id"):
-				var label_name = prop_name.replace("_id", "_name")
-				for relational_resource in table_editor.relational_resources:
-					for relational_property in relational_resource.get_property_list():
-						var rows = relational_resource.get(relational_property["name"])
-						if rows is Array:
-							for row in rows:
-								var label = row.get(label_name)
-								var id = row.get(prop_name)
-								if label and id:
-									option_button_items.append([label, id])
-			if option_button_items.is_empty():
+			var option_items = find_option_items(prop_name, hint_string)
+			if option_items.is_empty():
 				var spin_box = new_spin_box(value)
 				spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
 				add_child(new_label(prop_name))
 				add_child(spin_box)
 			else:
-				var option_button = new_option_button(value, option_button_items)
+				var option_button = new_option_button(value, option_items)
 				option_button.item_selected.connect(_on_option_value_changed.bind(prop_name, option_button))
 				add_child(new_label(prop_name))
 				add_child(option_button)
