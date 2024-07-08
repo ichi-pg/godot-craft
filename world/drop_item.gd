@@ -11,4 +11,4 @@ func init_drop_item_data(category, item_id, amount):
 	self.amount = amount
 	match category:
 		Item.Category.TILE:
-			$Sprite2D.texture = Common.get_level_atlas(item_id, 1)
+			$Sprite2D.texture = Common.get_level_texture(item_id, 1)

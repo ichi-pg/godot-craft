@@ -7,9 +7,11 @@ var rows: Array[Variant]
 var container: Container
 var row_name: String
 var typed_script: Script
+var table_editor: TableEditor
 
 
-func build(rows: Array[Variant], array_name: String, typed_script: Script):
+func build(rows: Array[Variant], array_name: String, typed_script: Script, table_editor: TableEditor):
+	self.table_editor = table_editor
 	self.rows = rows
 	self.typed_script = typed_script
 	if array_name.ends_with("ies"):
@@ -24,11 +26,12 @@ func build(rows: Array[Variant], array_name: String, typed_script: Script):
 		if row is Resource:
 			add_row(row)
 		# TODO int, float, string, enum, null
-	var button = new_button("🟢Add " + row_name)
+	var button = new_button("🟢add " + row_name)
 	button.pressed.connect(_on_add_row_pressed)
 	add_child(container)
 	add_child(button)
 	# TODO exchange indices
+	# TODO filter
 
 
 func new_button(text: String):
@@ -45,9 +48,9 @@ func _on_add_row_pressed():
 
 func add_row(row: Resource):
 	var container = ResourceContainer.new()
-	var button = new_button("🔴Remove " + row_name)
+	var button = new_button("🔴remove " + row_name)
 	button.pressed.connect(_on_remove_row_pressed.bind(row, container))
-	container.build(row)
+	container.build(row, table_editor)
 	container.add_child(button)
 	self.container.add_child(container)
 

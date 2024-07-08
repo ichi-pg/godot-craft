@@ -15,6 +15,8 @@ var dragged: ItemIcon
 
 @onready var label = $Label
 
+# TODO remove category
+
 
 func init_item_data(inventory, category, item_id, amount):
 	self.inventory = inventory
@@ -33,7 +35,7 @@ func set_item_data(category, item_id, amount):
 			$Label.visible = false
 			return
 		Item.Category.TILE:
-			texture = Common.get_level_atlas(item_id, 0)
+			texture = Common.get_level_texture(item_id, 0)
 	modulate.a = 1
 	$Label.text = str(amount)
 	$Label.visible = true

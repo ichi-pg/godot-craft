@@ -6,6 +6,7 @@ class_name ResourceContainer
 const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 
 var resource: Resource
+var table_editor: TableEditor
 
 
 func clear():
@@ -13,13 +14,15 @@ func clear():
 		child.queue_free()
 
 
-func build(resource: Resource):
+func build(resource: Resource, table_editor: TableEditor):
+	self.table_editor = table_editor
 	self.resource = resource
 	for prop in resource.get_property_list():
 		var prop_name = prop["name"]
 		var hint_string = prop["hint_string"]
 		var type = prop["type"]
 		var value = resource.get(prop_name)
+		# TODO texture preview
 		if value is int:
 			# HACK cache
 			var option_button_items = []
@@ -28,12 +31,15 @@ func build(resource: Resource):
 					option_button_items.append(option.split(":"))
 			elif prop_name.ends_with("_id"):
 				var label_name = prop_name.replace("_id", "_name")
-				for depends_table in TableEditor.depends_tables:
-					for row in depends_table.rows:
-						var label = row.get(label_name)
-						var id = row.get(prop_name)
-						if label and id:
-							option_button_items.append([label, id])
+				for relational_resource in table_editor.relational_resources:
+					for relational_property in relational_resource.get_property_list():
+						var rows = relational_resource.get(relational_property["name"])
+						if rows is Array:
+							for row in rows:
+								var label = row.get(label_name)
+								var id = row.get(prop_name)
+								if label and id:
+									option_button_items.append([label, id])
 			if option_button_items.is_empty():
 				var spin_box = new_spin_box(value)
 				spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
@@ -65,8 +71,6 @@ func build(resource: Resource):
 			add_child(x_spin_box)
 			add_child(y_spin_box)
 		if value is Array:
-			if value.get_typed_script() == VariantTable:
-				continue
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
 		if type == Variant.Type.TYPE_OBJECT:
@@ -84,14 +88,14 @@ func build(resource: Resource):
 
 func _on_new_resource_pressed(prop_name, hint_string, button):
 	# HACK cache
-	for script in TableEditor.scripts:
+	for script in table_editor.scripts:
 		if script.source_code.contains("class_name " + hint_string):
 			var resource = script.new()
 			var container = new_resource_container(resource)
 			add_child(container)
 			move_child(container, button.get_index())
 			button.queue_free()
-			self.resource.set(prop_name, resource)
+			_on_value_changed(resource, prop_name)
 			return
 
 
@@ -117,6 +121,7 @@ func new_line_edit(value: String):
 
 
 func new_spin_box(value: int):
+	# FIXME 0-100
 	var spin_box = SpinBox.new()
 	spin_box.value = value
 	var line_edit = spin_box.get_line_edit()
@@ -135,40 +140,37 @@ func new_option_button(id: int, items: Array):
 
 func new_resource_container(value):
 	var container = ResourceContainer.new()
-	container.build(value)
+	container.build(value, table_editor)
 	return container
 
 
 func new_array_container(value, prop_name):
 	var container = ArrayContainer.new()
-	if resource is VariantTable:
-		container.build(value, prop_name, resource.typed_script)
-	else:
-		container.build(value, prop_name, value.get_typed_script())
+	container.build(value, prop_name, value.get_typed_script(), table_editor)
 	return container
-
-
-func _on_option_value_changed(idx: int, prop_name: String, option_button: OptionButton):
-	resource.set(prop_name, option_button.get_item_id(idx))
 
 
 func _on_value_changed(value: Variant, prop_name: String):
 	resource.set(prop_name, value)
-	# TODO save
+	ResourceSaver.save(table_editor.selected_resource)
 	# TODO undo and modify
+
+
+func _on_option_value_changed(idx: int, prop_name: String, option_button: OptionButton):
+	_on_value_changed(option_button.get_item_id(idx), prop_name)
 
 
 func _on_v2i_x_value_changed(x: float, prop_name: String):
 	var v2i = resource.get(prop_name)
 	v2i.x = x
-	resource.set(prop_name, v2i)
+	_on_value_changed(v2i, prop_name)
 
 
 func _on_v2i_y_value_changed(y: float, prop_name: String):
 	var v2i = resource.get(prop_name)
 	v2i.y = y
-	resource.set(prop_name, v2i)
+	_on_value_changed(v2i, prop_name)
 
 
 func _on_int_value_changed(value: float, prop_name: String):
-	resource.set(prop_name, int(value))
+	_on_value_changed(int(value), prop_name)

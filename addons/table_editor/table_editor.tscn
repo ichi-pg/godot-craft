@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmfwlq7pniklp"]
 
 [ext_resource type="Script" path="res://addons/table_editor/table_editor.gd" id="1_fy4nb"]
-[ext_resource type="Script" path="res://addons/table_editor/resource_container.gd" id="2_br46k"]
+[ext_resource type="Script" path="res://addons/table_editor/resource_container.gd" id="2_w2one"]
 
 [node name="TableEditor" type="HSplitContainer"]
 anchors_preset = 15
@@ -15,15 +15,15 @@ script = ExtResource("1_fy4nb")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 item_count = 2
-item_0/text = "res://craft/hand_craft.tres"
-item_1/text = "res://item/item.tres"
+item_0/text = "res://craft/craft_recipes.tres"
+item_1/text = "res://item/items.tres"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
-script = ExtResource("2_br46k")
+script = ExtResource("2_w2one")
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="ItemList" to="." method="_on_file_selected"]

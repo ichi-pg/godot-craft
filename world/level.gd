@@ -20,7 +20,7 @@ var tile_size = tile_set.tile_size * 0.5
 
 func _ready():
 	var source = tile_set.get_source(0) as TileSetAtlasSource
-	Common.level_texture.atlas = source.texture
+	Common.level_atlas = source.texture
 	readied.emit(self)
 	# TODO layers
 	# TODO scaffold

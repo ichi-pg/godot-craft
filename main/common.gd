@@ -4,24 +4,26 @@ const ItemIcon = preload("res://item/item_icon.tscn")
 const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
 const QUARTER_OF_INDEX = 10000
 const MAX_INT = 9223372036854775807
+const MIN_INT = -9223372036854775808
 const MAX_Z_INDEX = 4096
 
-var level_texture: AtlasTexture = AtlasTexture.new()
-var level_atlas = {}
+var level_atlas: Texture2D
+var level_textures = {}
 
 
-func get_level_atlas(item_id, padding) -> AtlasTexture:
+func get_level_texture(item_id, padding) -> AtlasTexture:
 	var index = item_id + padding * HALF_OF_INDEX
-	if level_atlas.has(index):
-		return level_atlas[index]
-	var atlas = Common.level_texture.duplicate() as AtlasTexture
+	if level_textures.has(index):
+		return level_textures[index]
+	var texture = AtlasTexture.new()
+	texture.atlas = level_atlas
 	var coord = Common.get_tile_coord(item_id)
 	# TODO get tile size
 	var pos = coord * 128 + Vector2i.ONE * padding
 	var size = Vector2i(128 - padding, 128 - padding)
-	atlas.region = Rect2(pos, size)
-	level_atlas[index] = atlas
-	return atlas
+	texture.region = Rect2(pos, size)
+	level_textures[index] = texture
+	return texture
 
 
 func get_tile_id(coord: Vector2i) -> int:

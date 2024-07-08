@@ -3,8 +3,10 @@ extends Container
 
 class_name TableEditor
 
-static var scripts: Array[Script]
-static var depends_tables: Array[VariantTable]
+var all_scripts: Array[Script]
+var all_resources: Array[Resource]
+var relational_resources: Array[Resource]
+var selected_resource: Resource
 
 @onready var item_list = $ItemList
 @onready var container = $ScrollContainer/HBoxContainer
@@ -17,7 +19,8 @@ func _on_visibility_changed():
 		return
 	item_list.clear()
 	container.clear()
-	scripts = []
+	all_scripts = []
+	all_resources = []
 	add_files_recursively("res:/", "res://")
 	# HACK on create or delete resource
 
@@ -33,16 +36,20 @@ func add_files_recursively(dir_path, dir_name):
 		if dir.current_is_dir():
 			add_files_recursively(file_path, file_name)
 		elif file_name.get_extension() == "tres":
-			if load(file_path).get_class() == "Resource":
+			var resource = load(file_path)
+			if resource.get_class() == "Resource":
 				item_list.add_item(file_path)
+				all_resources.append(resource)
 		elif file_name.get_extension() == "gd":
-			scripts.append(load(file_path))
+			all_scripts.append(load(file_path))
 		file_name = dir.get_next()
 
 
 func _on_file_selected(index):
-	var resource = load(item_list.get_item_text(index))
-	if resource is VariantTable:
-		depends_tables = resource.depends_tables
+	selected_resource = load(item_list.get_item_text(index))
+	relational_resources = []
+	for resource in all_resources:
+		if resource != selected_resource:
+			relational_resources.append(resource)
 	container.clear()
-	container.build(resource)
+	container.build(selected_resource, self)
