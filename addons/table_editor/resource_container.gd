@@ -24,6 +24,7 @@ func find_option_items(prop_name, hint_string):
 		for option in hint_string.split(","):
 			items.append(option.split(":"))
 	elif prop_name.ends_with("_id"):
+		# TODO check duplicate ids
 		var label_name = prop_name.replace("_id", "_name")
 		for relational_resource in table_editor.relational_resources:
 			for relational_property in relational_resource.get_property_list():
@@ -46,7 +47,6 @@ func build(resource: Resource, table_editor: TableEditor):
 		var hint_string = prop["hint_string"]
 		var type = prop["type"]
 		var value = resource.get(prop_name)
-		# TODO texture preview
 		if value is int:
 			var option_items = find_option_items(prop_name, hint_string)
 			if option_items.is_empty():
@@ -79,11 +79,23 @@ func build(resource: Resource, table_editor: TableEditor):
 			add_child(new_label(prop_name))
 			add_child(x_spin_box)
 			add_child(y_spin_box)
+			# TODO atlas texture picker
+			# TODO atlas texture preview
 		if value is Array:
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
 		if type == Variant.Type.TYPE_OBJECT:
 			if ClassDB.get_class_list().has(hint_string):
+				match hint_string:
+					"Texture2D":
+						# TODO texture picker
+						# TODO texture preview
+						if value:
+							add_child(new_label(prop_name))
+							add_child(new_line_edit(value.resource_path))
+						else:
+							add_child(new_label(prop_name))
+							add_child(new_line_edit(""))
 				continue
 			if value != null:
 				add_child(new_label(prop_name))
@@ -117,11 +129,14 @@ func new_button(text: String):
 
 
 func new_label(text: String):
-	var label = LineEdit.new()
+	var container = MarginContainer.new()
+	var rect = ColorRect.new()
+	var label = Label.new()
 	label.text = text
-	label.editable = false
-	label.expand_to_text_length = true
-	return label
+	rect.color = Color(1, 1, 1, 0.1)
+	container.add_child(rect)
+	container.add_child(label)
+	return container
 
 
 func new_line_edit(value: String):
@@ -156,9 +171,13 @@ func new_resource_container(value):
 	return container
 
 
-func new_array_container(value, prop_name):
+func new_array_container(value: Array[Variant], prop_name: String):
 	var container = ArrayContainer.new()
-	container.build(value, prop_name, value.get_typed_script(), table_editor)
+	var typed_script = value.get_typed_script()
+	if not typed_script:
+		typed_script = resource.get("typed_script")
+	# FIXME empty arrays synchronized if same scripts
+	container.build(value, prop_name, typed_script, table_editor)
 	return container
 
 

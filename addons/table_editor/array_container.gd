@@ -41,6 +41,8 @@ func new_button(text: String):
 
 
 func _on_add_row_pressed():
+	if not typed_script:
+		return
 	var row = typed_script.new()
 	rows.append(row)
 	add_row(row)

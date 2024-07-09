@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="MasterData" load_steps=13 format=3 uid="uid://bk7u7ono7nwvv"]
+
+[ext_resource type="Script" path="res://main/master_data.gd" id="1_pew73"]
+[ext_resource type="Script" path="res://craft/craft_recipe.gd" id="2_w4kkn"]
+[ext_resource type="Script" path="res://craft/craft_item.gd" id="3_14bq2"]
+
+[sub_resource type="Resource" id="Resource_2xoet"]
+script = ExtResource("3_14bq2")
+item_id = 3
+amount = 1
+
+[sub_resource type="Resource" id="Resource_rlpgq"]
+script = ExtResource("3_14bq2")
+item_id = 5
+amount = 1
+
+[sub_resource type="Resource" id="Resource_7uooy"]
+script = ExtResource("2_w4kkn")
+product = SubResource("Resource_rlpgq")
+materials = Array[ExtResource("3_14bq2")]([SubResource("Resource_2xoet")])
+
+[sub_resource type="Resource" id="Resource_hhnlh"]
+script = ExtResource("3_14bq2")
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_smjmq"]
+script = ExtResource("3_14bq2")
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_nool4"]
+script = ExtResource("2_w4kkn")
+product = SubResource("Resource_smjmq")
+materials = Array[ExtResource("3_14bq2")]([SubResource("Resource_hhnlh")])
+
+[sub_resource type="Resource" id="Resource_hnpk0"]
+script = ExtResource("3_14bq2")
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_wvh1n"]
+script = ExtResource("3_14bq2")
+item_id = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_c7uv7"]
+script = ExtResource("2_w4kkn")
+product = SubResource("Resource_wvh1n")
+materials = Array[ExtResource("3_14bq2")]([SubResource("Resource_hnpk0")])
+
+[resource]
+script = ExtResource("1_pew73")
+values = [SubResource("Resource_7uooy"), SubResource("Resource_nool4"), SubResource("Resource_c7uv7")]
+typed_script = ExtResource("2_w4kkn")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="MasterData" load_steps=7 format=3 uid="uid://c7d0epxw1cr6b"]
+
+[ext_resource type="Script" path="res://main/master_data.gd" id="1_wvejh"]
+[ext_resource type="Script" path="res://item/item_category.gd" id="2_8kbnf"]
+[ext_resource type="Texture2D" uid="uid://diq7t5omnd5n3" path="res://assets/spritesheet_tiles.png" id="3_3tpko"]
+[ext_resource type="Texture2D" uid="uid://c7jh8l6i3xp1x" path="res://assets/spritesheet_items.png" id="4_5eo68"]
+
+[sub_resource type="Resource" id="Resource_gtgva"]
+script = ExtResource("2_8kbnf")
+category = 1
+atlas = ExtResource("3_3tpko")
+
+[sub_resource type="Resource" id="Resource_0mqie"]
+script = ExtResource("2_8kbnf")
+category = 2
+atlas = ExtResource("4_5eo68")
+
+[resource]
+script = ExtResource("1_wvejh")
+values = [SubResource("Resource_gtgva"), SubResource("Resource_0mqie")]
+typed_script = ExtResource("2_8kbnf")
