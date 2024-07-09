@@ -8,7 +8,7 @@ script = ExtResource("2_fnfnu")
 item_id = 1
 item_name = "soil"
 category = 1
-atlas_coord = Vector2i(0, 0)
+atlas_coord = Vector2i(4, 6)
 
 [sub_resource type="Resource" id="Resource_thw00"]
 script = ExtResource("2_fnfnu")
@@ -28,15 +28,15 @@ atlas_coord = Vector2i(0, 0)
 script = ExtResource("2_fnfnu")
 item_id = 4
 item_name = "leaf"
-category = 2
+category = 1
 atlas_coord = Vector2i(0, 0)
 
 [sub_resource type="Resource" id="Resource_ae2b4"]
 script = ExtResource("2_fnfnu")
 item_id = 5
 item_name = "pickaxe"
-category = 0
-atlas_coord = Vector2i(0, 0)
+category = 2
+atlas_coord = Vector2i(2, 1)
 
 [resource]
 script = ExtResource("1_hk340")
