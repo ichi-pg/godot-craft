@@ -8,6 +8,7 @@ const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 var resource: Resource
 var table_editor: TableEditor
 var atlas_texture: AtlasTexture
+var region_size: int
 
 
 func clear():
@@ -16,6 +17,7 @@ func clear():
 
 
 func build(resource: Resource, table_editor: TableEditor):
+	# HACK split class
 	self.table_editor = table_editor
 	self.resource = resource
 	for prop in resource.get_property_list():
@@ -48,19 +50,21 @@ func build(resource: Resource, table_editor: TableEditor):
 			add_child(new_label(prop_name))
 			add_child(line_edit)
 		if value is Vector2i:
-			var x_spin_box = new_spin_box(value.x)
-			var y_spin_box = new_spin_box(value.y)
-			x_spin_box.value_changed.connect(_on_v2i_x_value_changed.bind(prop_name))
-			y_spin_box.value_changed.connect(_on_v2i_y_value_changed.bind(prop_name))
-			add_child(new_label(prop_name))
-			add_child(x_spin_box)
-			add_child(y_spin_box)
 			if prop_name.contains("atlas"):
-				var texture_rect = new_atras_texture(value)
+				var texture_rect = new_atras_texture(value, prop_name)
 				if not texture_rect:
 					continue
 				atlas_texture = texture_rect.texture
+				add_child(new_label(prop_name))
 				add_child(texture_rect)
+			else:
+				var x_spin_box = new_spin_box(value.x)
+				var y_spin_box = new_spin_box(value.y)
+				x_spin_box.value_changed.connect(_on_v2i_x_value_changed.bind(prop_name))
+				y_spin_box.value_changed.connect(_on_v2i_y_value_changed.bind(prop_name))
+				add_child(new_label(prop_name))
+				add_child(x_spin_box)
+				add_child(y_spin_box)
 		if value is Array:
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
@@ -128,21 +132,22 @@ func find_resource_has_atlas() -> Resource:
 	return null
 
 
-func new_atlas_region(coord: Vector2i, size: int):
-	return Rect2(coord * size + Vector2i.ONE, Vector2i(size - 1, size - 1))
+func new_atlas_region(coord: Vector2i):
+	return Rect2(coord * region_size + Vector2i.ONE, Vector2i(region_size - 1, region_size - 1))
 
 
-func new_atras_texture(coord: Vector2i):
+func new_atras_texture(coord: Vector2i, prop_name: String):
 	var resource = find_resource_has_atlas()
 	if not resource:
 		return
 	var rect = TextureRect.new()
 	var texture = AtlasTexture.new()
+	region_size = resource.get("region_size")
 	texture.atlas = resource.get("atlas")
-	texture.region = new_atlas_region(coord, resource.get("region_size"))
+	texture.region = new_atlas_region(coord)
 	rect.texture = texture
 	rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
-	rect.gui_input.connect(_on_atlas_texture_gui_input.bind(texture))
+	rect.gui_input.connect(_on_atlas_texture_gui_input.bind(texture, prop_name))
 	return rect
 
 
@@ -206,9 +211,25 @@ func new_array_container(value: Array[Variant], prop_name: String):
 	return container
 
 
-func _on_atlas_texture_gui_input(event: InputEvent, texture: AtlasTexture):
+func _on_atlas_texture_gui_input(event: InputEvent, texture: AtlasTexture, prop_name: String):
 	if event.is_pressed():
-		table_editor.texture_rect.texture = texture.atlas
+		var rect = table_editor.texture_rect
+		rect.texture = texture.atlas
+		for connection in rect.get_signal_connection_list("gui_input"):
+			rect.gui_input.disconnect(connection["callable"])
+		rect.gui_input.connect(_on_atlas_gui_input.bind(prop_name))
+		# HACK disconnect when change file
+		# HACK disable when change file
+
+
+func _on_atlas_gui_input(event: InputEvent, prop_name: String):
+	if event.is_pressed():
+		var mouse_event = event as InputEventMouse
+		var rect = table_editor.texture_rect
+		var texture_size = rect.texture.get_size()
+		var coord = mouse_event.position * max(texture_size.x, texture_size.y) / rect.size / region_size
+		_on_v2i_value_changed(Vector2i(coord), prop_name)
+		# HACK link spin box
 
 
 func _on_new_resource_pressed(prop_name, hint_string, button):
@@ -231,11 +252,12 @@ func _on_value_changed(value: Variant, prop_name: String):
 
 func _on_option_value_changed(idx: int, prop_name: String, option_button: OptionButton):
 	_on_value_changed(option_button.get_item_id(idx), prop_name)
+	# HACK change atlas
 
 
 func _on_v2i_value_changed(coord: Vector2i, prop_name: String):
 	if atlas_texture:
-		atlas_texture.region = new_atlas_region(coord, 128)
+		atlas_texture.region = new_atlas_region(coord)
 	_on_value_changed(coord, prop_name)
 
 

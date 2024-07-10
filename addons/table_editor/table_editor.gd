@@ -10,7 +10,7 @@ var selected_resource: Resource
 
 @onready var item_list = $ItemList
 @onready var container = $HSplitContainer/ScrollContainer/HBoxContainer
-@onready var texture_rect = $HSplitContainer/TextureRect
+@onready var texture_rect: TextureRect = $HSplitContainer/TextureRect
 
 
 func _on_visibility_changed():
