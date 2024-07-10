@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MasterData" load_steps=7 format=3 uid="uid://c7d0epxw1cr6b"]
+[gd_resource type="Resource" script_class="MasterData" load_steps=8 format=3 uid="uid://cv8ndddlcdgrx"]
 
 [ext_resource type="Script" path="res://main/master_data.gd" id="1_wvejh"]
 [ext_resource type="Script" path="res://item/item_category.gd" id="2_8kbnf"]
@@ -9,13 +9,20 @@
 script = ExtResource("2_8kbnf")
 category = 1
 atlas = ExtResource("3_3tpko")
+region_size = 128
 
 [sub_resource type="Resource" id="Resource_0mqie"]
 script = ExtResource("2_8kbnf")
 category = 2
 atlas = ExtResource("4_5eo68")
+region_size = 128
+
+[sub_resource type="Resource" id="Resource_6pc3w"]
+script = ExtResource("2_8kbnf")
+category = 3
+region_size = 128
 
 [resource]
 script = ExtResource("1_wvejh")
-values = [SubResource("Resource_gtgva"), SubResource("Resource_0mqie")]
+values = [SubResource("Resource_gtgva"), SubResource("Resource_0mqie"), SubResource("Resource_6pc3w")]
 typed_script = ExtResource("2_8kbnf")

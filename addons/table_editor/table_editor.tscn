@@ -15,9 +15,9 @@ script = ExtResource("1_fy4nb")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 item_count = 3
-item_0/text = "res://craft/craft_recipes.tres"
-item_1/text = "res://item/items.tres"
-item_2/text = "res://item/item_categories.tres"
+item_0/text = "res://craft/craft_recipe.tres"
+item_1/text = "res://item/item.tres"
+item_2/text = "res://item/item_category.tres"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2

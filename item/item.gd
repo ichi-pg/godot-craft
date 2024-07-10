@@ -6,6 +6,7 @@ enum Category {
 	NULL,
 	TILE,
 	TOOL,
+	MATERIAL,
 }
 
 @export var item_id: int

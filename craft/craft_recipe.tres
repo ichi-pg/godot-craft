@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="MasterData" load_steps=7 format=3 uid="uid://bk7u7ono7nwvv"]
+[gd_resource type="Resource" script_class="MasterData" load_steps=7 format=3 uid="uid://crmky10psynvv"]
 
 [ext_resource type="Script" path="res://main/master_data.gd" id="1_pew73"]
 [ext_resource type="Script" path="res://craft/craft_recipe.gd" id="2_w4kkn"]

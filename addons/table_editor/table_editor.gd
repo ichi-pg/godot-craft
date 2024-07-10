@@ -23,6 +23,7 @@ func _on_visibility_changed():
 	all_resources = []
 	add_files_recursively("res:/", "res://")
 	# HACK on create or delete resource
+	# FIXME item list modified
 
 
 func add_files_recursively(dir_path, dir_name):
