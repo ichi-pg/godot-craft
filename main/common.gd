@@ -1,19 +1,19 @@
 extends Node
 
 const ItemIcon = preload("res://item/item_icon.tscn")
-const HALF_OF_INDEX = QUARTER_OF_INDEX * QUARTER_OF_INDEX
-const QUARTER_OF_INDEX = 10000
+const HALF_INT = QUARTER_INT * QUARTER_INT
+const QUARTER_INT = 10000
 const MAX_INT = 9223372036854775807
 const MIN_INT = -9223372036854775808
-const MAX_RANGE = HALF_OF_INDEX
-const MIN_RANGE = -HALF_OF_INDEX
+const MAX_RANGE = HALF_INT
+const MIN_RANGE = -HALF_INT
 
 var level_atlas: Texture2D
 var level_textures = {}
 
 
 func get_level_texture(item_id, padding) -> AtlasTexture:
-	var index = item_id + padding * HALF_OF_INDEX
+	var index = item_id + padding * HALF_INT
 	if level_textures.has(index):
 		return level_textures[index]
 	var texture = AtlasTexture.new()
@@ -29,12 +29,12 @@ func get_level_texture(item_id, padding) -> AtlasTexture:
 
 func get_tile_id(coord: Vector2i) -> int:
 	# HACK cache
-	return coord.x + coord.y * QUARTER_OF_INDEX + QUARTER_OF_INDEX + 1
+	return coord.x + coord.y * QUARTER_INT + QUARTER_INT + 1
 
 
 func get_tile_coord(tile_id: int) -> Vector2i:
 	# HACK cache
-	return Vector2i(tile_id % QUARTER_OF_INDEX - 1, int(tile_id / QUARTER_OF_INDEX) - 1)
+	return Vector2i(tile_id % QUARTER_INT - 1, int(tile_id / QUARTER_INT) - 1)
 
 
 func find_item(container: Container, category, item_id) -> ItemIcon:
