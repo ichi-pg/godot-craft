@@ -7,35 +7,12 @@ const IGNORE_PROPERTIES = ["resource_path", "resource_name"]
 
 var resource: Resource
 var table_editor: TableEditor
-var atlas_textures: Dictionary
+var atlas_texture: AtlasTexture
 
 
 func clear():
 	for child in get_children():
 		child.queue_free()
-
-
-func find_option_items(prop_name, hint_string):
-	# HACK cache
-	var items = []
-	if hint_string != "int":
-		# HACK can't link new item if script not modify
-		for option in hint_string.split(","):
-			items.append(option.split(":"))
-	elif prop_name.ends_with("_id"):
-		# TODO check duplicate ids
-		# HACK random id
-		var label_name = prop_name.replace("_id", "_name")
-		for resource in table_editor.relational_resources:
-			for prop in resource.get_property_list():
-				var rows = resource.get(prop["name"])
-				if rows is Array:
-					for row in rows:
-						var label = row.get(label_name)
-						var id = row.get(prop_name)
-						if label and id:
-							items.append([label, id])
-	return items
 
 
 func build(resource: Resource, table_editor: TableEditor):
@@ -79,12 +56,11 @@ func build(resource: Resource, table_editor: TableEditor):
 			add_child(x_spin_box)
 			add_child(y_spin_box)
 			if prop_name.contains("atlas"):
-				var texture_rect = new_texture_rect(value)
+				var texture_rect = new_atras_texture(value)
 				if not texture_rect:
 					continue
-				atlas_textures[prop_name] = texture_rect.texture
+				atlas_texture = texture_rect.texture
 				add_child(texture_rect)
-				# TODO atlas texture picker
 		if value is Array:
 			add_child(new_label(prop_name))
 			add_child(new_array_container(value, prop_name))
@@ -110,20 +86,27 @@ func build(resource: Resource, table_editor: TableEditor):
 				add_child(button)
 
 
-func _on_new_resource_pressed(prop_name, hint_string, button):
+func find_option_items(prop_name, hint_string):
 	# HACK cache
-	for script in table_editor.all_scripts:
-		if script.source_code.contains("class_name " + hint_string):
-			var resource = script.new()
-			var container = new_resource_container(resource)
-			add_child(container)
-			move_child(container, button.get_index())
-			button.queue_free()
-			_on_value_changed(resource, prop_name)
-
-
-func new_atlas_region(coord: Vector2i, size: int):
-	return Rect2(coord * size + Vector2i.ONE, Vector2i(size - 1, size - 1))
+	var items = []
+	if hint_string != "int":
+		# HACK can't link new item if script not modify
+		for option in hint_string.split(","):
+			items.append(option.split(":"))
+	elif prop_name.ends_with("_id"):
+		# TODO check duplicate ids
+		# HACK random id
+		var label_name = prop_name.replace("_id", "_name")
+		for resource in table_editor.relational_resources:
+			for prop in resource.get_property_list():
+				var rows = resource.get(prop["name"])
+				if rows is Array:
+					for row in rows:
+						var label = row.get(label_name)
+						var id = row.get(prop_name)
+						if label and id:
+							items.append([label, id])
+	return items
 
 
 func find_resource_has_atlas() -> Resource:
@@ -145,7 +128,11 @@ func find_resource_has_atlas() -> Resource:
 	return null
 
 
-func new_texture_rect(coord: Vector2i):
+func new_atlas_region(coord: Vector2i, size: int):
+	return Rect2(coord * size + Vector2i.ONE, Vector2i(size - 1, size - 1))
+
+
+func new_atras_texture(coord: Vector2i):
 	var resource = find_resource_has_atlas()
 	if not resource:
 		return
@@ -155,6 +142,7 @@ func new_texture_rect(coord: Vector2i):
 	texture.region = new_atlas_region(coord, resource.get("region_size"))
 	rect.texture = texture
 	rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH
+	rect.gui_input.connect(_on_atlas_texture_gui_input.bind(texture))
 	return rect
 
 
@@ -218,6 +206,23 @@ func new_array_container(value: Array[Variant], prop_name: String):
 	return container
 
 
+func _on_atlas_texture_gui_input(event: InputEvent, texture: AtlasTexture):
+	if event.is_pressed():
+		table_editor.texture_rect.texture = texture.atlas
+
+
+func _on_new_resource_pressed(prop_name, hint_string, button):
+	# HACK cache
+	for script in table_editor.all_scripts:
+		if script.source_code.contains("class_name " + hint_string):
+			var resource = script.new()
+			var container = new_resource_container(resource)
+			add_child(container)
+			move_child(container, button.get_index())
+			button.queue_free()
+			_on_value_changed(resource, prop_name)
+
+
 func _on_value_changed(value: Variant, prop_name: String):
 	resource.set(prop_name, value)
 	ResourceSaver.save(table_editor.selected_resource)
@@ -229,9 +234,8 @@ func _on_option_value_changed(idx: int, prop_name: String, option_button: Option
 
 
 func _on_v2i_value_changed(coord: Vector2i, prop_name: String):
-	if atlas_textures.has(prop_name):
-		var texture = atlas_textures[prop_name] as AtlasTexture
-		texture.region = new_atlas_region(coord, 128)
+	if atlas_texture:
+		atlas_texture.region = new_atlas_region(coord, 128)
 	_on_value_changed(coord, prop_name)
 
 

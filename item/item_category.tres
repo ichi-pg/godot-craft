@@ -5,24 +5,25 @@
 [ext_resource type="Texture2D" uid="uid://diq7t5omnd5n3" path="res://assets/spritesheet_tiles.png" id="3_3tpko"]
 [ext_resource type="Texture2D" uid="uid://c7jh8l6i3xp1x" path="res://assets/spritesheet_items.png" id="4_5eo68"]
 
-[sub_resource type="Resource" id="Resource_gtgva"]
+[sub_resource type="Resource" id="Resource_d57an"]
 script = ExtResource("2_8kbnf")
 category = 1
 atlas = ExtResource("3_3tpko")
 region_size = 128
 
-[sub_resource type="Resource" id="Resource_0mqie"]
+[sub_resource type="Resource" id="Resource_nlrgk"]
 script = ExtResource("2_8kbnf")
 category = 2
 atlas = ExtResource("4_5eo68")
 region_size = 128
 
-[sub_resource type="Resource" id="Resource_6pc3w"]
+[sub_resource type="Resource" id="Resource_5vbk2"]
 script = ExtResource("2_8kbnf")
 category = 3
+atlas = ExtResource("4_5eo68")
 region_size = 128
 
 [resource]
 script = ExtResource("1_wvejh")
-values = [SubResource("Resource_gtgva"), SubResource("Resource_0mqie"), SubResource("Resource_6pc3w")]
+values = [SubResource("Resource_d57an"), SubResource("Resource_nlrgk"), SubResource("Resource_5vbk2")]
 typed_script = ExtResource("2_8kbnf")

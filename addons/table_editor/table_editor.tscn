@@ -19,12 +19,23 @@ item_0/text = "res://craft/craft_recipe.tres"
 item_1/text = "res://item/item.tres"
 item_2/text = "res://item/item_category.tres"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 2
+dragger_visibility = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/ScrollContainer"]
 layout_mode = 2
 script = ExtResource("2_w2one")
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 4
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="item_selected" from="ItemList" to="." method="_on_file_selected"]

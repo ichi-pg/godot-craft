@@ -9,7 +9,8 @@ var relational_resources: Array[Resource]
 var selected_resource: Resource
 
 @onready var item_list = $ItemList
-@onready var container = $ScrollContainer/HBoxContainer
+@onready var container = $HSplitContainer/ScrollContainer/HBoxContainer
+@onready var texture_rect = $HSplitContainer/TextureRect
 
 
 func _on_visibility_changed():
