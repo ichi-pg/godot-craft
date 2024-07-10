@@ -53,5 +53,12 @@ func _on_file_selected(index):
 	for resource in all_resources:
 		if resource != selected_resource:
 			relational_resources.append(resource)
+	clear_texture()
 	container.clear()
 	container.build(selected_resource, self)
+
+
+func clear_texture():
+	for connection in texture_rect.get_signal_connection_list("gui_input"):
+		texture_rect.gui_input.disconnect(connection["callable"])
+	texture_rect.texture = null

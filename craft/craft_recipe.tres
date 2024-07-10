@@ -6,12 +6,12 @@
 
 [sub_resource type="Resource" id="Resource_2xoet"]
 script = ExtResource("3_14bq2")
-item_id = 3
+item_id = 89817375
 amount = 1
 
 [sub_resource type="Resource" id="Resource_rlpgq"]
 script = ExtResource("3_14bq2")
-item_id = 5
+item_id = 99501635
 amount = 1
 
 [sub_resource type="Resource" id="Resource_7uooy"]

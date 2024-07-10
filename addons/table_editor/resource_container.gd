@@ -28,10 +28,19 @@ func build(resource: Resource, table_editor: TableEditor):
 		if value is int:
 			var option_items = find_option_items(prop_name, hint_string)
 			if option_items.is_empty():
-				var spin_box = new_spin_box(value)
-				spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
-				add_child(new_label(prop_name))
-				add_child(spin_box)
+				if prop_name.ends_with("_id"):
+					var spin_box = new_spin_box(value)
+					spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
+					spin_box.editable = false
+					add_child(new_label(prop_name))
+					add_child(spin_box)
+					# HACK check duplicate ids
+					# HACK unlock id editable
+				else:
+					var spin_box = new_spin_box(value)
+					spin_box.value_changed.connect(_on_int_value_changed.bind(prop_name))
+					add_child(new_label(prop_name))
+					add_child(spin_box)
 			else:
 				var option_button = new_option_button(value, option_items)
 				option_button.item_selected.connect(_on_option_value_changed.bind(prop_name, option_button))
@@ -98,8 +107,6 @@ func find_option_items(prop_name, hint_string):
 		for option in hint_string.split(","):
 			items.append(option.split(":"))
 	elif prop_name.ends_with("_id"):
-		# TODO check duplicate ids
-		# HACK random id
 		var label_name = prop_name.replace("_id", "_name")
 		for resource in table_editor.relational_resources:
 			for prop in resource.get_property_list():
@@ -123,7 +130,7 @@ func find_resource_has_atlas() -> Resource:
 					var atlas = row.get("atlas")
 					if atlas:
 						for row_prop in row.get_property_list():
-							# HACK id pattern
+							# TODO id pattern
 							var row_name = row_prop["name"]
 							var enum_value = row.get(row_name)
 							if enum_value is int and row_prop["hint_string"] != "int":
@@ -205,21 +212,28 @@ func new_array_container(value: Array[Variant], prop_name: String):
 	var typed_script = value.get_typed_script()
 	if not typed_script:
 		typed_script = resource.get("typed_script")
-	# FIXME empty arrays synchronized if same scripts
-	# FIXME can't link script modify ???
+	# HACK empty arrays synchronized if same scripts
+	# HACK can't link script modify ???
 	container.build(value, prop_name, typed_script, table_editor)
 	return container
 
 
+func new_script_resource(script: Script):
+	var resource = script.new()
+	for prop in resource.get_property_list():
+		var prop_name = prop["name"]
+		if prop_name.ends_with("_id"):
+			resource.set(prop_name, randi_range(Common.MAX_RANGE/10, Common.MAX_RANGE-1))
+			# TODO check duplicate ids
+	return resource
+
+
 func _on_atlas_texture_gui_input(event: InputEvent, texture: AtlasTexture, prop_name: String):
 	if event.is_pressed():
+		table_editor.clear_texture()
 		var rect = table_editor.texture_rect
 		rect.texture = texture.atlas
-		for connection in rect.get_signal_connection_list("gui_input"):
-			rect.gui_input.disconnect(connection["callable"])
 		rect.gui_input.connect(_on_atlas_gui_input.bind(prop_name))
-		# HACK disconnect when change file
-		# HACK disable when change file
 
 
 func _on_atlas_gui_input(event: InputEvent, prop_name: String):
@@ -236,7 +250,7 @@ func _on_new_resource_pressed(prop_name, hint_string, button):
 	# HACK cache
 	for script in table_editor.all_scripts:
 		if script.source_code.contains("class_name " + hint_string):
-			var resource = script.new()
+			var resource = new_script_resource(script)
 			var container = new_resource_container(resource)
 			add_child(container)
 			move_child(container, button.get_index())

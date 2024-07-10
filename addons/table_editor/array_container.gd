@@ -24,7 +24,7 @@ func build(rows: Array[Variant], array_name: String, typed_script: Script, table
 	container = VBoxContainer.new()
 	for row in rows:
 		if row is Resource:
-			add_row(row)
+			add_row(row, ResourceContainer.new())
 		# TODO int, float, string, enum, null
 	var button = new_button("🟢add " + row_name)
 	button.pressed.connect(_on_add_row_pressed)
@@ -43,13 +43,13 @@ func new_button(text: String):
 func _on_add_row_pressed():
 	if not typed_script:
 		return
-	var row = typed_script.new()
-	rows.append(row)
-	add_row(row)
-
-
-func add_row(row: Resource):
 	var container = ResourceContainer.new()
+	var row = container.new_script_resource(typed_script)
+	rows.append(row)
+	add_row(row, container)
+
+
+func add_row(row: Resource, container: ResourceContainer):
 	var button = new_button("🔴remove " + row_name)
 	button.pressed.connect(_on_remove_row_pressed.bind(row, container))
 	container.build(row, table_editor)
