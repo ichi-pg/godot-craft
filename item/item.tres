@@ -1,42 +1,7 @@
-[gd_resource type="Resource" script_class="MasterData" load_steps=13 format=3 uid="uid://cexxg6hyo0x1v"]
+[gd_resource type="Resource" script_class="MasterData" load_steps=8 format=3 uid="uid://cexxg6hyo0x1v"]
 
 [ext_resource type="Script" path="res://main/master_data.gd" id="1_hk340"]
 [ext_resource type="Script" path="res://item/item.gd" id="2_fnfnu"]
-
-[sub_resource type="Resource" id="Resource_68ljr"]
-script = ExtResource("2_fnfnu")
-item_id = 1
-item_name = "Soil"
-category = 1
-atlas_coord = Vector2i(7, 5)
-
-[sub_resource type="Resource" id="Resource_thw00"]
-script = ExtResource("2_fnfnu")
-item_id = 2
-item_name = "Stone"
-category = 1
-atlas_coord = Vector2i(3, 4)
-
-[sub_resource type="Resource" id="Resource_bx32e"]
-script = ExtResource("2_fnfnu")
-item_id = 3
-item_name = "Wood"
-category = 1
-atlas_coord = Vector2i(1, 1)
-
-[sub_resource type="Resource" id="Resource_dwj3h"]
-script = ExtResource("2_fnfnu")
-item_id = 4
-item_name = "Leaf"
-category = 1
-atlas_coord = Vector2i(4, 8)
-
-[sub_resource type="Resource" id="Resource_ae2b4"]
-script = ExtResource("2_fnfnu")
-item_id = 5
-item_name = "Pickaxe"
-category = 2
-atlas_coord = Vector2i(2, 1)
 
 [sub_resource type="Resource" id="Resource_3ckuh"]
 script = ExtResource("2_fnfnu")
@@ -75,5 +40,5 @@ atlas_coord = Vector2i(2, 1)
 
 [resource]
 script = ExtResource("1_hk340")
-values = [SubResource("Resource_68ljr"), SubResource("Resource_thw00"), SubResource("Resource_bx32e"), SubResource("Resource_dwj3h"), SubResource("Resource_ae2b4"), SubResource("Resource_3ckuh"), SubResource("Resource_vd4de"), SubResource("Resource_ky7wn"), SubResource("Resource_m5f1k"), SubResource("Resource_koy4x")]
+values = [SubResource("Resource_3ckuh"), SubResource("Resource_vd4de"), SubResource("Resource_ky7wn"), SubResource("Resource_m5f1k"), SubResource("Resource_koy4x")]
 typed_script = ExtResource("2_fnfnu")

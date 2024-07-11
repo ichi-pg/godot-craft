@@ -81,8 +81,8 @@ func build(resource: Resource, table_editor: TableEditor):
 			if ClassDB.get_class_list().has(hint_string):
 				match hint_string:
 					"Texture2D":
-						# TODO texture picker
-						# TODO texture preview
+						# HACK texture picker
+						# HACK texture preview
 						if value:
 							add_child(new_label(prop_name))
 							add_child(new_line_edit(value.resource_path))
@@ -130,7 +130,7 @@ func find_resource_has_atlas() -> Resource:
 					var atlas = row.get("atlas")
 					if atlas:
 						for row_prop in row.get_property_list():
-							# TODO id pattern
+							# HACK id pattern
 							var row_name = row_prop["name"]
 							var enum_value = row.get(row_name)
 							if enum_value is int and row_prop["hint_string"] != "int":
@@ -224,16 +224,15 @@ func new_script_resource(script: Script):
 		var prop_name = prop["name"]
 		if prop_name.ends_with("_id"):
 			resource.set(prop_name, randi_range(Common.MAX_RANGE/10, Common.MAX_RANGE-1))
-			# TODO check duplicate ids
+			# HACK check duplicate ids
 	return resource
 
 
 func _on_atlas_texture_gui_input(event: InputEvent, texture: AtlasTexture, prop_name: String):
 	if event.is_pressed():
 		table_editor.clear_texture()
-		var rect = table_editor.texture_rect
-		rect.texture = texture.atlas
-		rect.gui_input.connect(_on_atlas_gui_input.bind(prop_name))
+		table_editor.texture_rect.texture = texture.atlas
+		table_editor.texture_rect.gui_input.connect(_on_atlas_gui_input.bind(prop_name))
 
 
 func _on_atlas_gui_input(event: InputEvent, prop_name: String):
@@ -260,8 +259,8 @@ func _on_new_resource_pressed(prop_name, hint_string, button):
 
 func _on_value_changed(value: Variant, prop_name: String):
 	resource.set(prop_name, value)
-	ResourceSaver.save(table_editor.selected_resource)
-	# TODO undo and modify
+	table_editor.save_resource()
+	# HACK undo and modify
 
 
 func _on_option_value_changed(idx: int, prop_name: String, option_button: OptionButton):
